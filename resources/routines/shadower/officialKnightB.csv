@@ -1,0 +1,4 @@
+*, x=0.037, y=0.468, frequency=1, skip=False, adjust=False
+    ChainCombo, direction=right, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
+    BloodyStorm, direction=left, repetitions=1

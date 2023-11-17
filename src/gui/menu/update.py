@@ -39,7 +39,8 @@ class UpdatePrompt(tk.Toplevel):
 
         # Display local changes
         display_frame = LabelFrame(self, 'Local Changes')
-        display_frame.grid(row=0, column=1, sticky=tk.NSEW, padx=(10, 0), pady=10)
+        display_frame.grid(row=0, column=1, sticky=tk.NSEW,
+                           padx=(10, 0), pady=10)
         self.scroll = tk.Scrollbar(display_frame)
         self.scroll.pack(side=tk.RIGHT, fill='both', pady=5)
         self.listbox = tk.Listbox(display_frame,
@@ -49,12 +50,14 @@ class UpdatePrompt(tk.Toplevel):
                                   exportselection=False,
                                   activestyle='none',
                                   yscrollcommand=self.scroll.set)
-        self.listbox.pack(side=tk.LEFT, expand=True, fill='both', padx=(5, 0), pady=5)
+        self.listbox.pack(side=tk.LEFT, expand=True,
+                          fill='both', padx=(5, 0), pady=5)
 
         # Controls
         controls_frame = Frame(self)
         controls_frame.grid(row=0, column=2, sticky=tk.NSEW, padx=10, pady=10)
-        self.refresh = tk.Button(controls_frame, text='Refresh', command=self._refresh_display)
+        self.refresh = tk.Button(
+            controls_frame, text='Refresh', command=self._refresh_display)
         self.refresh.pack(side=tk.TOP, pady=(10, 5))
         self.soft_update = tk.Button(
             controls_frame,
@@ -69,7 +72,8 @@ class UpdatePrompt(tk.Toplevel):
         )
         self.force_update.pack(side=tk.BOTTOM, pady=(0, 5))
 
-        self.listbox.bindtags((self.listbox, config.gui.root, "all"))       # Unbind all events
+        # Unbind all events
+        self.listbox.bindtags((self.listbox, config.gui.root, "all"))
         self.bind('<FocusIn>', lambda *_: self._refresh_display())
         self.focus()
 
@@ -80,7 +84,7 @@ class UpdatePrompt(tk.Toplevel):
                                     'Do you wish to proceed?',
                             icon='warning'):
                 return
-        config.bot.update_submodules(force=force)
+        # config.bot.update_submodules(force=force)
         self._close()
 
     def _refresh_display(self):
@@ -89,7 +93,8 @@ class UpdatePrompt(tk.Toplevel):
         repo = git.Repo(self.path)
         diffs = []
         paths = set()
-        for item in repo.index.diff(None) + repo.index.diff('HEAD'):        # Unstaged and staged changes
+        # Unstaged and staged changes
+        for item in repo.index.diff(None) + repo.index.diff('HEAD'):
             path = item.a_path
             if path not in paths:       # Only show changes once per file, unstaged has precedence over staged
                 diffs.append(f'{item.change_type} - {path}')

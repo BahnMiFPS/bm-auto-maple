@@ -61,7 +61,6 @@ class Bot(Configurable):
         self.ready = False
         self.thread = threading.Thread(target=self._main)
         self.thread.daemon = True
-        self.current_captcha_attempt = 0
         self.captcha_max_attempts = 2
 
     def start(self):
@@ -70,7 +69,7 @@ class Bot(Configurable):
         :return:    None
         """
 
-        self.update_submodules()
+        # self.update_submodules()
         print('\n[~] Started main bot loop')
         self.thread.start()
 
@@ -112,22 +111,13 @@ class Bot(Configurable):
                             f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
                         self.quit_game()
                     else:
-                        while self.current_captcha_attempt < self.captcha_max_attempts:
-                            self.current_captcha_attempt += 1
-                            captcha_attempts.append(now)
-                            self._solve_captcha()
-                            # Add current timestamp to attempts
+                        captcha_attempts.append(now)
+                        self._solve_captcha()
 
-                        if self.current_captcha_attempt >= self.captcha_max_attempts and self.captcha_active:
-                            print(
-                                f"Quitting because {self.current_captcha_attempt} attempts were made and captcha is still active.")
-                            self.quit_game()
-                    if captcha_timer - now < 10:
+                    if captcha_timer - now < 15:
                         self.captcha_timeout = True
-
                 else:
                     if now - last_captcha > 600:
-                        self.current_captcha_attempt = 0
                         captcha_attempts.clear()
                 element.execute()
                 config.routine.step()
@@ -207,7 +197,7 @@ class Bot(Configurable):
                 attempt += 1
 
             # Add an exponential delay between attempts
-            time.sleep(initial_delay * (2 * attempt))
+            time.sleep(initial_delay * (1.5 * attempt))
 
         if solution_attempts:
             most_common_solution_tuple, _ = Counter(
@@ -215,11 +205,9 @@ class Bot(Configurable):
             most_common_solution = list(most_common_solution_tuple)
             print(f"Most common solution: {most_common_solution}")
             self.type_solution(most_common_solution)
-        elif self.captcha_timeout:
-            self.type_solution(['N', 'a'])
         else:
-            print("Max attempts reached, captcha not solved. Quitting Game")
-            self.quit_game()
+            print("Max attempts reached, typing out solution regardless.")
+            self.type_solution(['N', 'a'])
 
     def type_solution(self, solution):
         target = (572, 229)  # Coordinates to click the solution box

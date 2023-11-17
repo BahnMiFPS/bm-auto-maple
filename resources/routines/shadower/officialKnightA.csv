@@ -1,0 +1,8 @@
+
+@, label=Top Floor Right
+*, x=0.579, y=0.421, frequency=1, skip=False, adjust=True
+    BloodyStorm, direction=none, repetitions=128
+
+@, label=Top Floor Left
+*, x=0.595, y=0.372, frequency=1, skip=False, adjust=True
+    BloodyStorm, direction=none, repetitions=64

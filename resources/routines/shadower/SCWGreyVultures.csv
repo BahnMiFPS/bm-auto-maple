@@ -1,0 +1,27 @@
+
+@, label=Top Floor Right
+*, x=0.224, y=0.513, frequency=1, skip=False, adjust=False
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=2
+
+@, label=Top Floor Left
+*, x=0.666, y=0.513, frequency=1, skip=False, adjust=False
+    ChainCombo, direction=left, repetitions=2
+
+@, label=Bot Floor Right
+*, x=0.128, y=0.609, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=2
+    FlashJump, direction=right
+    FlashJump, direction=right
+    FlashJump, direction=right
+*, x=0.885, y=0.487, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=left, repetitions=2
