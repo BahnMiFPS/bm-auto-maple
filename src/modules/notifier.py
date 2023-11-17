@@ -9,6 +9,7 @@ import threading
 import numpy as np
 import keyboard as kb
 from src.routine.components import Point
+from src.modules.bot import Bot
 
 
 # A rune's symbol on the minimap
@@ -108,8 +109,10 @@ class Notifier:
                 elif now - captcha_start_time > self.captcha_alert_delay:
                     config.bot.captcha_timeout = True
                 elif now - captcha_start_time > 55:
-                    print("quitting game")
+                    "Quitting game due to captcha start_time > 55"
+                    Bot.quit_game()
                     config.bot.captcha_active = False
+                    config.bot.captcha_timeout = False
 
                 # Check for rune
                 if not config.bot.rune_active:

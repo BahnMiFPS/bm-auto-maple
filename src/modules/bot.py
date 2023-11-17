@@ -109,6 +109,8 @@ class Bot(Configurable):
                 if self.captcha_active:
                     captcha_timer = now
                     if len(captcha_attempts) == 3 and now - captcha_attempts[0] < 120:
+                        print(
+                            f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
                         self.quit_game()
                     else:
                         while self.current_captcha_attempt < self.captcha_max_attempts:
@@ -117,7 +119,9 @@ class Bot(Configurable):
                             self._solve_captcha()
                             # Add current timestamp to attempts
 
-                        if self.current_captcha_attempt >= self.captcha_max_attempts:
+                        if self.current_captcha_attempt >= self.captcha_max_attempts and self.captcha_active:
+                            print(
+                                f"Quitting because {self.current_captcha_attempt} attempts were made and captcha is still active.")
                             self.quit_game()
                     if captcha_timer - now < 10:
                         self.captcha_timeout = True
@@ -182,12 +186,16 @@ class Bot(Configurable):
                     inferences.append(solution)
 
     def _solve_captcha(self):
+        if not self.captcha_active:
+            return
         max_attempts = 4
         solution_attempts = []
         attempt = 0
         initial_delay = 2  # initial delay in seconds
         print('\nSolving captcha:')
-        while attempt < max_attempts and not self.captcha_timeout:
+        while attempt < max_attempts and not self.captcha_timeout and self.captcha_active:
+            if (attempt == 0):
+                time.sleep(3)
             frame = config.capture.frame
             solution = detection.captcha_detection(frame)
             if solution:
@@ -236,6 +244,8 @@ class Bot(Configurable):
         press('f4', 1)
         key_up('alt')
         config.enabled = False
+        self.captcha_timeout = False
+        self.captcha_active = False
 
     def load_commands(self, file):
         try:
