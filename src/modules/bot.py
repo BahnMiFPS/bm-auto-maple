@@ -18,7 +18,6 @@ from src.command_book.command_book import CommandBook
 from src.routine.components import Point
 from src.common.vkeys import press, click, key_down, key_up
 from src.common.interfaces import Configurable
-import matplotlib.pyplot as plt
 from PIL import Image
 from src.modules.listener import Listener
 from collections import Counter

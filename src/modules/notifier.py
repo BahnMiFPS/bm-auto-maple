@@ -46,8 +46,12 @@ class Notifier:
     def __init__(self):
         """Initializes this Notifier object's main thread."""
 
-        pygame.mixer.init()
-        self.mixer = pygame.mixer.music
+        try:
+            pygame.mixer.init()
+            self.mixer = pygame.mixer.music
+        except pygame.error:
+            print("Mixer init failed. Audio will not work.")
+            self.mixer = None
 
         self.ready = False
         self.thread = threading.Thread(target=self._main)
@@ -140,15 +144,20 @@ class Notifier:
         Plays an alert to notify user of a dangerous event. Stops the alert
         once the key bound to 'Start/stop' is pressed.
         """
-
         config.enabled = False
         config.listener.enabled = False
-        self.mixer.load(get_alert_path(name))
-        self.mixer.set_volume(volume)
-        self.mixer.play(-1)
+
+        if self.mixer is not None:
+            self.mixer.load(get_alert_path(name))
+            self.mixer.set_volume(volume)
+            self.mixer.play(-1)
+
         while not kb.is_pressed(config.listener.config['Start/stop']):
             time.sleep(0.1)
-        self.mixer.stop()
+
+        if self.mixer is not None:
+            self.mixer.stop()
+
         time.sleep(2)
         config.listener.enabled = True
 

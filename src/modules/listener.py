@@ -81,10 +81,13 @@ class Listener(Configurable):
         config.enabled = not config.enabled
         utils.print_state()
 
-        if config.enabled:
-            winsound.Beep(784, 333)     # G5
-        else:
-            winsound.Beep(523, 333)     # C5
+        try:
+            if config.enabled:
+                winsound.Beep(784, 333)     # G5
+            else:
+                winsound.Beep(523, 333)     # C5
+        except RuntimeError:
+            print("Failed to beep. Audio will not work.")
         time.sleep(0.267)
 
     @staticmethod
@@ -93,9 +96,12 @@ class Listener(Configurable):
 
         config.routine.load(config.routine.path)
 
-        winsound.Beep(523, 200)     # C5
-        winsound.Beep(659, 200)     # E5
-        winsound.Beep(784, 200)     # G5
+        try:
+            winsound.Beep(523, 200)     # C5
+            winsound.Beep(659, 200)     # E5
+            winsound.Beep(784, 200)     # G5
+        except RuntimeError:
+            print("Failed to beep. Audio will not work.")
 
     @staticmethod
     def recalibrate_minimap():
