@@ -290,7 +290,7 @@ def captcha_detection(image):
 
     # Call the API request function with exponential backoff
     response_data = make_api_request(headers, payload)
-    content = response_data['choices'][0]['message']['content']
+    content = response_data['choices'][0]['message']['content'] or []
 
     # Convert the content to a list if it is a string representation of a list
     if content and isinstance(content, str):

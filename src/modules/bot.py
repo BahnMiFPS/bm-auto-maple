@@ -200,7 +200,7 @@ class Bot(Configurable):
                 attempt += 1
 
             # Add an exponential delay between attempts
-            time.sleep(initial_delay * (2 ** attempt))
+            time.sleep(initial_delay * (2 * attempt))
 
         if solution_attempts:
             most_common_solution_tuple, _ = Counter(
