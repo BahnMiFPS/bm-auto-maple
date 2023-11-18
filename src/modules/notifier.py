@@ -108,7 +108,10 @@ class Notifier:
                         frame, CAPTCHA_TEMPLATE, threshold=0.9)
                     captcha_start_time = now
                     if captcha and config.routine.sequence:
+                        time.sleep(0.1)
                         config.bot.captcha_active = True
+                        print(
+                            f"Captcha found, setting captcha_active to {config.bot.captcha_active}")
                         self._ping('rune_appeared', volume=0.75)
                 elif now - captcha_start_time > self.captcha_alert_delay:
                     print(

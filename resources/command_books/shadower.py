@@ -46,7 +46,7 @@ def step(direction, target):
             press(Key.JUMP, 3)
         elif direction == 'up':
             press(Key.JUMP, 1)
-    press(Key.JUMP, num_presses)
+    press(Key.FLASH_JUMP, num_presses)
 
 
 class Adjust(Command):

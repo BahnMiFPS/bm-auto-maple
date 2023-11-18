@@ -180,6 +180,7 @@ class Bot(Configurable):
 
     def _solve_captcha(self):
         if not self.captcha_active:
+            print("Captcha is not active", self.captcha_active)
             return
         max_attempts = 4
         solution_attempts = []
