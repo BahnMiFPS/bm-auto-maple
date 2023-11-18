@@ -40,7 +40,7 @@ def create_desktop_shortcut():
         shell.SpecialFolders('Desktop'), 'Auto Maple.lnk')
     shortcut = shell.CreateShortCut(shortcut_path)
     shortcut.Targetpath = target
-    cwd = "F:\\Downloads\\Compressed\\auto-maple-2.3.6\\auto-maple-2.3.6"
+    cwd = os.getcwd()
     command = flag + f' cd /d {cwd} & python main.py'
     print(f"Running command: {command}")
     shortcut.Arguments = command
