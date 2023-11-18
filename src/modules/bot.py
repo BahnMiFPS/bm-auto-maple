@@ -105,14 +105,16 @@ class Bot(Configurable):
                 element = config.routine[config.routine.index]
 
                 if self.captcha_active:
+                    self.captcha_timeout = False
                     captcha_timer = now
-                    if len(captcha_attempts) == 3 and now - captcha_attempts[0] < 120:
+                    captcha_attempts.append(now)
+                    print(f"Captcha attemps:: {captcha_attempts}")
+                    if len(captcha_attempts) == 3 and now - captcha_attempts[0] < 150:
                         print(
                             f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
                         self.quit_game()
                         captcha_attempts.clear()  # clear captcha_attempts after quitting the game
                     else:
-                        captcha_attempts.append(now)
                         self._solve_captcha()
 
                     if captcha_timer - now < 15:
