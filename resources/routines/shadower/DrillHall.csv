@@ -1,0 +1,4 @@
+
+@, label=One for all
+*, x=0.570, y=0.421, frequency=1, skip=False, adjust=True
+    BloodyStorm, direction=none, repetitions=5

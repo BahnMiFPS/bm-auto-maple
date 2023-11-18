@@ -2,5 +2,5 @@ $, target=move_tolerance, value=1
 
 @, label=One for all
 *, x=0.645, y=0.636, frequency=1, skip=False, adjust=False
-    ChainCombo, direction=none, repetitions=1
-    ChainCombo, direction=none, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=right, repetitions=1

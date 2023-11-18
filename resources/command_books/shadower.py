@@ -17,6 +17,7 @@ class Key:
     THORNS = 'a'
     HASTE = 's'
     FINAL_CUT = 'd'
+    RAID = 'ctrl'
 
     # Skills
     FLYING_ASSAULTER = 'x'
@@ -102,6 +103,7 @@ class Buff(Command):
 
     def __init__(self):
         super().__init__(locals())
+        self.cd20_buff_time = 0
         self.cd120_buff_time = 0
         self.cd240_buff_time = 0
         self.cd900_buff_time = 0
@@ -110,14 +112,16 @@ class Buff(Command):
     def main(self):
         buffs = [Key.THORNS, Key.HASTE, Key.FINAL_CUT]
         now = time.time()
-
+        if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
+            press(Key.RAID,  1, down_time=0.3)
+            self.cd20_buff_time = now
         if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
-            press(Key.THORNS,  1, down_time=0.3)
-            time.sleep(2.0)
-            press(Key.ATTACK, 1, down_time=0.2)
+            press(Key.ATTACK, 3)
             time.sleep(0.1)
+            press(Key.THORNS,  1, down_time=0.3)
+            time.sleep(5.0)
             press(Key.HASTE,  1, down_time=0.3)
-            time.sleep(2.0)
+            time.sleep(3.0)
             self.decent_buff_time = now
         if self.cd120_buff_time == 0 or now - self.cd120_buff_time > 120:
             key_down(Key.FINAL_CUT)
@@ -217,4 +221,4 @@ class BloodyStorm(Command):
                 else:
                     press('right', 1, down_time=0.3, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
-            time.sleep(0.15)
+            time.sleep(0.25)

@@ -110,12 +110,14 @@ class Bot(Configurable):
                         print(
                             f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
                         self.quit_game()
+                        captcha_attempts.clear()  # clear captcha_attempts after quitting the game
                     else:
                         captcha_attempts.append(now)
                         self._solve_captcha()
 
                     if captcha_timer - now < 15:
                         self.captcha_timeout = True
+                        time.sleep(0.1)
                 else:
                     if now - last_captcha > 600:
                         captcha_attempts.clear()
@@ -182,7 +184,9 @@ class Bot(Configurable):
         attempt = 0
         initial_delay = 2  # initial delay in seconds
         print('\nSolving captcha:')
-        while attempt < max_attempts and not self.captcha_timeout and self.captcha_active:
+        while attempt < max_attempts and self.captcha_active:
+            print(
+                f"Attempt: {attempt} \n Is timeout? {self.captcha_timeout} \n Is active? {self.captcha_active}")
             if (attempt == 0):
                 time.sleep(3)
             frame = config.capture.frame
@@ -196,17 +200,18 @@ class Bot(Configurable):
                 print(f"No solution found on attempt {attempt + 1}")
                 attempt += 1
 
-            # Add an exponential delay between attempts
-            time.sleep(initial_delay * (1.5 * attempt))
+            if attempt < 3:
+                time.sleep(initial_delay * (1.5 * attempt))
 
-        if solution_attempts:
+        if solution_attempts or len(solution_attempts) == max_attempts:
             most_common_solution_tuple, _ = Counter(
                 solution_attempts).most_common(1)[0]
             most_common_solution = list(most_common_solution_tuple)
             print(f"Most common solution: {most_common_solution}")
             self.type_solution(most_common_solution)
         else:
-            print("Max attempts reached, typing out solution regardless.")
+            print(
+                f"Max attempts reached, typing out solution regardless. \n Solution Attempts: {solution_attempts} \n Attempt: {attempt}")
             self.type_solution(['N', 'a'])
 
     def type_solution(self, solution):
@@ -222,7 +227,9 @@ class Bot(Configurable):
         press('enter', 1)
         time.sleep(1)
         press('enter', 1)
+        time.sleep(1)
         self.captcha_timeout = False
+        time.sleep(1)
         self.captcha_active = False  # Set captcha as solved
         time.sleep(1)
 
@@ -231,8 +238,11 @@ class Bot(Configurable):
         press('f4', 1)
         key_up('alt')
         config.enabled = False
+        time.sleep(1)
         self.captcha_timeout = False
+        time.sleep(1)
         self.captcha_active = False
+        time.sleep(1)
 
     def load_commands(self, file):
         try:

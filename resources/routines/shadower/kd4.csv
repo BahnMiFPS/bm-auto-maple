@@ -1,0 +1,8 @@
+*, x=0.545, y=0.752, frequency=1, skip=False, adjust=False
+    ChainCombo, direction=left, repetitions=1
+
+@, label=rope
+*, x=0.257, y=0.752, frequency=1, skip=False, adjust=True
+
+@, label=2ndleft
+*, x=0.257, y=0.564, frequency=1, skip=False, adjust=True

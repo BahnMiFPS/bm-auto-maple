@@ -99,7 +99,7 @@ class Notifier:
                 config.stage_fright = others > 0
                 if others != prev_others:
                     if others > prev_others:
-                        self._ping('ding')
+                        self._ping('ding', volume=0)
                     prev_others = others
 
                 # Check for captcha warning
@@ -111,8 +111,9 @@ class Notifier:
                         config.bot.captcha_active = True
                         self._ping('rune_appeared', volume=0.75)
                 elif now - captcha_start_time > self.captcha_alert_delay:
-                    print("Quitting game due to captcha start_time > 55")
-                    Bot.quit_game()
+                    print(
+                        f"Quitting game due to captcha start_time > {self.captcha_alert_delay}")
+                    config.bot.quit_game()
                     config.bot.captcha_active = False
                     config.bot.captcha_timeout = False
 
