@@ -112,9 +112,9 @@ class Buff(Command):
     def main(self):
         buffs = [Key.THORNS, Key.HASTE, Key.FINAL_CUT]
         now = time.time()
-        if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
-            press(Key.RAID,  1, down_time=0.3)
-            self.cd20_buff_time = now
+        # if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
+        #     press(Key.RAID,  1, down_time=0.3)
+        #     self.cd20_buff_time = now
         if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
             press(Key.ATTACK, 3)
             time.sleep(0.1)
@@ -178,13 +178,13 @@ class ChainCombo(Command):
             key_down(current_direction)
 
             # Press space (jump) and wait 200 milliseconds
-            press(Key.JUMP, 1, down_time=0.2, up_time=0.05)
-            press(Key.FLASH_JUMP, 1)
+            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+            press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
             # Press 'z' and wait 200 milliseconds
             # press(Key.FLASH_JUMP, 2)
 
             # Press 'x' three times with 50 milliseconds between each press
-            press(Key.FLYING_ASSAULTER, 1)
+            press(Key.FLYING_ASSAULTER, 1, down_time=0.1, up_time=0.05)
 
             time.sleep(0.8)  # Wait 800 milliseconds before the next sequence
 
