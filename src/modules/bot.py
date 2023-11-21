@@ -4,10 +4,12 @@ import threading
 import time
 import git
 import cv2
+import asyncio
 import inspect
 import importlib
 import traceback
 import mss
+import discord
 import numpy as np
 from os.path import splitext, basename
 from src.common import config, utils
@@ -25,6 +27,14 @@ from collections import Counter
 RUNE_BUFF_TEMPLATE = cv2.imread('assets/rune_buff_template.jpg', 0)
 
 
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged on as {self.user}!')
+
+    async def on_message(self, message):
+        print(f'Message from {message.author}: {message.content}')
+
+
 class Bot(Configurable):
     """A class that interprets and executes user-defined routines."""
 
@@ -35,10 +45,12 @@ class Bot(Configurable):
 
     def __init__(self):
         """Loads a user-defined routine on start up and initializes this Bot's main thread."""
+        intents = discord.Intents.default()
+        intents.message_content = True
 
         super().__init__('keybindings')
         config.bot = self
-
+        self.client = MyClient(intents=intents)
         self.rune_active = False
         self.rune_pos = (0, 0)
         # Location of the Point closest to rune
@@ -68,7 +80,10 @@ class Bot(Configurable):
         Starts this Bot object's thread.
         :return:    None
         """
-
+        print('\n[~] Started discord bot')
+        bot_thread = threading.Thread(target=self.client.run, args=(
+            'MTE3NTc2NDM5NDM3OTA1NTEzNA.GPK6gk.6NxQCSIUmrhVMXxDqAiz-hdG3XPL49XH6ZJ174',))
+        bot_thread.start()
         # self.update_submodules()
         print('\n[~] Started main bot loop')
         self.thread.start()
@@ -110,9 +125,10 @@ class Bot(Configurable):
                     captcha_attempts.append(now)
                     print(f"Captcha attemps:: {captcha_attempts}")
                     if len(captcha_attempts) == 3 and now - captcha_attempts[0] < 150:
-                        print(
-                            f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
-                        self.quit_game()
+                        # print(
+                        #     f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
+                        # self.quit_game()
+                        self._solve_captcha(isLast=True)
                         captcha_attempts.clear()  # clear captcha_attempts after quitting the game
                     else:
                         self._solve_captcha()
@@ -178,10 +194,11 @@ class Bot(Configurable):
                 elif len(solution) == 4:
                     inferences.append(solution)
 
-    def _solve_captcha(self):
+    def _solve_captcha(self, isLast=False):
         if not self.captcha_active:
             print("Captcha is not active", self.captcha_active)
             return
+
         max_attempts = 4
         solution_attempts = []
         attempt = 0
@@ -193,7 +210,7 @@ class Bot(Configurable):
             if (attempt == 0):
                 time.sleep(3)
             frame = config.capture.frame
-            solution = detection.captcha_detection(frame)
+            solution = asyncio.run(detection.captcha_detection(frame))
             if solution:
                 solution_tuple = tuple(solution)
                 solution_attempts.append(solution_tuple)

@@ -1,0 +1,12 @@
+*, x=0.480, y=0.624, frequency=1, skip=False, adjust=True
+    TPBigBang, direction=left, repetitions=5
+    Teleport, direction=up, jump=False
+    TPBigBang, direction=up, repetitions=5
+    TPBigBang, direction=right, repetitions=15
+    TPBigBang, direction=left, repetitions=10
+*, x=0.488, y=0.624, frequency=1, skip=False, adjust=True
+    UsePortal
+*, x=0.512, y=0.472, frequency=1, skip=False, adjust=True
+    TPBigBang, direction=left, repetitions=5
+    TPBigBang, direction=right, repetitions=10
+    TPBigBang, direction=left, repetitions=5
