@@ -1,0 +1,21 @@
+$, target=move_tolerance, value=0.06
+*, x=0.290, y=0.580, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=right, repetitions=3
+*, x=0.620, y=0.580, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=3
+
+@, label=Bottom floor
+*, x=0.29, y=0.720, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=right, repetitions=3
+    TPBigBang, direction=left, repetitions=3
+    TPBigBang, direction=right, repetitions=3
+*, x=0.62, y=0.720, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=3
+    TPBigBang, direction=right, repetitions=3
+    TPBigBang, direction=left, repetitions=3
+
+@, label=climbing
+$, target=adjust_tolerance, value=0.0001
+*, x=0.330, y=0.720, frequency=1, skip=False, adjust=True
+    Wait, duration=1
+    ClimbRope, time=2

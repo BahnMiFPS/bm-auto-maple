@@ -41,6 +41,8 @@ def step(direction, target):
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
             press(Key.JUMP, 3)
+    d_x = target[0] - config.player_pos[0]
+    print(d_x)
     press(Key.TELEPORT, num_presses)
 
 
@@ -169,7 +171,7 @@ class TPBigBang(Command):
             press(Key.TELEPORT, 1, down_time=0.1, up_time=0.05)
             press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
             key_up(current_direction)
-            time.sleep(utils.rand_float(0.3, 0.5))
+            time.sleep(0.5)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -189,7 +191,7 @@ class BigBang(Command):
     def main(self):
         for _ in range(self.repetitions):
             press(Key.BIG_BANG, 1)
-            time.sleep(utils.rand_float(0.3, 0.5))
+            time.sleep(0.5)
 
 
 class UsePortal(Command):
@@ -197,3 +199,17 @@ class UsePortal(Command):
 
     def main(self):
         press('up', 3, down_time=0.1, up_time=0.05)
+
+
+class ClimbRope(Command):
+    """Use Rope at designated point for x amount of time."""
+
+    def __init__(self, time=2):
+        super().__init__(locals())
+        self.time = int(time)
+
+    def main(self):
+        press(Key.JUMP, 1, down_time=0.2, up_time=0.05)
+        key_down('up')
+        time.sleep(self.time)
+        key_up('up')
