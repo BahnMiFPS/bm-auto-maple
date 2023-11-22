@@ -5,7 +5,7 @@ from discord.errors import Forbidden
 import threading
 import asyncio
 from src.common import config, utils
-
+import cv2
 import base64
 from src.detection import detection
 import io
@@ -13,6 +13,7 @@ import io
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
+target_user = None
 
 
 def init():
@@ -38,7 +39,12 @@ async def on_message(message):
 
 @client.event
 async def on_ready():
+    global target_user
     print(f'Logged on as {client.user}!')
+    try:
+        target_user = await client.fetch_user(319685126323961859)
+    except Forbidden as e:
+        print(f"Error fetching user: {e}")
 
 
 async def send_captcha(frame):
@@ -51,11 +57,11 @@ async def send_captcha(frame):
     # Crop the image to the captcha area
     cropped = frame[top:top + height, left:left + width]
     # Ensure this function is defined elsewhere
-    base64_image = detection.encode_image(cropped)
-    image_bytes = base64.b64decode(base64_image)
-    file = File(io.BytesIO(image_bytes), filename="image.jpg")
+    is_success, buffer = cv2.imencode(".jpg", cropped)
+    io_buf = io.BytesIO(buffer)
+    file = File(io_buf, filename="image.jpg")
+
     try:
-        user = await client.fetch_user(319685126323961859)
-        await user.send('Solve this', file=file)
+        await target_user.send('Solve this', file=file)
     except Forbidden as e:
         print(f"Error sending message to user: {e}")

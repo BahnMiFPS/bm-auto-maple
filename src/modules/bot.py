@@ -54,7 +54,6 @@ class Bot(Configurable):
         self.rune_closest_pos = (0, 0)
         self.submodules = []
         self.command_book = None            # CommandBook instance
-
         self.captcha_active = False
         self.captcha_timeout = False
         # self.module_name = None
