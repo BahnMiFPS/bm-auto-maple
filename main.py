@@ -2,6 +2,7 @@
 
 import time
 from src.modules.bot import Bot
+from src.modules.discord import client, init as discord
 from src.modules.capture import Capture
 from src.modules.notifier import Notifier
 from src.modules.listener import Listener
@@ -12,6 +13,8 @@ bot = Bot()
 capture = Capture()
 notifier = Notifier()
 listener = Listener()
+
+discord()
 
 bot.start()
 while not bot.ready:

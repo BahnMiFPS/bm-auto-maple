@@ -35,6 +35,8 @@ layout = None
 # Shares the main bot loop
 bot = None
 
+# Shares the discord bot
+discord = None
 # Shares the video capture loop
 capture = None
 

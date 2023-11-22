@@ -11,7 +11,8 @@ from requests.exceptions import HTTPError, RequestException
 import time
 import random
 from ast import literal_eval
-import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
 #########################
 #       Functions       #
 #########################
@@ -247,11 +248,12 @@ def make_api_request(headers, payload):
         headers=headers,
         json=payload
     )
-    response.raise_for_status()  # This will raise an error for HTTP error responses
+    # This will raise an error for HTTP error responses
+    response.raise_for_status()
     return response.json()
 
 
-async def captcha_detection(image):
+def captcha_detection(image):
     top = 170
     left = 530
     width = 200
@@ -261,22 +263,12 @@ async def captcha_detection(image):
     cropped = image[top:top + height, left:left + width]
     # Ensure this function is defined elsewhere
     base64_image = encode_image(cropped)
-    # Try and see if we get solution as a return from discord
 
-    discord_task = asyncio.create_task(discord_handle(base64_image))
-    api_task = asyncio.create_task(get_gpt_solution(base64_image))
-    done, pending = await asyncio.wait([discord_task, api_task], return_when=asyncio.FIRST_COMPLETED)
-
-    # Cancel any tasks that are still running
-    for task in pending:
-        task.cancel()
-
-    # Return the result of the first task that completed
-    for task in done:
-        return task.result()
+    solution = get_gpt_solution(base64_image)
+    return solution
 
 
-async def get_gpt_solution(base64_image):
+def get_gpt_solution(base64_image):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"  # Ensure api_key is defined
@@ -318,26 +310,6 @@ async def get_gpt_solution(base64_image):
             return []
     else:
         print("No content or content is not a string.")
-        return []
-
-
-async def discord_handle(image):
-    # Send the cropped image to my discord account and wait for response, if there is no response, return empty list
-    # If there is a response, return the response as a list
-    discord_bot = config.bot.client
-    discord_user_id = '319685126323961859'
-    user = await discord_bot.fetch_user(discord_user_id)
-    await user.send(f"data:image/jpeg;base64,{image}")
-
-    try:
-        answer = []
-        response = await discord_bot.wait_for('message', timeout=30.0)
-        for letters in response:
-            answer.append(letters)
-        return answer
-    except TimeoutError:
-        print("No response from discord bot")
-        await user.send(f"Timeout bitch")
         return []
 
 

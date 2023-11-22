@@ -34,6 +34,7 @@ ELITE_TEMPLATE = cv2.imread('assets/elite_template.jpg', 0)
 
 # The Captcha clock warning
 CAPTCHA_TEMPLATE = cv2.imread('assets/captcha_warning.png', 0)
+DEBUG = False
 
 
 def get_alert_path(name):
@@ -120,25 +121,28 @@ class Notifier:
                     config.bot.captcha_active = False
                     config.bot.captcha_timeout = False
 
+                if DEBUG:
+                    config.bot.captcha_active = True
+
                 # Check for rune
-                if not config.bot.rune_active:
-                    filtered = utils.filter_color(minimap, RUNE_RANGES)
-                    matches = utils.multi_match(
-                        filtered, RUNE_TEMPLATE, threshold=0.9)
-                    rune_start_time = now
-                    if matches and config.routine.sequence:
-                        abs_rune_pos = (matches[0][0], matches[0][1])
-                        config.bot.rune_pos = utils.convert_to_relative(
-                            abs_rune_pos, minimap)
-                        distances = list(
-                            map(distance_to_rune, config.routine.sequence))
-                        index = np.argmin(distances)
-                        config.bot.rune_closest_pos = config.routine[index].location
-                        config.bot.rune_active = True
-                        self._ping('rune_appeared', volume=0.75)
-                elif now - rune_start_time > self.rune_alert_delay:     # Alert if rune hasn't been solved
-                    config.bot.rune_active = False
-                    self._alert('siren')
+                # if not config.bot.rune_active:
+                #     filtered = utils.filter_color(minimap, RUNE_RANGES)
+                #     matches = utils.multi_match(
+                #         filtered, RUNE_TEMPLATE, threshold=0.9)
+                #     rune_start_time = now
+                #     if matches and config.routine.sequence:
+                #         abs_rune_pos = (matches[0][0], matches[0][1])
+                #         config.bot.rune_pos = utils.convert_to_relative(
+                #             abs_rune_pos, minimap)
+                #         distances = list(
+                #             map(distance_to_rune, config.routine.sequence))
+                #         index = np.argmin(distances)
+                #         config.bot.rune_closest_pos = config.routine[index].location
+                #         config.bot.rune_active = True
+                #         self._ping('rune_appeared', volume=0.75)
+                # elif now - rune_start_time > self.rune_alert_delay:     # Alert if rune hasn't been solved
+                #     config.bot.rune_active = False
+                #     self._alert('siren')
             time.sleep(0.05)
 
     def _alert(self, name, volume=0.75):

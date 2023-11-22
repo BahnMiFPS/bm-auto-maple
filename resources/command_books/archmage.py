@@ -177,13 +177,10 @@ class TPBigBang(Command):
                     current_direction = 'right'
             key_down(current_direction)
 
-            press(Key.TELEPORT, 1)
-            press(Key.BIG_BANG, 1)
+            press(Key.TELEPORT, 1, down_time=0.1, up_time=0.05)
+            press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
             key_up(current_direction)
-            if self.repetitions > 1:
-                time.sleep(utils.rand_float(0.3, 0.5))
-            else:
-                time.sleep(utils.rand_float(0.1, 0.2))
+            time.sleep(utils.rand_float(0.3, 0.5))
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -210,4 +207,4 @@ class UsePortal(Command):
     """Use Portal."""
 
     def main(self):
-        press('up', 1)
+        press('up', 1, down_time=0.1, up_time=0.05)

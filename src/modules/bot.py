@@ -15,6 +15,7 @@ from os.path import splitext, basename
 from src.common import config, utils
 from src.detection import detection
 from src.routine import components
+from src.modules.discord import client
 from src.routine.routine import Routine
 from src.command_book.command_book import CommandBook
 from src.routine.components import Point
@@ -23,16 +24,15 @@ from src.common.interfaces import Configurable
 from PIL import Image
 from src.modules.listener import Listener
 from collections import Counter
+
+import asyncio
+from src.modules.discord import send_captcha
 # The rune's buff icon
 RUNE_BUFF_TEMPLATE = cv2.imread('assets/rune_buff_template.jpg', 0)
 
 
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
-
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
+def schedule_coroutine(loop, coroutine):
+    loop.call_soon_threadsafe(lambda: asyncio.create_task(coroutine))
 
 
 class Bot(Configurable):
@@ -45,12 +45,9 @@ class Bot(Configurable):
 
     def __init__(self):
         """Loads a user-defined routine on start up and initializes this Bot's main thread."""
-        intents = discord.Intents.default()
-        intents.message_content = True
 
         super().__init__('keybindings')
         config.bot = self
-        self.client = MyClient(intents=intents)
         self.rune_active = False
         self.rune_pos = (0, 0)
         # Location of the Point closest to rune
@@ -80,10 +77,7 @@ class Bot(Configurable):
         Starts this Bot object's thread.
         :return:    None
         """
-        print('\n[~] Started discord bot')
-        bot_thread = threading.Thread(target=self.client.run, args=(
-            'MTE3NTc2NDM5NDM3OTA1NTEzNA.GPK6gk.6NxQCSIUmrhVMXxDqAiz-hdG3XPL49XH6ZJ174',))
-        bot_thread.start()
+
         # self.update_submodules()
         print('\n[~] Started main bot loop')
         self.thread.start()
@@ -210,7 +204,10 @@ class Bot(Configurable):
             if (attempt == 0):
                 time.sleep(3)
             frame = config.capture.frame
-            solution = asyncio.run(detection.captcha_detection(frame))
+
+            schedule_coroutine(client.loop, send_captcha(frame))
+
+            solution = detection.captcha_detection(frame)
             if solution:
                 solution_tuple = tuple(solution)
                 solution_attempts.append(solution_tuple)
@@ -235,10 +232,12 @@ class Bot(Configurable):
             self.type_solution(['N', 'a'])
 
     def type_solution(self, solution):
+        print("typing solution:", solution)
         target = (572, 229)  # Coordinates to click the solution box
         click(target, button='left')
         for digit in solution:
             if digit.isupper():
+                print(digit)
                 key_down('shift')
                 press(digit, 1, down_time=0.1)
                 key_up('shift')
