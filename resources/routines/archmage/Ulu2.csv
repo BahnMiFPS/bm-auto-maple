@@ -1,3 +1,4 @@
+$, target=adjust_tolerance, value=0.005
 
 @, label=Bottom Floor
 *, x=0.480, y=0.726, frequency=1, skip=False, adjust=True
@@ -15,15 +16,16 @@
     TPBigBang, direction=left, repetitions=3
 
 @, label=Top Floor
-*, x=0.486, y=0.726, frequency=1, skip=False, adjust=True
+*, x=0.478, y=0.726, frequency=1, skip=False, adjust=True
+    Adjust, x=0.476, y=0.726, max_steps=2
     BigBang, repetitions=1
     Wait, duration=1
     UsePortal
     BigBang, repetitions=4
 
 @, label=Top Floor Fight
-*, x=0.500, y=0.556, frequency=4, skip=False, adjust=True
-    TPBigBang, direction=left, repetitions=3
+*, x=0.411, y=0.573, frequency=4, skip=False, adjust=True
+    TPBigBang, direction=left, repetitions=2
 *, x=0.323, y=0.548, frequency=4, skip=False, adjust=True
     TPBigBang, direction=left, repetitions=1
     TPBigBang, direction=right, repetitions=3
