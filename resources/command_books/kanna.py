@@ -56,7 +56,7 @@ def step(direction, target):
         if direction == 'down':
             press(Key.JUMP, 3)
         elif direction == 'up':
-            press(Key.JUMP, 1)
+            press(Key.T, 1)
     press(Key.TELEPORT, num_presses)
 
 

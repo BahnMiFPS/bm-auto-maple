@@ -41,8 +41,6 @@ def step(direction, target):
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
             press(Key.JUMP, 3)
-        elif direction == 'up':
-            press(Key.JUMP, 1)
     press(Key.TELEPORT, num_presses)
 
 
@@ -135,17 +133,8 @@ class Teleport(Command):
         time.sleep(0.05)
         if self.direction in ['up', 'down']:
             num_presses = 2
-        if self.direction != 'up':
-            key_down(self.direction)
-            time.sleep(0.05)
-        if self.jump:
-            if self.direction == 'down':
-                press(Key.JUMP, 3, down_time=0.1)
-            else:
-                press(Key.JUMP, 1)
-        if self.direction == 'up':
-            key_down(self.direction)
-            time.sleep(0.05)
+        key_down(self.direction)
+        time.sleep(0.05)
         press(Key.TELEPORT, num_presses)
         key_up(self.direction)
         if settings.record_layout:
@@ -207,4 +196,4 @@ class UsePortal(Command):
     """Use Portal."""
 
     def main(self):
-        press('up', 1, down_time=0.1, up_time=0.05)
+        press('up', 3, down_time=0.1, up_time=0.05)
