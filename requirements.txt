@@ -8,3 +8,4 @@ pygame
 pywin32
 tensorflow
 discord.py
+twocaptcha
