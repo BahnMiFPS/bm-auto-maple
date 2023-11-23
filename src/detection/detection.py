@@ -19,7 +19,6 @@ from twocaptcha import TwoCaptcha
 #########################
 api_key = "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"
 config = {
-    'server': '2captcha.com',
     'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
     'defaultTimeout': 30,  # Set the timeout to 60 seconds
     'pollingInterval': 5,  # Set the polling interval to 5 seconds
