@@ -132,6 +132,7 @@ class Bot(Configurable):
                 else:
                     if now - last_captcha > 600:
                         captcha_attempts.clear()
+
                 element.execute()
                 config.routine.step()
 
@@ -236,7 +237,7 @@ class Bot(Configurable):
         solution = detection.captcha_detection(frame)
         if solution:
             print(f"Solution found: {solution}")
-            # self.type_solution(solution)
+            self.type_solution(solution)
 
     def type_solution(self, solution):
         print("typing solution:", solution)

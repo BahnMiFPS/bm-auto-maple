@@ -22,6 +22,7 @@ config = {
     'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
     'defaultTimeout': 30,  # Set the timeout to 60 seconds
     'pollingInterval': 5,  # Set the polling interval to 5 seconds
+
 }
 solver = TwoCaptcha(**config)
 
@@ -272,17 +273,19 @@ def captcha_detection(image):
     base64_image = encode_image(cropped)
     twocaptcha_solution = get_2captcha_solution(base64_image)
     print(f"2captcha solution: {twocaptcha_solution}")
-    solution = get_gpt_solution(base64_image)
-    return solution
+    # solution = get_gpt_solution(base64_image)
+    return twocaptcha_solution
 
 
 def get_2captcha_solution(base64_image):
     try:
         # Increase the timeout
-        result = solver.normal(base64_image, calc=True)
-        return result
+        result = solver.normal(
+            base64_image, calc=True, math=True, hintText="If it is math, return the result. If it's text, retype what you see.", comment="If it is math, return the result. If it's text, retype what you see.")
+        print(result)
+        return result['code']
     except Exception as e:
-        print(f"Exception occurred while getting 2captcha solution: {e}")
+        print(f"Exceptizon occurred while getting 2captcha solution: {e}")
 
 
 def get_gpt_solution(base64_image):

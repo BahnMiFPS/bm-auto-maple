@@ -72,7 +72,6 @@ class Notifier:
     def _main(self):
         self.ready = True
         prev_others = 0
-        rune_start_time = time.time()
         while True:
             if config.enabled:
                 frame = config.capture.frame
