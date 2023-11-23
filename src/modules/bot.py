@@ -138,97 +138,105 @@ class Bot(Configurable):
             else:
                 time.sleep(0.01)
 
-    @utils.run_if_enabled
-    def _solve_rune(self, model):
-        """
-        Moves to the position of the rune and solves the arrow-key puzzle.
-        :param model:   The TensorFlow model to classify with.
-        :param sct:     The mss instance object with which to take screenshots.
-        :return:        None
-        """
+    # @utils.run_if_enabled
+    # def _solve_rune(self, model):
+    #     """
+    #     Moves to the position of the rune and solves the arrow-key puzzle.
+    #     :param model:   The TensorFlow model to classify with.
+    #     :param sct:     The mss instance object with which to take screenshots.
+    #     :return:        None
+    #     """
+    #     move = self.command_book['move']
+    #     move(*self.rune_pos).execute()
+    #     adjust = self.command_book['adjust']
+    #     adjust(*self.rune_pos).execute()
+    #     time.sleep(0.2)
+    #     # Inherited from Configurable
+    #     press(self.config['Interact'], 1, down_time=0.2)
+    #     print('\nSolving rune:')
+    #     inferences = []
+    #     for _ in range(15):
+    #         frame = config.capture.frame
+    #         solution = detection.merge_detection(model, frame)
+    #         if solution:
+    #             print(', '.join(solution))
+    #             if solution in inferences:
+    #                 print('Solution found, entering result')
+    #                 for arrow in solution:
+    #                     press(arrow, 1, down_time=0.1)
+    #                 time.sleep(1)
+    #                 for _ in range(3):
+    #                     time.sleep(0.3)
+    #                     frame = config.capture.frame
+    #                     rune_buff = utils.multi_match(frame[:frame.shape[0] // 8, :],
+    #                                                   RUNE_BUFF_TEMPLATE,
+    #                                                   threshold=0.9)
+    #                     if rune_buff:
+    #                         rune_buff_pos = min(rune_buff, key=lambda p: p[0])
+    #                         target = (
+    #                             round(
+    #                                 rune_buff_pos[0] + config.capture.window['left']),
+    #                             round(rune_buff_pos[1] +
+    #                                   config.capture.window['top'])
+    #                         )
+    #                         click(target, button='right')
+    #                 self.rune_active = False
+    #                 break
+    #             elif len(solution) == 4:
+    #                 inferences.append(solution)
+    # def _solve_captcha(self, isLast=False):
+    #     if not self.captcha_active:
+    #         print("Captcha is not active", self.captcha_active)
+    #         return
 
-        move = self.command_book['move']
-        move(*self.rune_pos).execute()
-        adjust = self.command_book['adjust']
-        adjust(*self.rune_pos).execute()
-        time.sleep(0.2)
-        # Inherited from Configurable
-        press(self.config['Interact'], 1, down_time=0.2)
+    #     max_attempts = 4
+    #     solution_attempts = []
+    #     attempt = 0
+    #     initial_delay = 2  # initial delay in seconds
+    #     print('\nSolving captcha:')
+    #     while attempt < max_attempts and self.captcha_active:
+    #         print(
+    #             f"Attempt: {attempt} \n Is timeout? {self.captcha_timeout} \n Is active? {self.captcha_active}")
+    #         if (attempt == 0):
+    #             time.sleep(3)
+    #         frame = config.capture.frame
 
-        print('\nSolving rune:')
-        inferences = []
-        for _ in range(15):
-            frame = config.capture.frame
-            solution = detection.merge_detection(model, frame)
-            if solution:
-                print(', '.join(solution))
-                if solution in inferences:
-                    print('Solution found, entering result')
-                    for arrow in solution:
-                        press(arrow, 1, down_time=0.1)
-                    time.sleep(1)
-                    for _ in range(3):
-                        time.sleep(0.3)
-                        frame = config.capture.frame
-                        rune_buff = utils.multi_match(frame[:frame.shape[0] // 8, :],
-                                                      RUNE_BUFF_TEMPLATE,
-                                                      threshold=0.9)
-                        if rune_buff:
-                            rune_buff_pos = min(rune_buff, key=lambda p: p[0])
-                            target = (
-                                round(
-                                    rune_buff_pos[0] + config.capture.window['left']),
-                                round(rune_buff_pos[1] +
-                                      config.capture.window['top'])
-                            )
-                            click(target, button='right')
-                    self.rune_active = False
-                    break
-                elif len(solution) == 4:
-                    inferences.append(solution)
+    #         schedule_coroutine(client.loop, send_captcha(frame))
+
+    #         solution = detection.captcha_detection(frame)
+    #         if solution:
+    #             solution_tuple = tuple(solution)
+    #             solution_attempts.append(solution_tuple)
+    #             print(f"Solution found on attempt {attempt + 1}: {solution}")
+    #             attempt += 1
+    #         else:
+    #             print(f"No solution found on attempt {attempt + 1}")
+    #             attempt += 1
+
+    #         if attempt < 3:
+    #             time.sleep(initial_delay * (1.5 * attempt))
+
+    #     if solution_attempts or len(solution_attempts) == max_attempts:
+    #         most_common_solution_tuple, _ = Counter(
+    #             solution_attempts).most_common(1)[0]
+    #         most_common_solution = list(most_common_solution_tuple)
+    #         print(f"Most common solution: {most_common_solution}")
+    #         self.type_solution(most_common_solution)
+    #     else:
+    #         print(
+    #             f"Max attempts reached, typing out solution regardless. \n Solution Attempts: {solution_attempts} \n Attempt: {attempt}")
+    #         self.type_solution(['N', 'a'])
 
     def _solve_captcha(self, isLast=False):
         if not self.captcha_active:
             print("Captcha is not active", self.captcha_active)
             return
-
-        max_attempts = 4
-        solution_attempts = []
-        attempt = 0
-        initial_delay = 2  # initial delay in seconds
-        print('\nSolving captcha:')
-        while attempt < max_attempts and self.captcha_active:
-            print(
-                f"Attempt: {attempt} \n Is timeout? {self.captcha_timeout} \n Is active? {self.captcha_active}")
-            if (attempt == 0):
-                time.sleep(3)
-            frame = config.capture.frame
-
-            schedule_coroutine(client.loop, send_captcha(frame))
-
-            solution = detection.captcha_detection(frame)
-            if solution:
-                solution_tuple = tuple(solution)
-                solution_attempts.append(solution_tuple)
-                print(f"Solution found on attempt {attempt + 1}: {solution}")
-                attempt += 1
-            else:
-                print(f"No solution found on attempt {attempt + 1}")
-                attempt += 1
-
-            if attempt < 3:
-                time.sleep(initial_delay * (1.5 * attempt))
-
-        if solution_attempts or len(solution_attempts) == max_attempts:
-            most_common_solution_tuple, _ = Counter(
-                solution_attempts).most_common(1)[0]
-            most_common_solution = list(most_common_solution_tuple)
-            print(f"Most common solution: {most_common_solution}")
-            self.type_solution(most_common_solution)
-        else:
-            print(
-                f"Max attempts reached, typing out solution regardless. \n Solution Attempts: {solution_attempts} \n Attempt: {attempt}")
-            self.type_solution(['N', 'a'])
+        frame = config.capture.frame
+        schedule_coroutine(client.loop, send_captcha(frame))
+        solution = detection.captcha_detection(frame)
+        if solution:
+            print(f"Solution found: {solution}")
+            # self.type_solution(solution)
 
     def type_solution(self, solution):
         print("typing solution:", solution)

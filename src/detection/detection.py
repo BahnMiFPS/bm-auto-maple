@@ -12,11 +12,13 @@ import time
 import random
 from ast import literal_eval
 from concurrent.futures import ThreadPoolExecutor
+from twocaptcha import TwoCaptcha
 
 #########################
 #       Functions       #
 #########################
 api_key = "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"
+solver = TwoCaptcha('b85a7dc3e0bbbe9f4ff6e01bf67480b9')
 
 
 def load_model():
@@ -263,9 +265,24 @@ def captcha_detection(image):
     cropped = image[top:top + height, left:left + width]
     # Ensure this function is defined elsewhere
     base64_image = encode_image(cropped)
-
+    twocaptcha_solution = get_2captcha_solution(base64_image)
+    print(f"2captcha solution: {twocaptcha_solution}")
     solution = get_gpt_solution(base64_image)
     return solution
+
+
+def get_2captcha_solution(base64_image):
+    try:
+        # Increase the timeout
+        result = solver.normal(base64_image, timeout=40, calc=True)
+        if 'error' in result:
+            print(f"2captcha error: {result}")
+        elif 'solution' in result:
+            return result['solution']
+        else:
+            print("Unexpected response from 2captcha")
+    except Exception as e:
+        print(f"Exception occurred while getting 2captcha solution: {e}")
 
 
 def get_gpt_solution(base64_image):

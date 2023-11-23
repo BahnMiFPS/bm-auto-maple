@@ -23,8 +23,8 @@ class Minimap(LabelFrame):
 
         minimap = config.capture.minimap
         if minimap:
-            rune_active = minimap['rune_active']
-            rune_pos = minimap['rune_pos']
+            # rune_active = minimap['rune_active']
+            # rune_pos = minimap['rune_pos']
             path = minimap['path']
             player_pos = minimap['player_pos']
 
@@ -40,12 +40,12 @@ class Minimap(LabelFrame):
                                  interpolation=cv2.INTER_AREA)
 
             # Mark the position of the active rune
-            if rune_active:
-                cv2.circle(img,
-                           utils.convert_to_absolute(rune_pos, img),
-                           3,
-                           (128, 0, 128),
-                           -1)
+            # if rune_active:
+            #     cv2.circle(img,
+            #                utils.convert_to_absolute(rune_pos, img),
+            #                3,
+            #                (128, 0, 128),
+            #                -1)
 
             # Draw the current path that the program is taking
             if config.enabled and len(path) > 1:

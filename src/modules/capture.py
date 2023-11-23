@@ -103,7 +103,8 @@ class Capture:
                 max(mm_tl[1] + PT_HEIGHT, br[1] - MINIMAP_BOTTOM_BORDER)
             )
             self.minimap_ratio = (mm_br[0] - mm_tl[0]) / (mm_br[1] - mm_tl[1])
-            self.minimap_sample = self.frame[mm_tl[1]:mm_br[1], mm_tl[0]:mm_br[0]]
+            self.minimap_sample = self.frame[mm_tl[1]
+                :mm_br[1], mm_tl[0]:mm_br[0]]
             self.calibrated = True
 
             with mss.mss() as self.sct:
@@ -120,14 +121,16 @@ class Capture:
                     minimap = self.frame[mm_tl[1]:mm_br[1], mm_tl[0]:mm_br[0]]
 
                     # Determine the player's position
-                    player = utils.multi_match(minimap, PLAYER_TEMPLATE, threshold=0.8)
+                    player = utils.multi_match(
+                        minimap, PLAYER_TEMPLATE, threshold=0.8)
                     if player:
-                        config.player_pos = utils.convert_to_relative(player[0], minimap)
+                        config.player_pos = utils.convert_to_relative(
+                            player[0], minimap)
 
                     # Package display information to be polled by GUI
                     self.minimap = {
                         'minimap': minimap,
-                        'rune_active': config.bot.rune_active,
+                        # 'rune_active': config.bot.rune_active,
                         'rune_pos': config.bot.rune_pos,
                         'path': config.path,
                         'player_pos': config.player_pos

@@ -41,8 +41,6 @@ def step(direction, target):
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
             press(Key.JUMP, 3)
-    d_x = target[0] - config.player_pos[0]
-    print(d_x)
     press(Key.TELEPORT, num_presses)
 
 

@@ -1,3 +1,4 @@
+$, target=move_tolerance, value=0.075
 
 @, label=Bottom Floor
 *, x=0.480, y=0.726, frequency=1, skip=False, adjust=False
@@ -12,14 +13,14 @@
     TPBigBang, direction=right, repetitions=2
 *, x=0.784, y=0.726, frequency=1, skip=False, adjust=False
     TPBigBang, direction=right, repetitions=3
-    TPBigBang, direction=left, repetitions=5
+    TPBigBang, direction=left, repetitions=3
 
 @, label=Top Floor
-*, x=0.484, y=0.726, frequency=1, skip=False, adjust=True
+*, x=0.492, y=0.726, frequency=1, skip=False, adjust=True
     BigBang, repetitions=2
     Wait, duration=0.5
     UsePortal
-    BigBang, repetitions=3
+    BigBang, repetitions=4
 *, x=0.5, y=0.484, frequency=4, skip=False, adjust=False
     BigBang, repetitions=4
 
@@ -34,8 +35,8 @@
 *, x=0.669, y=0.548, frequency=4, skip=True, adjust=False
     TPBigBang, direction=right, repetitions=1
     TPBigBang, direction=left, repetitions=5
-    TPBigBang, direction=right, repetitions=1
+    TPBigBang, direction=right, repetitions=3
 
 @, label=Use Portal
-*, x=0.500, y=0.484, frequency=4, skip=True, adjust=False
+*, x=0.500, y=0.484, frequency=1, skip=False, adjust=False
     UsePortal
