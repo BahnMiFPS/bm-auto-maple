@@ -18,7 +18,13 @@ from twocaptcha import TwoCaptcha
 #       Functions       #
 #########################
 api_key = "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"
-solver = TwoCaptcha('b85a7dc3e0bbbe9f4ff6e01bf67480b9')
+config = {
+    'server': '2captcha.com',
+    'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
+    'defaultTimeout': 30,  # Set the timeout to 60 seconds
+    'pollingInterval': 5,  # Set the polling interval to 5 seconds
+}
+solver = TwoCaptcha(**config)
 
 
 def load_model():
@@ -274,7 +280,7 @@ def captcha_detection(image):
 def get_2captcha_solution(base64_image):
     try:
         # Increase the timeout
-        result = solver.normal(base64_image, timeout=40, calc=True)
+        result = solver.normal(base64_image, calc=True)
         if 'error' in result:
             print(f"2captcha error: {result}")
         elif 'solution' in result:
