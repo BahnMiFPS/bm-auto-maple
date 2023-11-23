@@ -280,12 +280,7 @@ def get_2captcha_solution(base64_image):
     try:
         # Increase the timeout
         result = solver.normal(base64_image, calc=True)
-        if 'error' in result:
-            print(f"2captcha error: {result}")
-        elif 'solution' in result:
-            return result['solution']
-        else:
-            print("Unexpected response from 2captcha")
+        return result
     except Exception as e:
         print(f"Exception occurred while getting 2captcha solution: {e}")
 
