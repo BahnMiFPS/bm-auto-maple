@@ -141,9 +141,10 @@ class Bot(Configurable):
                 else:
                     if now - last_captcha > 600:
                         # report last captcha is good
-                        print(
-                            f"Report last_captcha id is good: {self.last_captcha_id}")
-                        detection.report_captcha(isGood=True)
+                        if self.last_captcha_id is not None:
+                            print(
+                                f"Report last_captcha id is good: {self.last_captcha_id}")
+                            detection.report_captcha(isGood=True)
                         captcha_attempts.clear()
                 if not skip_step:
                     element.execute()
