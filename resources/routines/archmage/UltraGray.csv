@@ -1,3 +1,5 @@
-*, x=0.022, y=0.377, frequency=1, skip=False, adjust=False
-    DoubleTPBigBang, direction=right, repetitions=12
-    DoubleTPBigBang, direction=left, repetitions=12
+*, x=0.377, y=0.384, frequency=1, skip=False, adjust=False
+    Blizzard
+    DoubleTPBigBang, direction=right, repetitions=4
+    DoubleTPBigBang, direction=left, repetitions=5
+    DoubleTPBigBang, direction=right, repetitions=1

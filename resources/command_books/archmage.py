@@ -107,9 +107,9 @@ class Buff(Command):
 
     def main(self, reset=False):
         now = time.time()
-        if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
-            press(Key.BLIZZARD,  1, down_time=0.3)
-            self.cd20_buff_time = now
+        # if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
+        #     press(Key.BLIZZARD,  1, down_time=0.3)
+        #     self.cd20_buff_time = now
         if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown or reset:
             press(Key.THORNS,  1, down_time=0.3)
             time.sleep(5.0)
@@ -199,13 +199,11 @@ class DoubleTPBigBang(Command):
                 else:
                     current_direction = 'right'
             key_down(current_direction)
-
-            key_down(Key.TELEPORT)
-            time.sleep(0.2)
+            press(Key.TELEPORT, 2, down_time=0.2, up_time=0.05)
+            press(Key.TELEPORT, 2, down_time=0.1, up_time=0.05)
             press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
-            key_up(Key.TELEPORT)
             key_up(current_direction)
-            time.sleep(0.35)
+            time.sleep(0.5)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -233,6 +231,13 @@ class UsePortal(Command):
 
     def main(self):
         press('up', 3, down_time=0.1, up_time=0.05)
+
+
+class Blizzard(Command):
+    """Use Portal."""
+
+    def main(self):
+        press(Key.BLIZZARD, 3, down_time=0.1, up_time=0.05)
 
 
 class ClimbRope(Command):
