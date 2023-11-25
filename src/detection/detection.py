@@ -277,6 +277,10 @@ def captcha_detection(image):
     return twocaptcha_solution
 
 
+def report_captcha(isGood=False):
+    solver.report(config.bot.last_captcha_id, isGood)
+
+
 def get_2captcha_solution(base64_image):
     try:
         # Increase the timeout
@@ -287,7 +291,7 @@ def get_2captcha_solution(base64_image):
         time_taken = end_time - start_time
         print(f"Time taken for 2captcha request: {time_taken} seconds")
 
-        return result['code']
+        return result
     except Exception as e:
         print(f"Exceptizon occurred while getting 2captcha solution: {e}")
 

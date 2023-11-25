@@ -60,6 +60,7 @@ class Bot(Configurable):
         self.thread = threading.Thread(target=self._main)
         self.thread.daemon = True
         self.captcha_max_attempts = 2
+        self.last_captcha_id = None
 
     def start(self):
         """
@@ -125,23 +126,24 @@ class Bot(Configurable):
 
                 if self.captcha_active:
                     self.captcha_timeout = False
+                    if len(captcha_attempts) > 1:
+                        print(
+                            f"Report last_captcha id as bad: {self.last_captcha_id}")
+                        detection.report_captcha(isGood=False)
                     captcha_timer = now
                     captcha_attempts.append(now)
-                    print(f"Captcha attemps:: {captcha_attempts}")
-                    if len(captcha_attempts) == 3 and now - captcha_attempts[0] < 150:
-                        # print(
-                        #     f"Quitting because {len(captcha_attempts)} attempts in 2 minutes")
-                        # self.quit_game()
-                        self._solve_captcha(isLast=True)
-                        captcha_attempts.clear()  # clear captcha_attempts after quitting the game
-                    else:
-                        self._solve_captcha()
+                    print(f"Captcha attempts:: {captcha_attempts}")
+                    self._solve_captcha()
 
                     if captcha_timer - now < 10:
                         self.captcha_timeout = True
                         time.sleep(0.1)
                 else:
                     if now - last_captcha > 600:
+                        # report last captcha is good
+                        print(
+                            f"Report last_captcha id is good: {self.last_captcha_id}")
+                        detection.report_captcha(isGood=True)
                         captcha_attempts.clear()
                 if not skip_step:
                     element.execute()
@@ -247,10 +249,11 @@ class Bot(Configurable):
         schedule_coroutine(client.loop, send_captcha(frame))
         if solution:
             print(f"Solution found: {solution}")
+            self.last_captcha_id = solution['id']
             self.type_solution(solution)
         if self.captcha_timeout and not solution:
             print(
-                f"Max attempts reached, typing out solution regardless.")
+                f"Timed out, typing out solution regardless.")
             self.type_solution(['N', 'a'])
 
     def change_channel(self):
@@ -270,14 +273,13 @@ class Bot(Configurable):
         self.command_book.buff.main(reset=True)
         time.sleep(1)
         self.players_detected_time = None
-
         # config.listener.toggle_enabled()
 
     def type_solution(self, solution):
         print("typing solution:", solution)
         target = (572, 229)  # Coordinates to click the solution box
         click(target, button='left')
-        for digit in solution:
+        for digit in solution['code']:
             if digit.isupper():
                 print(digit)
                 key_down('shift')
