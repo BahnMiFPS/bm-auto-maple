@@ -250,7 +250,7 @@ class Bot(Configurable):
         schedule_coroutine(client.loop, send_captcha(frame))
         if solution:
             print(f"Solution found: {solution}")
-            self.last_captcha_id = solution['id']
+            self.last_captcha_id = solution['captchaId']
             self.type_solution(solution)
         if self.captcha_timeout and not solution:
             print(
