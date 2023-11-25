@@ -5,26 +5,15 @@ import time
 import git
 import cv2
 import asyncio
-import inspect
-import importlib
-import traceback
-import mss
-import discord
 import numpy as np
-from os.path import splitext, basename
 from src.common import config, utils
 from src.detection import detection
-from src.routine import components
 from src.modules.discord import client
 from src.routine.routine import Routine
 from src.command_book.command_book import CommandBook
-from src.routine.components import Point
 from src.common.vkeys import press, click, key_down, key_up
 from src.common.interfaces import Configurable
-from PIL import Image
-from src.modules.listener import Listener
-from collections import Counter
-
+import random
 import asyncio
 from src.modules.discord import send_captcha
 # The rune's buff icon
@@ -56,6 +45,7 @@ class Bot(Configurable):
         self.command_book = None            # CommandBook instance
         self.captcha_active = False
         self.captcha_timeout = False
+        self.other_players = 0
         # self.module_name = None
         # self.buff = components.Buff()
 
@@ -86,11 +76,13 @@ class Bot(Configurable):
         The main body of Bot that executes the user's routine.
         :return:    None
         """
-
         self.ready = True
         config.listener.enabled = True
         last_fed = time.time()
         last_captcha = time.time()
+        last_changed_server = time.time()
+        players_detected_time = None
+        next_channel_change = np.random.randint(1800, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         while True:
             if config.enabled and len(config.routine) > 0:
@@ -109,8 +101,27 @@ class Bot(Configurable):
                 # Highlight the current Point
                 config.gui.view.routine.select(config.routine.index)
                 config.gui.view.details.display_info(config.routine.index)
-
+                skip_step = False
                 element = config.routine[config.routine.index]
+                if self.other_players > 0:
+                    print(self.other_players, "other players detected")
+                    if players_detected_time is None:
+                        players_detected_time = now
+                    if now - players_detected_time > 10:
+                        skip_step = True
+                    if now - players_detected_time > 20 and skip_step:
+                        print(
+                            f"Player detected for {now - players_detected_time} seconds, change channel now")
+                        self.change_channel()
+                        last_changed_server = now
+                else:
+                    players_detected_time = None
+                    skip_step = False
+                # change channel after every 30-60 minutes
+                if now - last_changed_server > next_channel_change:
+                    self.change_channel()
+                    last_changed_server = now
+                    next_channel_change = random.randint(1800, 3600)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
@@ -126,16 +137,15 @@ class Bot(Configurable):
                     else:
                         self._solve_captcha()
 
-                    if captcha_timer - now < 15:
+                    if captcha_timer - now < 10:
                         self.captcha_timeout = True
                         time.sleep(0.1)
                 else:
                     if now - last_captcha > 600:
                         captcha_attempts.clear()
-
-                element.execute()
-                config.routine.step()
-
+                if not skip_step:
+                    element.execute()
+                    config.routine.step()
             else:
                 time.sleep(0.01)
 
@@ -233,11 +243,35 @@ class Bot(Configurable):
             print("Captcha is not active", self.captcha_active)
             return
         frame = config.capture.frame
-        schedule_coroutine(client.loop, send_captcha(frame))
         solution = detection.captcha_detection(frame)
+        schedule_coroutine(client.loop, send_captcha(frame))
         if solution:
             print(f"Solution found: {solution}")
             self.type_solution(solution)
+        if self.captcha_timeout and not solution:
+            print(
+                f"Max attempts reached, typing out solution regardless.")
+            self.type_solution(['N', 'a'])
+
+    def change_channel(self):
+        if self.other_players <= 0:
+            return
+        print("Changing channel")
+        random_channel_to_skip = np.random.randint(1, 4)
+        press('esc', 1)
+        time.sleep(2)
+        press('enter', 1)
+        time.sleep(2)
+        press('right', random_channel_to_skip)
+        time.sleep(2)
+        press('enter', 1)
+        time.sleep(4)
+        press('ctrl', 3)
+        self.command_book.buff.main(reset=True)
+        time.sleep(1)
+        self.players_detected_time = None
+
+        # config.listener.toggle_enabled()
 
     def type_solution(self, solution):
         print("typing solution:", solution)
@@ -249,14 +283,16 @@ class Bot(Configurable):
                 key_down('shift')
                 press(digit, 1, down_time=0.1)
                 key_up('shift')
+                time.sleep(0.2)
             else:
                 press(digit, 1, down_time=0.1)
+                time.sleep(0.2)
         press('enter', 1)
         time.sleep(1)
         press('enter', 1)
         time.sleep(1)
         self.captcha_timeout = False
-        time.sleep(1)
+        time.sleep(0.1)
         self.captcha_active = False  # Set captcha as solved
         time.sleep(1)
 

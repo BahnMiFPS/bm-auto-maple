@@ -73,7 +73,9 @@ class Listener(Configurable):
         """Resumes or pauses the current routine. Plays a sound to notify the user."""
 
         config.bot.rune_active = False
-
+        config.bot.captcha_active = False
+        config.bot.captcha_timeout = False
+        config.bot.other_players = 0
         if not config.enabled:
             # Recalibrate only when being enabled.
             Listener.recalibrate_minimap()

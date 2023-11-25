@@ -9,7 +9,7 @@ $, target=move_tolerance, value=0.075
     BigBang, repetitions=3
 *, x=0.208, y=0.726, frequency=1, skip=False, adjust=False
     TPBigBang, direction=right, repetitions=1
-*, x=0.472, y=0.726, frequency=1, skip=False, adjust=True
+*, x=0.462, y=0.726, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
     Wait, duration=0.5
     UsePortal
@@ -18,30 +18,38 @@ $, target=move_tolerance, value=0.075
     TPBigBang, direction=right, repetitions=2
 *, x=0.784, y=0.726, frequency=1, skip=False, adjust=False
     TPBigBang, direction=right, repetitions=3
-    TPBigBang, direction=left, repetitions=3
+*, x=0.784, y=0.726, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=1
+
+@, label=Loot
+*, x=0.734, y=0.702, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=2
+*, x=0.508, y=0.726, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=1
 
 @, label=Top Floor
-*, x=0.492, y=0.726, frequency=1, skip=False, adjust=True
+*, x=0.5, y=0.726, frequency=1, skip=False, adjust=True
     BigBang, repetitions=2
     Wait, duration=0.5
     UsePortal
     BigBang, repetitions=4
-*, x=0.5, y=0.484, frequency=4, skip=False, adjust=False
+*, x=0.5, y=0.484, frequency=2, skip=False, adjust=False
     BigBang, repetitions=4
 
 @, label=Top Floor Fight
-*, x=0.411, y=0.573, frequency=4, skip=True, adjust=False
+*, x=0.411, y=0.573, frequency=2, skip=True, adjust=False
     TPBigBang, direction=left, repetitions=2
-*, x=0.323, y=0.548, frequency=4, skip=True, adjust=True
+*, x=0.323, y=0.548, frequency=2, skip=True, adjust=True
     TPBigBang, direction=left, repetitions=1
     TPBigBang, direction=right, repetitions=3
-*, x=0.500, y=0.573, frequency=4, skip=True, adjust=False
+*, x=0.500, y=0.573, frequency=2, skip=True, adjust=False
     TPBigBang, direction=right, repetitions=1
-*, x=0.669, y=0.548, frequency=4, skip=True, adjust=True
+*, x=0.669, y=0.548, frequency=2, skip=True, adjust=True
     TPBigBang, direction=right, repetitions=1
     TPBigBang, direction=left, repetitions=5
     TPBigBang, direction=right, repetitions=3
 
 @, label=Use Portal
 *, x=0.500, y=0.484, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
     UsePortal

@@ -1,0 +1,3 @@
+*, x=0.022, y=0.377, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=12
+    DoubleTPBigBang, direction=left, repetitions=12

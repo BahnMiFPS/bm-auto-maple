@@ -10,8 +10,9 @@ import numpy as np
 import keyboard as kb
 from src.routine.components import Point
 from src.modules.bot import Bot
-
-
+from src.modules.discord import send_image_to_discord
+import asyncio
+from src.modules.discord import client
 # A rune's symbol on the minimap
 RUNE_RANGES = (
     ((141, 148, 245), (146, 158, 255)),
@@ -37,6 +38,10 @@ CAPTCHA_TEMPLATE = cv2.imread('assets/captcha_warning.png', 0)
 DEBUG = False
 
 
+def schedule_coroutine(loop, coroutine):
+    loop.call_soon_threadsafe(lambda: asyncio.create_task(coroutine))
+
+
 def get_alert_path(name):
     return os.path.join(Notifier.ALERTS_DIR, f'{name}.mp3')
 
@@ -60,8 +65,7 @@ class Notifier:
 
         self.room_change_threshold = 0.9
         self.rune_alert_delay = 270         # 4.5 minutes
-
-        self.captcha_alert_delay = 50       # 50 seconds
+        self.captcha_alert_delay = 55       # 50 seconds
 
     def start(self):
         """Starts this Notifier's thread."""
@@ -71,19 +75,26 @@ class Notifier:
 
     def _main(self):
         self.ready = True
-        prev_others = 0
+        last_black_screen_alert = None
         while True:
             if config.enabled:
                 frame = config.capture.frame
                 height, width, _ = frame.shape
                 minimap = config.capture.minimap['minimap']
 
+                now = time.time()
                 # Check for unexpected black screen
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 if np.count_nonzero(gray < 15) / height / width > self.room_change_threshold:
-                    self._alert('siren')
-                now = time.time()
+                    if last_black_screen_alert is None or now - last_black_screen_alert > 5:
+                        # self._alert('siren')
+                        print("Black screen detected")
 
+                        time.sleep(5)
+                        this_frame = config.capture.frame
+                        schedule_coroutine(client.loop, send_image_to_discord(
+                            this_frame, 'Black screen detected'))
+                        last_black_screen_alert = now
                 # Check for elite warning
                 elite_frame = frame[height // 4:3 *
                                     height // 4, width // 4:3 * width // 4]
@@ -97,10 +108,10 @@ class Notifier:
                 others = len(utils.multi_match(
                     filtered, OTHER_TEMPLATE, threshold=0.5))
                 config.stage_fright = others > 0
-                if others != prev_others:
-                    if others > prev_others:
+                if others != config.bot.other_players:
+                    if others > config.bot.other_players:
                         self._ping('ding', volume=0)
-                    prev_others = others
+                    config.bot.other_players = others
 
                 # Check for captcha warning
                 if not config.bot.captcha_active:

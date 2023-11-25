@@ -20,11 +20,12 @@ class Key:
     # Skills
     BIG_BANG = 'x'
     ATTACK = 'v'
-
+    BLIZZARD = 'd'
 
 #########################
 #       Commands        #
 #########################
+
 
 def step(direction, target):
     """
@@ -104,12 +105,12 @@ class Buff(Command):
         self.cd900_buff_time = 0
         self.decent_buff_time = 0
 
-    def main(self):
+    def main(self, reset=False):
         now = time.time()
-        # if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
-        #     press(Key.RAID,  1, down_time=0.3)
-        #     self.cd20_buff_time = now
-        if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
+        if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
+            press(Key.BLIZZARD,  1, down_time=0.3)
+            self.cd20_buff_time = now
+        if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown or reset:
             press(Key.THORNS,  1, down_time=0.3)
             time.sleep(5.0)
             press(Key.HASTE,  1, down_time=0.3)
@@ -169,7 +170,42 @@ class TPBigBang(Command):
             press(Key.TELEPORT, 1, down_time=0.1, up_time=0.05)
             press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
             key_up(current_direction)
-            time.sleep(0.5)
+            time.sleep(0.35)
+        if settings.record_layout:
+            config.layout.add(*config.player_pos)
+
+
+class DoubleTPBigBang(Command):
+    """
+    Teleport and BigBang in a given direction, or towards the center of the map if
+    no direction is specified. Adds the player's position to the current
+    Layout if necessary.
+    Can add a number of repetitions to the command.
+    """
+
+    def __init__(self, direction='none', repetitions=1):
+        super().__init__(locals())
+        self.direction = direction
+        self.repetitions = int(repetitions)
+
+    def main(self):
+        # directional handler
+        for _ in range(self.repetitions):
+            if self.direction != 'none':
+                current_direction = self.direction
+            else:
+                if config.player_pos[0] > 0.5:
+                    current_direction = 'left'
+                else:
+                    current_direction = 'right'
+            key_down(current_direction)
+
+            key_down(Key.TELEPORT)
+            time.sleep(0.2)
+            press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
+            key_up(Key.TELEPORT)
+            key_up(current_direction)
+            time.sleep(0.35)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -189,7 +225,7 @@ class BigBang(Command):
     def main(self):
         for _ in range(self.repetitions):
             press(Key.BIG_BANG, 1)
-            time.sleep(0.5)
+            time.sleep(0.35)
 
 
 class UsePortal(Command):

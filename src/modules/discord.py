@@ -57,11 +57,15 @@ async def send_captcha(frame):
     # Crop the image to the captcha area
     cropped = frame[top:top + height, left:left + width]
     # Ensure this function is defined elsewhere
-    is_success, buffer = cv2.imencode(".jpg", cropped)
+    await send_image_to_discord(cropped, 'Solve this captcha')
+
+
+async def send_image_to_discord(image, txt):
+    is_success, buffer = cv2.imencode(".jpg", image)
     io_buf = io.BytesIO(buffer)
     file = File(io_buf, filename="image.jpg")
 
     try:
-        await target_user.send('Solve this', file=file)
+        await target_user.send(txt, file=file)
     except Forbidden as e:
-        print(f"Error sending message to user: {e}")
+        print(f"Error sending message to user: {txt} : {e}")
