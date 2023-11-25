@@ -96,12 +96,12 @@ class Notifier:
                             this_frame, 'Black screen detected'))
                         last_black_screen_alert = now
                 # Check for elite warning
-                elite_frame = frame[height // 4:3 *
-                                    height // 4, width // 4:3 * width // 4]
-                elite = utils.multi_match(
-                    elite_frame, ELITE_TEMPLATE, threshold=0.9)
-                if len(elite) > 0:
-                    self._alert('siren')
+                # elite_frame = frame[height // 4:3 *
+                #                     height // 4, width // 4:3 * width // 4]
+                # elite = utils.multi_match(
+                #     elite_frame, ELITE_TEMPLATE, threshold=0.9)
+                # if len(elite) > 0:
+                #     self._alert('siren')
 
                 # Check for other players entering the map
                 filtered = utils.filter_color(minimap, OTHER_RANGES)
@@ -123,7 +123,7 @@ class Notifier:
                         config.bot.captcha_active = True
                         print(
                             f"Captcha found, setting captcha_active to {config.bot.captcha_active}")
-                        self._ping('rune_appeared', volume=0.75)
+                        # self._ping('rune_appeared', volume=0.75)
                 elif now - captcha_start_time > self.captcha_alert_delay:
                     print(
                         f"Quitting game due to captcha start_time > {self.captcha_alert_delay}")

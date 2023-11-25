@@ -61,6 +61,7 @@ class Bot(Configurable):
         self.thread.daemon = True
         self.captcha_max_attempts = 2
         self.last_captcha_id = None
+        self.last_captcha_solved = None
 
     def start(self):
         """
@@ -80,11 +81,12 @@ class Bot(Configurable):
         self.ready = True
         config.listener.enabled = True
         last_fed = time.time()
-        last_captcha = time.time()
         last_changed_server = time.time()
         players_detected_time = None
         next_channel_change = np.random.randint(1800, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
+        skip_step = False
+
         while True:
             if config.enabled and len(config.routine) > 0:
                 # Buff and feed pets
@@ -102,7 +104,7 @@ class Bot(Configurable):
                 # Highlight the current Point
                 config.gui.view.routine.select(config.routine.index)
                 config.gui.view.details.display_info(config.routine.index)
-                skip_step = False
+
                 element = config.routine[config.routine.index]
                 if self.other_players > 0:
                     print(self.other_players, "other players detected")
@@ -122,16 +124,16 @@ class Bot(Configurable):
                 if now - last_changed_server > next_channel_change:
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(1800, 3600)
+                    next_channel_change = random.randint(1800, 2000)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
+                    captcha_timer = now
+                    captcha_attempts.append(now)
                     if len(captcha_attempts) > 1:
                         print(
                             f"Report last_captcha id as bad: {self.last_captcha_id}")
                         detection.report_captcha(isGood=False)
-                    captcha_timer = now
-                    captcha_attempts.append(now)
                     print(f"Captcha attempts:: {captcha_attempts}")
                     self._solve_captcha()
 
@@ -139,14 +141,14 @@ class Bot(Configurable):
                         self.captcha_timeout = True
                         time.sleep(0.1)
                 else:
-                    if now - last_captcha > 600:
+                    if captcha_attempts and (now - captcha_attempts[-1] > 600):
                         # report last captcha is good
                         if self.last_captcha_id is not None:
                             print(
-                                f"Report last_captcha id is good: {self.last_captcha_id}")
+                                f"Report last captcha id is good: {self.last_captcha_id}")
                             detection.report_captcha(isGood=True)
                         captcha_attempts.clear()
-                if not skip_step:
+                if not skip_step and (not captcha_attempts or now - captcha_attempts[-1] > 5):
                     element.execute()
                     config.routine.step()
             else:
@@ -241,6 +243,7 @@ class Bot(Configurable):
     #             f"Max attempts reached, typing out solution regardless. \n Solution Attempts: {solution_attempts} \n Attempt: {attempt}")
     #         self.type_solution(['N', 'a'])
 
+    @utils.run_if_enabled
     def _solve_captcha(self, isLast=False):
         if not self.captcha_active:
             print("Captcha is not active", self.captcha_active)
@@ -257,6 +260,7 @@ class Bot(Configurable):
                 f"Timed out, typing out solution regardless.")
             self.type_solution(['N', 'a'])
 
+    @utils.run_if_enabled
     def change_channel(self):
         if self.other_players <= 0:
             return
@@ -276,13 +280,12 @@ class Bot(Configurable):
         self.players_detected_time = None
         # config.listener.toggle_enabled()
 
+    @utils.run_if_enabled
     def type_solution(self, solution):
-        print("typing solution:", solution)
         target = (572, 229)  # Coordinates to click the solution box
         click(target, button='left')
         for digit in solution['code']:
             if digit.isupper():
-                print(digit)
                 key_down('shift')
                 press(digit, 1, down_time=0.1)
                 key_up('shift')
@@ -299,6 +302,7 @@ class Bot(Configurable):
         self.captcha_active = False  # Set captcha as solved
         time.sleep(1)
 
+    @utils.run_if_enabled
     def quit_game(self):
         key_down('alt')
         press('f4', 1)
