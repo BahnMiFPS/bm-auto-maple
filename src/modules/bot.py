@@ -83,7 +83,7 @@ class Bot(Configurable):
         last_fed = time.time()
         last_changed_server = time.time()
         players_detected_time = None
-        next_channel_change = np.random.randint(1800, 3600)
+        next_channel_change = random.randint(2500, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
 
@@ -122,13 +122,14 @@ class Bot(Configurable):
                     skip_step = False
                 # change channel after every 30-60 minutes
                 if now - last_changed_server > next_channel_change:
+                    print(
+                        f"change channel after {next_channel_change} seconds")
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(1800, 2000)
+                    next_channel_change = random.randint(2500, 2000)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
-                    captcha_timer = now
                     captcha_attempts.append(now)
                     if len(captcha_attempts) > 1:
                         print(
@@ -137,9 +138,6 @@ class Bot(Configurable):
                     print(f"Captcha attempts:: {captcha_attempts}")
                     self._solve_captcha()
 
-                    if captcha_timer - now < 10:
-                        self.captcha_timeout = True
-                        time.sleep(0.1)
                 else:
                     if captcha_attempts and (now - captcha_attempts[-1] > 600):
                         # report last captcha is good
@@ -262,10 +260,10 @@ class Bot(Configurable):
 
     @utils.run_if_enabled
     def change_channel(self):
-        if self.other_players <= 0:
+        if self.captcha_active:
             return
         print("Changing channel")
-        random_channel_to_skip = np.random.randint(1, 4)
+        random_channel_to_skip = random.randint(1, 4)
         press('esc', 1)
         time.sleep(2)
         press('enter', 1)

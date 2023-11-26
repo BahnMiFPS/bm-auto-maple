@@ -127,9 +127,7 @@ class Notifier:
                 elif now - captcha_start_time > self.captcha_alert_delay:
                     print(
                         f"Quitting game due to captcha start_time > {self.captcha_alert_delay}")
-                    config.bot.quit_game()
-                    config.bot.captcha_active = False
-                    config.bot.captcha_timeout = False
+                    config.bot.captcha_timeout = True
 
                 if DEBUG:
                     config.bot.captcha_active = True

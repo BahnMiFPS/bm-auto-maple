@@ -112,7 +112,7 @@ class Buff(Command):
         #     self.cd20_buff_time = now
         if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown or reset:
             press(Key.THORNS,  1, down_time=0.3)
-            time.sleep(5.0)
+            time.sleep(3.0)
             press(Key.HASTE,  1, down_time=0.3)
             time.sleep(3.0)
             self.decent_buff_time = now
@@ -167,10 +167,10 @@ class TPBigBang(Command):
                     current_direction = 'right'
             key_down(current_direction)
 
-            press(Key.TELEPORT, 1, down_time=0.1, up_time=0.05)
+            press(Key.TELEPORT, 1, down_time=0.2, up_time=0.05)
             press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
             key_up(current_direction)
-            time.sleep(0.35)
+            time.sleep(0.4)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -200,10 +200,10 @@ class DoubleTPBigBang(Command):
                     current_direction = 'right'
             key_down(current_direction)
             press(Key.TELEPORT, 2, down_time=0.2, up_time=0.05)
-            press(Key.TELEPORT, 2, down_time=0.1, up_time=0.05)
-            press(Key.BIG_BANG, 1, down_time=0.1, up_time=0.05)
+            press(Key.TELEPORT, 2)
+            press(Key.BIG_BANG, 3, down_time=0.1, up_time=0.05)
             key_up(current_direction)
-            time.sleep(0.5)
+            time.sleep(0.4)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -238,6 +238,7 @@ class Blizzard(Command):
 
     def main(self):
         press(Key.BLIZZARD, 3, down_time=0.1, up_time=0.05)
+        time.sleep(4)
 
 
 class ClimbRope(Command):
@@ -252,3 +253,16 @@ class ClimbRope(Command):
         key_down('up')
         time.sleep(self.time)
         key_up('up')
+
+
+class JumpInDirection(Command):
+    """Use Jump at designated point for x amount of time."""
+
+    def __init__(self, direction):
+        super().__init__(locals())
+        self.direction = direction
+
+    def main(self):
+        key_down(self.direction)
+        press(Key.JUMP, 1, down_time=2, up_time=0.05)
+        key_up(self.direction)

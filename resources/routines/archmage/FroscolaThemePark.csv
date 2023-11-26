@@ -1,0 +1,24 @@
+$, target=move_tolerance, value=0.04
+*, x=0.591, y=0.759, frequency=1, skip=False, adjust=True
+    DoubleTPBigBang, direction=right, repetitions=2
+    DoubleTPBigBang, direction=left, repetitions=5
+    TPBigBang, direction=right, repetitions=4
+    TPBigBang, direction=left, repetitions=3
+*, x=0.146, y=0.759, frequency=1, skip=False, adjust=True
+*, x=0.146, y=0.715, frequency=1, skip=False, adjust=True
+    Wait, duration=1
+    UsePortal
+    Wait, duration=1
+*, x=0.75, y=0.336, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=2
+    TPBigBang, direction=left, repetitions=5
+    TPBigBang, direction=right, repetitions=4
+    TPBigBang, direction=left, repetitions=4
+    TPBigBang, direction=right, repetitions=4
+    TPBigBang, direction=left, repetitions=4
+*, x=0.219, y=0.526, frequency=1, skip=False, adjust=True
+    TPBigBang, direction=right, repetitions=5
+    Blizzard
+    TPBigBang, direction=left, repetitions=5
+    TPBigBang, direction=right, repetitions=4
+    TPBigBang, direction=left, repetitions=4

@@ -1,0 +1,17 @@
+*, x=0.399, y=0.384, frequency=1, skip=False, adjust=False
+    Blizzard
+    DoubleTPBigBang, direction=left, repetitions=2
+    DoubleTPBigBang, direction=right, repetitions=2
+*, x=0.283, y=0.384, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=3
+*, x=0.797, y=0.384, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=1
+    DoubleTPBigBang, direction=left, repetitions=2
+    TPBigBang, direction=right, repetitions=2
+    DoubleTPBigBang, direction=right, repetitions=2
+*, x=0.819, y=0.384, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=1
+    DoubleTPBigBang, direction=left, repetitions=2
+    TPBigBang, direction=left, repetitions=1
+    DoubleTPBigBang, direction=left, repetitions=2
+    TPBigBang, direction=right, repetitions=4

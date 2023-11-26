@@ -1,0 +1,48 @@
+$, target=move_tolerance, value=0.075
+*, x=0.125, y=0.408, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
+*, x=0.125, y=0.383, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.125, y=0.308, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=2
+    TPBigBang, direction=right, repetitions=2
+*, x=0.125, y=0.242, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=1
+    TPBigBang, direction=right, repetitions=1
+*, x=0.125, y=0.383, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=2
+*, x=0.125, y=0.242, frequency=4, skip=False, adjust=False
+    BigBang, repetitions=1
+    TPBigBang, direction=right, repetitions=2
+*, x=0.290, y=0.242, frequency=4, skip=False, adjust=True
+    JumpInDirection, direction=right
+    BigBang, repetitions=2
+*, x=0.325, y=0.408, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=left, repetitions=2
+    DoubleTPBigBang, direction=right, repetitions=2
+*, x=0.567, y=0.408, frequency=1, skip=False, adjust=True
+    Blizzard
+    TPBigBang, direction=left, repetitions=5
+    DoubleTPBigBang, direction=right, repetitions=2
+    TPBigBang, direction=right, repetitions=5
+    TPBigBang, direction=left, repetitions=1
+*, x=0.950, y=0.408, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.950, y=0.383, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.95, y=0.308, frequency=1, skip=False, adjust=True
+    TPBigBang, direction=left, repetitions=2
+    BigBang, repetitions=3
+*, x=0.783, y=0.242, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=1
+    TPBigBang, direction=right, repetitions=1
+    TPBigBang, direction=left, repetitions=2
+*, x=0.692, y=0.242, frequency=4, skip=False, adjust=True
+*, x=0.683, y=0.367, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=5
+*, x=0.808, y=0.367, frequency=4, skip=False, adjust=True
+    BigBang, repetitions=3
+*, x=0.575, y=0.408, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=1
+    DoubleTPBigBang, direction=left, repetitions=3
+    TPBigBang, direction=left, repetitions=1
