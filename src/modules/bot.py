@@ -126,7 +126,7 @@ class Bot(Configurable):
                         f"change channel after {next_channel_change} seconds")
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(2500, 2000)
+                    next_channel_change = random.randint(1800, 2500)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
