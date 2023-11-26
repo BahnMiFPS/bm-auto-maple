@@ -286,7 +286,7 @@ def get_2captcha_solution(base64_image):
         # Increase the timeout
         start_time = time.time()
         result = solver.normal(
-            base64_image, calc=1,  textinstructions="For tasks involving mathematics: Solve the math problem and provide the final answer. For tasks that display text: Carefully transcribe the text exactly as it is shown.")
+            base64_image, calc=1,  hintText="For tasks involving mathematics: Solve the math problem and provide the final answer. For tasks that display text: Carefully transcribe the text exactly as it is shown.", hintImage="../../assets/hintImage.jpg")
         end_time = time.time()
         time_taken = end_time - start_time
         print(f"Time taken for 2captcha request: {time_taken} seconds")
