@@ -278,7 +278,10 @@ def captcha_detection(image):
 
 
 def report_captcha(isGood=False):
-    solver.report(config.bot.last_captcha_id, isGood)
+    try:
+        solver.report(config.bot.last_captcha_id, isGood)
+    except Exception as e:
+        print(f"Exception occurred while reporting captcha: {e}")
 
 
 def get_2captcha_solution(base64_image):
