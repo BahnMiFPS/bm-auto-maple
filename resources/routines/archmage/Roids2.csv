@@ -1,0 +1,22 @@
+$, target=move_tolerance, value=0.075
+*, x=0.040, y=0.495, frequency=5, skip=False, adjust=False
+    BigBang, repetitions=1
+    TPBigBang, direction=right, repetitions=1
+*, x=0.242, y=0.495, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=1
+    TPBigBang, direction=right, repetitions=1
+*, x=0.242, y=0.465, frequency=5, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.556, y=0.495, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
+*, x=0.838, y=0.495, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=right, repetitions=1
+    TPBigBang, direction=left, repetitions=1
+*, x=0.838, y=0.465, frequency=5, skip=False, adjust=True
+    BigBang, repetitions=1
+    TPBigBang, direction=right, repetitions=1
+    TPBigBang, direction=left, repetitions=1
+*, x=0.556, y=0.495, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
+*, x=0.242, y=0.495, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
