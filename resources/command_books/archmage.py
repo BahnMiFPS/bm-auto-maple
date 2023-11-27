@@ -222,8 +222,8 @@ class BigBang(Command):
 
     def main(self):
         for _ in range(self.repetitions):
-            press(Key.BIG_BANG, 1)
-            time.sleep(0.35)
+            press(Key.BIG_BANG, 2)
+            time.sleep(0.5)
 
 
 class UsePortal(Command):

@@ -1,20 +1,21 @@
-*, x=0.222, y=0.495, frequency=1, skip=False, adjust=False
+$, target=move_tolerance, value=0.075
+*, x=0.242, y=0.495, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
     TPBigBang, direction=left, repetitions=2
     TPBigBang, direction=right, repetitions=2
-*, x=0.222, y=0.465, frequency=2, skip=False, adjust=True
+*, x=0.242, y=0.465, frequency=2, skip=False, adjust=True
     BigBang, repetitions=5
 *, x=0.556, y=0.495, frequency=1, skip=False, adjust=False
     BigBang, repetitions=1
-*, x=0.556, y=0.495, frequency=4, skip=False, adjust=False
+*, x=0.556, y=0.495, frequency=2, skip=False, adjust=False
     TPBigBang, direction=left, repetitions=1
     TPBigBang, direction=right, repetitions=1
     Blizzard
-*, x=0.808, y=0.495, frequency=1, skip=False, adjust=False
+*, x=0.808, y=0.495, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
     TPBigBang, direction=right, repetitions=1
     TPBigBang, direction=left, repetitions=1
-*, x=0.808, y=0.465, frequency=4, skip=False, adjust=True
+*, x=0.808, y=0.465, frequency=2, skip=False, adjust=True
     BigBang, repetitions=3
     TPBigBang, direction=right, repetitions=2
     TPBigBang, direction=left, repetitions=2
