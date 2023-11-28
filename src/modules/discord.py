@@ -9,8 +9,10 @@ import cv2
 import base64
 from src.detection import detection
 import io
-
-
+import os
+from dotenv import load_dotenv
+import os
+load_dotenv()
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 target_user = None
@@ -18,14 +20,14 @@ target_user = None
 
 def init():
     loop = asyncio.new_event_loop()
-    loop.create_task(client.start(
-        'MTE3NTc2NDM5NDM3OTA1NTEzNA.GPK6gk.6NxQCSIUmrhVMXxDqAiz-hdG3XPL49XH6ZJ174'))
+    loop.create_task(client.start(os.getenv('DISCORD_BOT_TOKEN')
+                                  ))
     Thread(target=loop.run_forever).start()
 
 
 @client.event
 async def on_message(message):
-    if message.author.id != 319685126323961859:
+    if message.author.id != os.getenv('DISCORD_USER_ID'):
         return
 
     print(
@@ -41,7 +43,7 @@ async def on_ready():
     global target_user
     print(f'Logged on as {client.user}!')
     try:
-        target_user = await client.fetch_user(319685126323961859)
+        target_user = await client.fetch_user(os.getenv('DISCORD_USER_ID'))
     except Forbidden as e:
         print(f"Error fetching user: {e}")
 
