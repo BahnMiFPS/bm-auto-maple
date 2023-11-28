@@ -272,7 +272,7 @@ def captcha_detection(image):
     # Ensure this function is defined elsewhere
     base64_image = encode_image(cropped)
     twocaptcha_solution = get_2captcha_solution(base64_image)
-    print(f"2captcha solution: {twocaptcha_solution}")
+    print(f"Captcha solution: {twocaptcha_solution}")
     # solution = get_gpt_solution(base64_image)
     return twocaptcha_solution
 
@@ -292,11 +292,11 @@ def get_2captcha_solution(base64_image):
             base64_image, calc=1,  hintText="For tasks involving mathematics: Solve the math problem and provide the final answer. For tasks that display text: Carefully transcribe the text exactly as it is shown.", hintImage="../../assets/hintImage.jpg")
         end_time = time.time()
         time_taken = end_time - start_time
-        print(f"Time taken for 2captcha request: {time_taken} seconds")
+        print(f"Time taken for Captcha: {time_taken} seconds")
 
         return result
     except Exception as e:
-        print(f"Exceptizon occurred while getting 2captcha solution: {e}")
+        print(f"Exceptizon occurred while getting Captcha solution: {e}")
 
 
 def get_gpt_solution(base64_image):

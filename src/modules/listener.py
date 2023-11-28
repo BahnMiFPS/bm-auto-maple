@@ -64,7 +64,7 @@ class Listener(Configurable):
             now = time.time()
             if now - self.block_time > Listener.BLOCK_DELAY:
                 print(
-                    f"\n[!] Cannot use '{action}' while Auto Maple is enabled")
+                    f"\n[!] Cannot use '{action}' while Kaizen Auto is enabled")
                 self.block_time = now
         return False
 

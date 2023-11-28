@@ -1,4 +1,4 @@
-"""User friendly GUI to interact with Auto Maple."""
+"""User friendly GUI to interact with Kaizen Auto."""
 
 import time
 import threading
@@ -19,7 +19,7 @@ class GUI:
         config.gui = self
 
         self.root = tk.Tk()
-        self.root.title('Auto Maple')
+        self.root.title('Kaizen Auto')
         icon = tk.PhotoImage(file='assets/icon.png')
         self.root.iconphoto(False, icon)
         self.root.geometry(GUI.RESOLUTIONS['DEFAULT'])

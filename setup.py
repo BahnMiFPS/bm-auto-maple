@@ -1,4 +1,4 @@
-"""Creates a desktop shortcut that can run Auto Maple from anywhere."""
+"""Creates a desktop shortcut that can run Kaizen Auto from anywhere."""
 
 import os
 import sys
@@ -21,13 +21,13 @@ def run_as_admin():
             None,
             1
         )
-        print(' ~  Finished setting up Auto Maple')
+        print(' ~  Finished setting up Kaizen Auto')
     exit(0)
 
 
 def create_desktop_shortcut():
     """Creates and saves a desktop shortcut using absolute paths"""
-    print('\n[~] Creating desktop shortcut for Auto Maple:')
+    print('\n[~] Creating desktop shortcut for Kaizen Auto:')
     target = os.path.join(os.environ['WINDIR'], 'System32', 'cmd.exe')
 
     flag = "/c"
@@ -37,7 +37,7 @@ def create_desktop_shortcut():
 
     shell = client.Dispatch('WScript.Shell')
     shortcut_path = os.path.join(
-        shell.SpecialFolders('Desktop'), 'Auto Maple.lnk')
+        shell.SpecialFolders('Desktop'), 'Kaizen Auto.lnk')
     shortcut = shell.CreateShortCut(shortcut_path)
     shortcut.Targetpath = target
     cwd = os.getcwd()
@@ -60,7 +60,7 @@ def create_desktop_shortcut():
     with open(shortcut_path, 'wb') as lnk:
         lnk.write(arr)
         print(' -  Enabled the "Run as Administrator" option')
-    print(' ~  Successfully created Auto Maple shortcut')
+    print(' ~  Successfully created Kaizen Auto shortcut')
 
 
 if __name__ == '__main__':

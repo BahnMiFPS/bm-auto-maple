@@ -1,8 +1,8 @@
 <h1 align="center">
-  Auto Maple
+  Kaizen Auto
 </h1>
 
-Auto Maple is an intelligent Python bot that plays MapleStory, a 2D side-scrolling MMORPG, using simulated key presses, TensorFlow machine learning, OpenCV template matching, and other computer vision techniques.
+Kaizen Auto is an intelligent Python bot that plays MapleStory, a 2D side-scrolling MMORPG, using simulated key presses, TensorFlow machine learning, OpenCV template matching, and other computer vision techniques.
 
 Community-created resources, such as **command books** for each class and **routines** for each map, can be found in the **[resources repository](https://github.com/tanjeffreyz/auto-maple-resources)**.
 
@@ -15,7 +15,7 @@ Community-created resources, such as **command books** for each class and **rout
 <table align="center" border="0">
   <tr>
     <td>
-Auto Maple uses <b>OpenCV template matching</b> to determine the bounds of the minimap as well as the various elements within it, allowing it to accurately track the player's in-game position. If <code>record_layout</code> is set to <code>True</code>, Auto Maple will record the player's previous positions in a <b>quadtree-based</b> Layout object, which is periodically saved to a file in the "layouts" directory. Every time a new routine is loaded, its corresponding layout file, if it exists, will also be loaded. This Layout object uses the <b>A* search algorithm</b> on its stored points to calculate the shortest path from the player to any target location, which can dramatically improve the accuracy and speed at which routines are executed.
+Kaizen Auto uses <b>OpenCV template matching</b> to determine the bounds of the minimap as well as the various elements within it, allowing it to accurately track the player's in-game position. If <code>record_layout</code> is set to <code>True</code>, Kaizen Auto will record the player's previous positions in a <b>quadtree-based</b> Layout object, which is periodically saved to a file in the "layouts" directory. Every time a new routine is loaded, its corresponding layout file, if it exists, will also be loaded. This Layout object uses the <b>A* search algorithm</b> on its stored points to calculate the shortest path from the player to any target location, which can dramatically improve the accuracy and speed at which routines are executed.
     </td>
     <td align="center" width="400px">
       <img align="center" src="https://user-images.githubusercontent.com/69165598/123177212-b16f0700-d439-11eb-8a21-8b414273f1e1.gif"/>
@@ -33,14 +33,14 @@ Auto Maple uses <b>OpenCV template matching</b> to determine the bounds of the m
   <img src="https://user-images.githubusercontent.com/69165598/123372905-502e5d00-d539-11eb-81c2-46b8bbf929cc.gif" width="100%"/>
   <br>
   <sub>
-    The above video shows Auto Maple consistently performing a mechanically advanced ability combination.
+    The above video shows Kaizen Auto consistently performing a mechanically advanced ability combination.
   </sub>
 </p>
   
 <table align="center" border="0">
   <tr>
     <td width="100%">
-Designed with modularity in mind, Auto Maple can operate any character in the game as long as it is provided with a list of in-game actions, or a "command book". A command book is a Python file that contains multiple classes, one for each in-game ability, that tells the program what keys it should press and when to press them. Once a command book is imported, its classes are automatically compiled into a dictionary that Auto Maple can then use to interpret commands within routines. Commands have access to all of Auto Maple's global variables, which can allow them to actively change their behavior based on the player's position and the state of the game.
+Designed with modularity in mind, Kaizen Auto can operate any character in the game as long as it is provided with a list of in-game actions, or a "command book". A command book is a Python file that contains multiple classes, one for each in-game ability, that tells the program what keys it should press and when to press them. Once a command book is imported, its classes are automatically compiled into a dictionary that Kaizen Auto can then use to interpret commands within routines. Commands have access to all of Kaizen Auto's global variables, which can allow them to actively change their behavior based on the player's position and the state of the game.
     </td>
   </tr>
 </table>
@@ -63,7 +63,7 @@ Designed with modularity in mind, Auto Maple can operate any character in the ga
       </p>
     </td>
     <td>
-A routine is a user-created CSV file that tells Auto Maple where to move and what commands to use at each location. A custom compiler within Auto Maple parses through the selected routine and converts it into a list of <code>Component</code> objects that can then be executed by the program. An error message is printed for every line that contains invalid parameters, and those lines are ignored during the conversion. 
+A routine is a user-created CSV file that tells Kaizen Auto where to move and what commands to use at each location. A custom compiler within Kaizen Auto parses through the selected routine and converts it into a list of <code>Component</code> objects that can then be executed by the program. An error message is printed for every line that contains invalid parameters, and those lines are ignored during the conversion. 
 <br><br>
 Below is a summary of the most commonly used routine components:
 <ul>
@@ -108,7 +108,7 @@ Below is a summary of the most commonly used routine components:
 <table align="center" border="0">
   <tr>
     <td width="100%">
-Auto Maple has the ability to automatically solve "runes", or in-game arrow key puzzles. It first uses OpenCV's color filtration and <b>Canny edge detection</b> algorithms to isolate the arrow keys and reduce as much background noise as possible. Then, it runs multiple inferences on the preprocessed frames using a custom-trained <b>TensorFlow</b> model until two inferences agree. Because of this preprocessing, Auto Maple is extremely accurate at solving runes in all kinds of (often colorful and chaotic) environments.
+Kaizen Auto has the ability to automatically solve "runes", or in-game arrow key puzzles. It first uses OpenCV's color filtration and <b>Canny edge detection</b> algorithms to isolate the arrow keys and reduce as much background noise as possible. Then, it runs multiple inferences on the preprocessed frames using a custom-trained <b>TensorFlow</b> model until two inferences agree. Because of this preprocessing, Kaizen Auto is extremely accurate at solving runes in all kinds of (often colorful and chaotic) environments.
     </td>
   </tr>
 </table>
@@ -146,18 +146,18 @@ Auto Maple has the ability to automatically solve "runes", or in-game arrow key 
     Download and install <a href="https://git-scm.com/download/win">Git</a>.
   </li>
   <li>
-    Download and unzip the latest <a href="https://github.com/tanjeffreyz02/auto-maple/releases">Auto Maple release</a>.
+    Download and unzip the latest <a href="https://github.com/tanjeffreyz02/auto-maple/releases">Kaizen Auto release</a>.
   </li>
   <li>
-    Download the <a href="https://drive.google.com/drive/folders/1SPdTNF4KZczoWyWTgfyTBRvLvy7WSGpu?usp=sharing">TensorFlow model</a> and unzip the "models" folder into Auto Maple's "assets" directory.
+    Download the <a href="https://drive.google.com/drive/folders/1SPdTNF4KZczoWyWTgfyTBRvLvy7WSGpu?usp=sharing">TensorFlow model</a> and unzip the "models" folder into Kaizen Auto's "assets" directory.
   </li>
   <li>
-    Inside Auto Maple's main directory, open a command prompt and run:
+    Inside Kaizen Auto's main directory, open a command prompt and run:
     <pre><code>python -m pip install -r requirements.txt</code></pre>
   </li>
   <li>
     Lastly, create a desktop shortcut by running:
     <pre><code>python setup.py</code></pre>
-    This shortcut uses absolute paths, so feel free to move it wherever you want. However, if you move Auto Maple's main directory, you will need to run <code>python setup.py</code> again to generate a new shortcut. To keep the command prompt open after Auto Maple closes, run the above command with the <code>--stay</code> flag.
+    This shortcut uses absolute paths, so feel free to move it wherever you want. However, if you move Kaizen Auto's main directory, you will need to run <code>python setup.py</code> again to generate a new shortcut. To keep the command prompt open after Kaizen Auto closes, run the above command with the <code>--stay</code> flag.
   </li>
 </ol>

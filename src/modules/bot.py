@@ -133,7 +133,7 @@ class Bot(Configurable):
                     captcha_attempts.append(now)
                     if len(captcha_attempts) > 1:
                         print(
-                            f"Report last_captcha id as bad: {self.last_captcha_id}")
+                            "Bad captcha solution reported")
                         detection.report_captcha(isGood=False)
                     print(f"Captcha attempts:: {captcha_attempts}")
                     self._solve_captcha()
@@ -143,7 +143,7 @@ class Bot(Configurable):
                         # report last captcha is good
                         if self.last_captcha_id is not None:
                             print(
-                                f"Report last captcha id is good: {self.last_captcha_id}")
+                                "Last captcha is good, reporting to server")
                             detection.report_captcha(isGood=True)
                         captcha_attempts.clear()
                 if not skip_step and (not captcha_attempts or now - captcha_attempts[-1] > 5):
@@ -248,7 +248,7 @@ class Bot(Configurable):
             return
         frame = config.capture.frame
         solution = detection.captcha_detection(frame)
-        schedule_coroutine(client.loop, send_captcha(frame))
+        schedule_coroutine(client.loop, send_captcha(frame, solution))
         if solution:
             print(f"Solution found: {solution}")
             self.last_captcha_id = solution['captchaId']

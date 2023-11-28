@@ -33,7 +33,6 @@ async def on_message(message):
     answer = []
     for letters in message.content:
         answer.append(letters)
-    print(type(answer))
     config.bot.type_solution(answer)
 
 
@@ -47,7 +46,7 @@ async def on_ready():
         print(f"Error fetching user: {e}")
 
 
-async def send_captcha(frame):
+async def send_captcha(frame, solution):
     print("Sending captcha")
     top = 170
     left = 530
@@ -57,7 +56,7 @@ async def send_captcha(frame):
     # Crop the image to the captcha area
     cropped = frame[top:top + height, left:left + width]
     # Ensure this function is defined elsewhere
-    await send_image_to_discord(cropped, 'Solve this captcha')
+    await send_image_to_discord(cropped, f'Captcha solved using solution: {solution}')
 
 
 async def send_image_to_discord(image, txt):

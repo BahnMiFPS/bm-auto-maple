@@ -153,7 +153,8 @@ def filter_color(img, ranges):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, ranges[0][0], ranges[0][1])
     for i in range(1, len(ranges)):
-        mask = cv2.bitwise_or(mask, cv2.inRange(hsv, ranges[i][0], ranges[i][1]))
+        mask = cv2.bitwise_or(mask, cv2.inRange(
+            hsv, ranges[i][0], ranges[i][1]))
 
     # Mask the image
     color_mask = mask > 0
@@ -187,7 +188,7 @@ def print_separator():
 
 
 def print_state():
-    """Prints whether Auto Maple is currently enabled or disabled."""
+    """Prints whether Kaizen Auto is currently enabled or disabled."""
 
     print_separator()
     print('#' * 18)

@@ -43,7 +43,7 @@ class Key:
 def step(direction, target):
     """
     Performs one movement step in the given DIRECTION towards TARGET.
-    Should not press any arrow keys, as those are handled by Auto Maple.
+    Should not press any arrow keys, as those are handled by Kaizen Auto.
     """
 
     num_presses = 2

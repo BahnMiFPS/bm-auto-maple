@@ -65,28 +65,34 @@ class KeyBindings(LabelFrame):
         if self.target is None:
             self.contents = Frame(self)
             self.create_disabled_entry()
-            self.contents.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=5, pady=5)
+            self.contents.pack(side=tk.TOP, fill=tk.BOTH,
+                               expand=True, padx=5, pady=5)
             return
 
         if len(self.target.config) > 27:
             self.long = True
             self.container = Frame(self, width=354, height=650)
-            self.container.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=(5, 0))
+            self.container.pack(side=tk.TOP, fill=tk.BOTH,
+                                expand=True, padx=(5, 0))
             self.container.pack_propagate(False)
             self.canvas = tk.Canvas(self.container, bd=0, highlightthickness=0)
-            self.scrollbar = tk.Scrollbar(self.container, command=self.canvas.yview)
+            self.scrollbar = tk.Scrollbar(
+                self.container, command=self.canvas.yview)
             self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
             self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
             self.contents = Frame(self.canvas)
             self.contents.bind(
                 '<Configure>',
-                lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+                lambda e: self.canvas.configure(
+                    scrollregion=self.canvas.bbox("all"))
             )
-            self.canvas.create_window((0, 0), window=self.contents, anchor=tk.NW)
+            self.canvas.create_window(
+                (0, 0), window=self.contents, anchor=tk.NW)
             self.canvas.configure(yscrollcommand=self.scrollbar.set)
         else:
             self.contents = Frame(self)
-            self.contents.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=5, pady=5)
+            self.contents.pack(side=tk.TOP, fill=tk.BOTH,
+                               expand=True, padx=5, pady=5)
 
         for action, key in self.target.config.items():
             self.forward[action] = key
@@ -94,9 +100,11 @@ class KeyBindings(LabelFrame):
             self.create_entry(action, key)
         self.focus()
 
-        self.reset = tk.Button(self, text='Reset', command=self.refresh_edit_ui, takefocus=False)
+        self.reset = tk.Button(
+            self, text='Reset', command=self.refresh_edit_ui, takefocus=False)
         self.reset.pack(side=tk.LEFT, padx=5, pady=5)
-        self.save = tk.Button(self, text='Save', command=self.save_keybindings, takefocus=False)
+        self.save = tk.Button(
+            self, text='Save', command=self.save_keybindings, takefocus=False)
         self.save.pack(side=tk.RIGHT, padx=5, pady=5)
 
     def refresh_edit_ui(self):
@@ -112,7 +120,7 @@ class KeyBindings(LabelFrame):
             self.canvas.destroy()
             self.scrollbar.destroy()
 
-    @utils.run_if_disabled('\n[!] Cannot save key bindings while Auto Maple is enabled')
+    @utils.run_if_disabled('\n[!] Cannot save key bindings while Kaizen Auto is enabled')
     def save_keybindings(self):
         utils.print_separator()
         print(f"[~] Saving key bindings to '{self.target.TARGET}':")
@@ -129,7 +137,8 @@ class KeyBindings(LabelFrame):
         if failures == 0:
             print(' ~  Successfully saved all key bindings')
         else:
-            print(f' ~  Successfully saved all except for {failures} key bindings')
+            print(
+                f' ~  Successfully saved all except for {failures} key bindings')
         self.refresh_edit_ui()
 
     def create_entry(self, action, key):

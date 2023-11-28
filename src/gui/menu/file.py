@@ -22,7 +22,8 @@ class File(MenuBarItem):
             state=tk.DISABLED
         )
         self.add_separator()
-        self.add_command(label='Load Command Book', command=utils.async_callback(self, File._load_commands))
+        self.add_command(label='Load Command Book',
+                         command=utils.async_callback(self, File._load_commands))
         self.add_command(
             label='Load Routine',
             command=utils.async_callback(self, File._load_routine),
@@ -35,7 +36,7 @@ class File(MenuBarItem):
         self.entryconfig('Load Routine', state=tk.NORMAL)
 
     @staticmethod
-    @utils.run_if_disabled('\n[!] Cannot create a new routine while Auto Maple is enabled')
+    @utils.run_if_disabled('\n[!] Cannot create a new routine while Kaizen Auto is enabled')
     def _new_routine():
         if config.routine.dirty:
             if not askyesno(title='New Routine',
@@ -46,7 +47,7 @@ class File(MenuBarItem):
         config.routine.clear()
 
     @staticmethod
-    @utils.run_if_disabled('\n[!] Cannot save routines while Auto Maple is enabled')
+    @utils.run_if_disabled('\n[!] Cannot save routines while Kaizen Auto is enabled')
     def _save_routine():
         file_path = asksaveasfilename(initialdir=get_routines_dir(),
                                       title='Save routine',
@@ -56,7 +57,7 @@ class File(MenuBarItem):
             config.routine.save(file_path)
 
     @staticmethod
-    @utils.run_if_disabled('\n[!] Cannot load routines while Auto Maple is enabled')
+    @utils.run_if_disabled('\n[!] Cannot load routines while Kaizen Auto is enabled')
     def _load_routine():
         if config.routine.dirty:
             if not askyesno(title='Load Routine',
@@ -71,7 +72,7 @@ class File(MenuBarItem):
             config.routine.load(file_path)
 
     @staticmethod
-    @utils.run_if_disabled('\n[!] Cannot load command books while Auto Maple is enabled')
+    @utils.run_if_disabled('\n[!] Cannot load command books while Kaizen Auto is enabled')
     def _load_commands():
         if config.routine.dirty:
             if not askyesno(title='Load Command Book',
@@ -87,7 +88,8 @@ class File(MenuBarItem):
 
 
 def get_routines_dir():
-    target = os.path.join(config.RESOURCES_DIR, 'routines', config.bot.command_book.name)
+    target = os.path.join(config.RESOURCES_DIR, 'routines',
+                          config.bot.command_book.name)
     if not os.path.exists(target):
         os.makedirs(target)
     return target
