@@ -13,11 +13,15 @@ import random
 from ast import literal_eval
 from concurrent.futures import ThreadPoolExecutor
 from twocaptcha import TwoCaptcha
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 #########################
 #       Functions       #
 #########################
-api_key = "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"
+api_key = "dontmindthis"
+CAPTCHA_API = os.getenv('CAPTCHA_API_KEY')
 captcha_config = {
     'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
     'defaultTimeout': 50,  # Set the timeout to 60 seconds

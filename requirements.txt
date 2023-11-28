@@ -9,3 +9,4 @@ pywin32
 tensorflow
 discord.py
 2captcha-python
+python-dotenv
