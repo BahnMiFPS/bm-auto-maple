@@ -1,9 +1,9 @@
 $, target=move_tolerance, value=0.055
-*, x=0.140, y=0.244, frequency=1, skip=False, adjust=True
+*, x=0.148, y=0.244, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
-*, x=0.140, y=0.212, frequency=1, skip=False, adjust=True
+*, x=0.148, y=0.212, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
-*, x=0.188, y=0.184, frequency=1, skip=False, adjust=True
+*, x=0.148, y=0.184, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
 *, x=0.184, y=0.152, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
