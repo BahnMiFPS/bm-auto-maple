@@ -43,11 +43,11 @@ def step(direction, target):
     d_y = target[1] - config.player_pos[1]
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
-            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+            press(Key.JUMP, 2, down_time=0.15, up_time=0.05)
         elif direction == 'up':
             press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
     # press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
-    press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
+    # press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
 
 
 class Adjust(Command):
@@ -223,17 +223,16 @@ class ReverseChainCombo(Command):
                 else:
                     current_direction = 'right'
             reverse_direction = 'left' if current_direction == 'right' else 'right'
-            key_down(reverse_direction)
-            time.sleep(0.2)
+            press(reverse_direction, 1, down_time=0.05, up_time=0.05)
+            time.sleep(0.1)
             # Press space (jump) and wait 200 milliseconds
             press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
-            press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
-            key_up(reverse_direction)
+            press(Key.FLASH_JUMP, 1, down_time=0.1, up_time=0.05)
 
             # Press 'z' and wait 200 milliseconds
             # press(Key.FLASH_JUMP, 2)
             key_down(current_direction)
-            time.sleep(0.1)
+            time.sleep(0.05)
             # Press 'x' three times with 50 milliseconds between each press
             press(Key.FLYING_ASSAULTER, 1, down_time=0.1, up_time=0.05)
 
@@ -265,14 +264,14 @@ class BloodyStorm(Command):
     def main(self):
         for _ in range(self.repetitions):
             if self.direction != 'none':
-                press(self.direction, 1, down_time=0.1, up_time=0.05)
+                press(self.direction, 1, down_time=0.05, up_time=0.05)
             else:
                 if config.player_pos[0] > 0.5:
                     press('left', 1, down_time=0.3, up_time=0.05)
                 else:
                     press('right', 1, down_time=0.3, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
-            time.sleep(0.25)
+            time.sleep(0.2)
 
 
 class UsePortal(Command):
@@ -294,6 +293,7 @@ class JumpFlashToRopes(Command):
         self.duration = float(duration)
 
     def main(self):
+
         # directional handler
         if self.direction != 'none':
             current_direction = self.direction
@@ -302,10 +302,9 @@ class JumpFlashToRopes(Command):
                 current_direction = 'left'
             else:
                 current_direction = 'right'
-        key_down(current_direction)
+        press(current_direction, 1, down_time=0.05, up_time=0.05)
         press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
         press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
         key_down('up')
-        key_up(current_direction)
         time.sleep(self.duration)
         key_up('up')

@@ -2,6 +2,8 @@
     ChainCombo, direction=right, repetitions=1
     ChainCombo, direction=Left, repetitions=2
     ChainCombo, direction=right, repetitions=1
+*, x=0.466, y=0.777, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=none, repetitions=4
 *, x=0.466, y=0.777, frequency=1, skip=False, adjust=True
     JumpFlashToRopes, direction=right, duration=3.0
 *, x=0.631, y=0.485, frequency=1, skip=False, adjust=False
@@ -10,16 +12,22 @@
     ReverseChainCombo, direction=right, repetitions=1
     BloodyStorm, direction=left, repetitions=1
 *, x=0.563, y=0.485, frequency=1, skip=False, adjust=True
-    FlashJump, direction=left
-*, x=0.379, y=0.456, frequency=1, skip=False, adjust=True
-    ReverseChainCombo, direction=left, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+*, x=0.087, y=0.456, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=right, repetitions=1
     ReverseChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
-*, x=0.379, y=0.456, frequency=1, skip=False, adjust=True
-    JumpFlashToRopes, direction=right, duration=2.5
-*, x=0.495, y=0.272, frequency=1, skip=False, adjust=True
+*, x=0.330, y=0.456, frequency=1, skip=False, adjust=True
+    JumpFlashToRopes, direction=right, duration=2
+*, x=0.485, y=0.272, frequency=1, skip=False, adjust=True
     ReverseChainCombo, direction=right, repetitions=1
+*, x=0.796, y=0.272, frequency=1, skip=False, adjust=True
     ReverseChainCombo, direction=left, repetitions=1
+*, x=0.408, y=0.456, frequency=1, skip=False, adjust=True
+    ReverseChainCombo, direction=left, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
+    ChainCombo, direction=right, repetitions=1
+*, x=0.883, y=0.485, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=left, repetitions=1
     ReverseChainCombo, direction=right, repetitions=1
-    ReverseChainCombo, direction=left, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
