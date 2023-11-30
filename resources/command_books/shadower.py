@@ -46,6 +46,7 @@ def step(direction, target):
             press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
         elif direction == 'up':
             press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+    press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
     press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
 
 
@@ -272,6 +273,13 @@ class BloodyStorm(Command):
                     press('right', 1, down_time=0.3, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
             time.sleep(0.25)
+
+
+class UsePortal(Command):
+    """Use Portal."""
+
+    def main(self):
+        press('up', 3, down_time=0.1, up_time=0.05)
 
 
 class JumpFlashToRopes(Command):
