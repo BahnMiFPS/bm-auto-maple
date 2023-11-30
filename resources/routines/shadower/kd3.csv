@@ -28,7 +28,7 @@
     ReverseChainCombo, direction=right, repetitions=1
 *, x=0.796, y=0.272, frequency=1, skip=False, adjust=True
     ReverseChainCombo, direction=left, repetitions=1
-    Walk, direction=left, duration=2
+    Walk, direction=left, duration=1
 *, x=0.408, y=0.456, frequency=1, skip=False, adjust=True
     ReverseChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
