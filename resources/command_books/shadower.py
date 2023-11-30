@@ -48,6 +48,7 @@ def step(direction, target):
             press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
     # press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
     # press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
+    time.sleep(0.1)
 
 
 class Adjust(Command):
