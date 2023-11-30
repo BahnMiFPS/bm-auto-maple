@@ -1,0 +1,2 @@
+*, x=0.424, y=0.929, frequency=1, skip=False, adjust=True
+    JumpFlashToRopes, direction=left, duration=2

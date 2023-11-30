@@ -13,6 +13,7 @@ from src.routine.routine import Routine
 from src.command_book.command_book import CommandBook
 from src.common.vkeys import press, click, key_down, key_up
 from src.common.interfaces import Configurable
+from src.modules.listener import Listener
 import random
 import asyncio
 from src.modules.discord import send_captcha
@@ -62,6 +63,10 @@ class Bot(Configurable):
         self.captcha_max_attempts = 2
         self.last_captcha_id = None
         self.last_captcha_solved = None
+        self.auto_balrog = False
+
+        self.finding_muyoung = False
+        self.muyoung_pos = (0, 0)
 
     def start(self):
         """
@@ -86,15 +91,46 @@ class Bot(Configurable):
         next_channel_change = random.randint(2500, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
-
+        last_loot_rotation = time.time()
         while True:
-            if config.enabled and len(config.routine) > 0:
-                # Buff and feed pets
+            if config.enabled:
+                self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
+            if config.enabled and self.auto_balrog:
+                print(f"Finding Muyoung: {self.finding_muyoung}")
+                """
+                key down right until finding muyoung
+                """
+                now = time.time()
+
                 self.command_book.buff.main()
                 pet_settings = config.gui.settings.pets
                 auto_feed = pet_settings.auto_feed.get()
                 num_pets = pet_settings.num_pets.get()
+
+                if auto_feed and now - last_fed > 1200 / num_pets:
+                    press(self.config['Feed pet'], 1)
+                    last_fed = now
+                    print(
+                        f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
+
+                self.interact_muyoung(isEnter=True)
+                time.sleep(1.5)
+                self.fight_balrog()
+                time.sleep(1)
+                # self.loot_map()
+                time.sleep(1)
+                self.interact_muyoung(isEnter=False)
+                time.sleep(2)
+
+            if config.enabled and len(config.routine) > 0:
+
+                # Buff and feed pets
                 now = time.time()
+                self.command_book.buff.main()
+                pet_settings = config.gui.settings.pets
+                auto_feed = pet_settings.auto_feed.get()
+                num_pets = pet_settings.num_pets.get()
+
                 if auto_feed and now - last_fed > 1200 / num_pets:
                     press(self.config['Feed pet'], 1)
                     last_fed = now
@@ -107,16 +143,14 @@ class Bot(Configurable):
 
                 element = config.routine[config.routine.index]
                 if self.other_players > 0:
-                    print(self.other_players, "other players detected")
                     if players_detected_time is None:
                         players_detected_time = now
+                    print(
+                        f"Players detected time: {now - players_detected_time}")
                     if now - players_detected_time > 10:
                         skip_step = True
                     if now - players_detected_time > 20 and skip_step:
-                        print(
-                            f"Player detected for {now - players_detected_time} seconds, change channel now")
-                        self.change_channel()
-                        last_changed_server = now
+                        self.go_fm()
                 else:
                     players_detected_time = None
                     skip_step = False
@@ -126,7 +160,7 @@ class Bot(Configurable):
                         f"change channel after {next_channel_change} seconds")
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(1800, 3000)
+                    next_channel_change = random.randint(1800, 2000)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
@@ -151,6 +185,97 @@ class Bot(Configurable):
                     config.routine.step()
             else:
                 time.sleep(0.01)
+
+    def interact_muyoung(self, isEnter=True):
+        """
+        Moves to the right until muyoung is found on the screen and click him
+        :return:        None
+        """
+        print("interact_muyoung called")
+        self.finding_muyoung = True
+
+        time.sleep(1)
+
+        while self.finding_muyoung:
+            key_down('right')
+            key_down('z')
+
+        key_up('right')
+        key_up('z')
+        time.sleep(3)
+        self.finding_muyoung = True
+        time.sleep(2)
+        print(f"finding muyoung is: {self.finding_muyoung}")
+        if not self.finding_muyoung:
+            click(self.muyoung_pos, button='left')
+            time.sleep(1)
+            click(self.muyoung_pos, button='left')
+
+            print('\nInteracting with muyoung:')
+
+            if isEnter:
+                press('enter', 1)
+                time.sleep(1)
+                press('enter', 1)
+                time.sleep(1)
+                click(self.muyoung_pos, button='left')
+                time.sleep(1)
+                click(self.muyoung_pos, button='left')
+                time.sleep(1)
+                press('down', 1)
+                time.sleep(1)
+
+                press('enter', 1)
+                time.sleep(1)
+                press('enter', 1)
+            else:
+                press('left', 1)
+                time.sleep(1)
+
+                press('left', 1)
+                time.sleep(1)
+
+                press('enter', 1)
+                time.sleep(1)
+
+    def fight_balrog(self):
+        """
+        Moves to the right and teleport twice then hold down attack for 1 minutes straight
+        """
+
+        print("Fighting balrog")
+        # move to the right
+        key_down('right')
+        press('z', 1, down_time=0.2)
+        time.sleep(1)
+        key_up('right')
+        time.sleep(0.5)
+
+        for _ in range(30):
+            press('f', 1, down_time=0.35)
+
+        time.sleep(1)
+
+    def loot_map(self):
+        """
+        Move to the right for 5 seconds, constantly press alt to loot while moving
+        """
+        print("Looting map")
+        start_time = time.time()
+        key_down('right')
+        while time.time() - start_time < 3:
+            print(time.time() - start_time)
+            press('alt', 1, down_time=0.1)
+        key_up('right')
+        time.sleep(1)
+        end_time = time.time()
+        key_down('left')
+        while time.time() - end_time < 3:
+            print(time.time() - start_time)
+            press('alt', 1, down_time=0.1)
+        key_up('left')
+
+        # teleport twice
 
     # @utils.run_if_enabled
     # def _solve_rune(self, model):
@@ -257,6 +382,15 @@ class Bot(Configurable):
             print(
                 f"Timed out, typing out solution regardless.")
             self.type_solution(['N', 'a'])
+
+    @utils.run_if_enabled
+    def go_fm(self):
+        print("Going to FM")
+        target = (1222, 781)
+        click(target, button='left')
+        time.sleep(300)
+        press('up', 2)
+        time.sleep(0.1)
 
     @utils.run_if_enabled
     def change_channel(self):

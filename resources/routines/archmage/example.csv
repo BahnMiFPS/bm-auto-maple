@@ -1,0 +1,6 @@
+*, x=0.838, y=0.495, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=3
+*, x=0.394, y=0.495, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=2
+*, x=0.394, y=0.434, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1

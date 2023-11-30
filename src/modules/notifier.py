@@ -37,6 +37,8 @@ ELITE_TEMPLATE = cv2.imread('assets/elite_template.jpg', 0)
 CAPTCHA_TEMPLATE = cv2.imread('assets/captcha_warning.png', 0)
 DEBUG = False
 
+MUYOUNG_TEMPLATE = cv2.imread('assets/muyoung.png', 0)
+
 
 def schedule_coroutine(loop, coroutine):
     loop.call_soon_threadsafe(lambda: asyncio.create_task(coroutine))
@@ -88,6 +90,8 @@ class Notifier:
                 if np.count_nonzero(gray < 15) / height / width > self.room_change_threshold:
                     if last_black_screen_alert is None or now - last_black_screen_alert > 5:
                         # self._alert('siren')
+                        if config.bot.auto_balrog:
+                            return
                         print("Black screen detected")
 
                         time.sleep(5)
@@ -128,6 +132,27 @@ class Notifier:
                     print(
                         f"Quitting game due to captcha start_time > {self.captcha_alert_delay}")
                     config.bot.captcha_timeout = True
+
+                if config.bot.finding_muyoung:
+                    print("Finding muyoung from notifier")
+                    # Convert the frame to grayscale
+                    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                    # Match the template
+                    result = cv2.matchTemplate(
+                        gray_frame, MUYOUNG_TEMPLATE, cv2.TM_CCOEFF_NORMED)
+                    if result.any():
+                        time.sleep(0.1)
+                        _, max_val, _, max_loc = cv2.minMaxLoc(result)
+
+                        # Calculate the center of the matched area
+                        muyoung_center = (
+                            max_loc[0] + MUYOUNG_TEMPLATE.shape[1] // 2, max_loc[1] + MUYOUNG_TEMPLATE.shape[0] // 2)
+
+                        if max_val > 0.9:  # Adjust this threshold as needed
+                            time.sleep(0.1)
+                            config.bot.muyoung_pos = muyoung_center
+                            config.bot.finding_muyoung = False
 
                 if DEBUG:
                     config.bot.captcha_active = True

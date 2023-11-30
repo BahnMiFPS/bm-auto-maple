@@ -43,10 +43,10 @@ def step(direction, target):
     d_y = target[1] - config.player_pos[1]
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
-            press(Key.JUMP, 3)
+            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
         elif direction == 'up':
-            press(Key.JUMP, 1)
-    press(Key.FLASH_JUMP, num_presses)
+            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+    press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
 
 
 class Adjust(Command):
@@ -198,6 +198,56 @@ class ChainCombo(Command):
             config.layout.add(*config.player_pos)
 
 
+class ReverseChainCombo(Command):
+    """
+    ChainCombo in a given direction, or towards the center of the map if
+    no direction is specified. Adds the player's position to the current
+    Layout if necessary.
+    Can add a number of repetitions to the command.
+    """
+
+    def __init__(self, direction='none', repetitions=1):
+        super().__init__(locals())
+        self.direction = direction
+        self.repetitions = int(repetitions)
+
+    def main(self):
+        # directional handler
+        for _ in range(self.repetitions):
+            if self.direction != 'none':
+                current_direction = self.direction
+            else:
+                if config.player_pos[0] > 0.5:
+                    current_direction = 'left'
+                else:
+                    current_direction = 'right'
+            reverse_direction = 'left' if current_direction == 'right' else 'right'
+            key_down(reverse_direction)
+            time.sleep(0.2)
+            # Press space (jump) and wait 200 milliseconds
+            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+            press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
+            key_up(reverse_direction)
+
+            # Press 'z' and wait 200 milliseconds
+            # press(Key.FLASH_JUMP, 2)
+            key_down(current_direction)
+            time.sleep(0.1)
+            # Press 'x' three times with 50 milliseconds between each press
+            press(Key.FLYING_ASSAULTER, 1, down_time=0.1, up_time=0.05)
+
+            time.sleep(0.8)  # Wait 800 milliseconds before the next sequence
+
+            # Press 'c' three times with 50 milliseconds between each press
+            press(Key.BLOODY_STORM, 2)
+            key_up(current_direction)
+            # directional handler
+            # Wait 500 milliseconds after the combo is done
+            time.sleep(utils.rand_float(0.6, 1))
+        if settings.record_layout:
+            config.layout.add(*config.player_pos)
+
+
 class BloodyStorm(Command):
     """
     BloodyStorm in a given direction, or towards the center of the map if
@@ -222,3 +272,32 @@ class BloodyStorm(Command):
                     press('right', 1, down_time=0.3, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
             time.sleep(0.25)
+
+
+class JumpFlashToRopes(Command):
+    """
+    Jump Flash in a given direction. 
+    Hold up for x amount of seconds to be attached to the ropes
+    """
+
+    def __init__(self, direction='none', duration=1.0):
+        super().__init__(locals())
+        self.direction = direction
+        self.duration = float(duration)
+
+    def main(self):
+        # directional handler
+        if self.direction != 'none':
+            current_direction = self.direction
+        else:
+            if config.player_pos[0] > 0.5:
+                current_direction = 'left'
+            else:
+                current_direction = 'right'
+        key_down(current_direction)
+        press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+        press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
+        key_down('up')
+        key_up(current_direction)
+        time.sleep(self.duration)
+        key_up('up')

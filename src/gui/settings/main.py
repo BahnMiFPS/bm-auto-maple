@@ -5,6 +5,7 @@ from src.gui.interfaces import KeyBindings
 from src.gui.settings.pets import Pets
 from src.gui.interfaces import Tab, Frame
 from src.common import config
+from src.gui.settings.balrog import Balrog
 
 
 class Settings(Tab):
@@ -12,7 +13,7 @@ class Settings(Tab):
         super().__init__(parent, 'Settings', **kwargs)
 
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(3, weight=1)
+        self.columnconfigure(4, weight=1)
 
         self.column1 = Frame(self)
         self.column1.grid(row=0, column=1, sticky=tk.N, padx=10, pady=10)
@@ -25,7 +26,8 @@ class Settings(Tab):
             side=tk.TOP, fill='x', expand=True, pady=(10, 0))
         self.pets = Pets(self.column1)
         self.pets.pack(side=tk.TOP, fill='x', expand=True, pady=(10, 0))
-
+        self.balrog = Balrog(self.column1)
+        self.balrog.pack(side=tk.TOP, fill='x', expand=True, pady=(10, 0))
         self.column2 = Frame(self)
         self.column2.grid(row=0, column=2, sticky=tk.N, padx=10, pady=10)
         self.class_bindings = KeyBindings(

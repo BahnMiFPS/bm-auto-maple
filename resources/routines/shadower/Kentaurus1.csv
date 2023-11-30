@@ -4,3 +4,5 @@ $, target=move_tolerance, value=2
 *, x=0.645, y=0.636, frequency=1, skip=False, adjust=False
     ChainCombo, direction=right, repetitions=1
     ChainCombo, direction=left, repetitions=1
+*, x=0.645, y=0.636, frequency=10, skip=False, adjust=False
+    ChainCombo, direction=left, repetitions=1

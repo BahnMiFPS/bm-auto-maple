@@ -1,0 +1,3 @@
+*, x=0.424, y=0.616, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=left, repetitions=1
+    ReverseChainCombo, direction=right, repetitions=1
