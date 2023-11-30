@@ -5,12 +5,14 @@ from src.common.interfaces import Configurable
 
 class Pets(LabelFrame):
     def __init__(self, parent, **kwargs):
-        super().__init__(parent, 'Pets', **kwargs)
+        super().__init__(parent, 'Pets and Buffs', **kwargs)
 
         self.pet_settings = PetSettings('pets')
-        self.auto_feed = tk.BooleanVar(value=self.pet_settings.get('Auto-feed'))
+        self.auto_feed = tk.BooleanVar(
+            value=self.pet_settings.get('Auto-feed'))
         self.num_pets = tk.IntVar(value=self.pet_settings.get('Num pets'))
-
+        self.pet_auto_buff = tk.BooleanVar(
+            value=self.pet_settings.get('Auto-buff'))
         feed_row = Frame(self)
         feed_row.pack(side=tk.TOP, fill='x', expand=True, pady=5, padx=5)
         check = tk.Checkbutton(
@@ -20,7 +22,15 @@ class Pets(LabelFrame):
             command=self._on_change
         )
         check.pack()
-
+        pet_buff_row = Frame(self)
+        pet_buff_row.pack(side=tk.TOP, fill='x', expand=True, pady=5, padx=5)
+        buff_check = tk.Checkbutton(
+            feed_row,
+            variable=self.auto_feed,
+            text='Auto-buff',
+            command=self._on_change
+        )
+        buff_check.pack()
         num_row = Frame(self)
         num_row.pack(side=tk.TOP, fill='x', expand=True, pady=(0, 5), padx=5)
         label = tk.Label(num_row, text='Number of pets to feed:')
@@ -46,6 +56,7 @@ class Pets(LabelFrame):
 class PetSettings(Configurable):
     DEFAULT_CONFIG = {
         'Auto-feed': False,
+        'Auto-buff': False,
         'Num pets': 1
     }
 
