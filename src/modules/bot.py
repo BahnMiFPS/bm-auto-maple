@@ -91,7 +91,7 @@ class Bot(Configurable):
         next_channel_change = random.randint(2500, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
-        last_loot_rotation = time.time()
+        # last_loot_rotation = time.time()
         while True:
             if config.enabled:
                 self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
@@ -106,7 +106,6 @@ class Bot(Configurable):
                 pet_settings = config.gui.settings.pets
                 auto_feed = pet_settings.auto_feed.get()
                 num_pets = pet_settings.num_pets.get()
-                auto_buff = pet_settings.pet_auto_buff.get()
 
                 if auto_feed and now - last_fed > 1200 / num_pets:
                     press(self.config['Feed pet'], 1)

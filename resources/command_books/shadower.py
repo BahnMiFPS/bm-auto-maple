@@ -118,36 +118,19 @@ class Buff(Command):
         # if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
         #     press(Key.RAID,  1, down_time=0.3)
         #     self.cd20_buff_time = now
-        pet_settings = config.gui.settings.pets
-        pet_auto_buff = pet_settings.pet_auto_buff.get()
-
-        if pet_auto_buff:
-            if self.decent_buff_time == 0 or self.cd120_buff_time == 0:
-                press(Key.ATTACK, 3)
-                time.sleep(0.1)
-                press(Key.THORNS,  1, down_time=0.3)
-                time.sleep(5.0)
-                press(Key.HASTE,  1, down_time=0.3)
-                time.sleep(3.0)
-                self.decent_buff_time = now
-                key_down(Key.FINAL_CUT)
-                time.sleep(1.0)
-                key_up(Key.FINAL_CUT)
-                self.cd120_buff_time = now
-        elif not pet_auto_buff:
-            if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
-                press(Key.ATTACK, 3)
-                time.sleep(0.1)
-                press(Key.THORNS,  1, down_time=0.3)
-                time.sleep(5.0)
-                press(Key.HASTE,  1, down_time=0.3)
-                time.sleep(3.0)
-                self.decent_buff_time = now
-            if self.cd120_buff_time == 0 or now - self.cd120_buff_time > 120:
-                key_down(Key.FINAL_CUT)
-                time.sleep(1.0)
-                key_up(Key.FINAL_CUT)
-                self.cd120_buff_time = now
+        if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
+            press(Key.ATTACK, 3)
+            time.sleep(0.1)
+            press(Key.THORNS,  1, down_time=0.3)
+            time.sleep(5.0)
+            press(Key.HASTE,  1, down_time=0.3)
+            time.sleep(3.0)
+            self.decent_buff_time = now
+        if self.cd120_buff_time == 0 or now - self.cd120_buff_time > 120:
+            key_down(Key.FINAL_CUT)
+            time.sleep(1.0)
+            key_up(Key.FINAL_CUT)
+            self.cd120_buff_time = now
 
 
 class FlashJump(Command):
