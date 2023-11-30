@@ -407,7 +407,7 @@ class Bot(Configurable):
         press('enter', 1)
         time.sleep(4)
         press('ctrl', 3)
-        self.command_book.buff.main(reset=True)
+        self.command_book.buff.main()
         time.sleep(1)
         self.players_detected_time = None
         # config.listener.toggle_enabled()

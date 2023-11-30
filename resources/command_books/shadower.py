@@ -23,6 +23,7 @@ class Key:
     FLYING_ASSAULTER = 'x'
     BLOODY_STORM = 'c'
     ATTACK = 'v'
+    CHAIN_OF_HELL = 'f'
 
 
 #########################
@@ -309,3 +310,11 @@ class JumpFlashToRopes(Command):
         key_down('up')
         time.sleep(self.duration)
         key_up('up')
+
+
+class ChainOfHell(Command):
+    """Use Chain Of Hell."""
+
+    def main(self):
+        press(ChainOfHell, 1, down_time=0.1, up_time=0.05)
+        time.sleep(0.5)
