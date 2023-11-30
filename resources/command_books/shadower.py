@@ -24,6 +24,8 @@ class Key:
     BLOODY_STORM = 'c'
     ATTACK = 'v'
     CHAIN_OF_HELL = 'f'
+    UPPER_STAB = 'f2'
+    SUDDEN_RAID = 'f1'
 
 
 #########################
@@ -36,9 +38,6 @@ def step(direction, target):
     Should not press any arrow keys, as those are handled by Kaizen Auto.
     """
 
-    num_presses = 2
-    if direction == 'up' or direction == 'down':
-        num_presses = 1
     if config.stage_fright and direction != 'up' and utils.bernoulli(0.75):
         time.sleep(utils.rand_float(0.1, 0.3))
     d_y = target[1] - config.player_pos[1]
@@ -107,7 +106,7 @@ class Buff(Command):
     def __init__(self):
         super().__init__(locals())
         self.cd20_buff_time = 0
-        self.cd120_buff_time = 0
+        self.cd100_buff_time = 0
         self.cd240_buff_time = 0
         self.cd900_buff_time = 0
         self.decent_buff_time = 0
@@ -126,11 +125,12 @@ class Buff(Command):
             press(Key.HASTE,  1, down_time=0.3)
             time.sleep(3.0)
             self.decent_buff_time = now
-        if self.cd120_buff_time == 0 or now - self.cd120_buff_time > 120:
+        if self.cd100_buff_time == 0 or now - self.cd100_buff_time > 100:
+            time.sleep(1)
             key_down(Key.FINAL_CUT)
-            time.sleep(1.0)
+            time.sleep(2)
             key_up(Key.FINAL_CUT)
-            self.cd120_buff_time = now
+            self.cd100_buff_time = now
 
 
 class FlashJump(Command):
@@ -273,7 +273,7 @@ class BloodyStorm(Command):
                 else:
                     press('right', 1, down_time=0.3, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
-            time.sleep(0.2)
+            time.sleep(0.25)
 
 
 class UsePortal(Command):
@@ -318,3 +318,11 @@ class ChainOfHell(Command):
     def main(self):
         press(Key.CHAIN_OF_HELL, 1, down_time=0.1, up_time=0.05)
         time.sleep(0.5)
+
+
+class SuddenRaid(Command):
+    """Use Sudden Raid."""
+
+    def main(self):
+        press(Key.SUDDEN_RAID, 1, down_time=0.1, up_time=0.05)
+        time.sleep(1)

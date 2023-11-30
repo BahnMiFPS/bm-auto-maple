@@ -154,13 +154,13 @@ class Bot(Configurable):
                 else:
                     players_detected_time = None
                     skip_step = False
-                # change channel after every 30-60 minutes
+                # change channel after every 45 minutes - 1 hour
                 if now - last_changed_server > next_channel_change:
                     print(
                         f"change channel after {next_channel_change} seconds")
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(1800, 2000)
+                    next_channel_change = random.randint(2400, 3600)
 
                 if self.captcha_active:
                     self.captcha_timeout = False
