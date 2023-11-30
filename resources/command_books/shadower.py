@@ -195,7 +195,7 @@ class ChainCombo(Command):
             key_up(current_direction)
             # directional handler
             # Wait 500 milliseconds after the combo is done
-            time.sleep(utils.rand_float(0.6, 1))
+            time.sleep(utils.rand_float(0.7, 1))
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -244,7 +244,7 @@ class ReverseChainCombo(Command):
             key_up(current_direction)
             # directional handler
             # Wait 500 milliseconds after the combo is done
-            time.sleep(utils.rand_float(0.6, 1))
+            time.sleep(utils.rand_float(0.7, 1))
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
