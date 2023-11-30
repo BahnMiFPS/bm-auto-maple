@@ -130,6 +130,7 @@ class Buff(Command):
             key_down(Key.FINAL_CUT)
             time.sleep(2)
             key_up(Key.FINAL_CUT)
+            time.sleep(2)
             self.cd100_buff_time = now
 
 

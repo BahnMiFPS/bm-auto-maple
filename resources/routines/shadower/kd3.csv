@@ -6,7 +6,7 @@
     ReverseChainCombo, direction=right, repetitions=1
 *, x=0.748, y=0.777, frequency=1, skip=False, adjust=True
     Wait, duration=1
-    JumpFlashToRopes, direction=right, duration=3.5
+    JumpFlashToRopes, direction=left, duration=3.5
 *, x=0.631, y=0.485, frequency=1, skip=False, adjust=False
     ReverseChainCombo, direction=right, repetitions=1
     BloodyStorm, direction=left, repetitions=1
