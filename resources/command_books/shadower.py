@@ -316,5 +316,5 @@ class ChainOfHell(Command):
     """Use Chain Of Hell."""
 
     def main(self):
-        press(ChainOfHell, 1, down_time=0.1, up_time=0.05)
+        press(Key.CHAIN_OF_HELL, 1, down_time=0.1, up_time=0.05)
         time.sleep(0.5)
