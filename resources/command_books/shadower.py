@@ -125,13 +125,13 @@ class Buff(Command):
             press(Key.HASTE,  1, down_time=0.3)
             time.sleep(3.0)
             self.decent_buff_time = now
-        if self.cd100_buff_time == 0 or now - self.cd100_buff_time > 100:
-            time.sleep(1)
-            key_down(Key.FINAL_CUT)
-            time.sleep(2)
-            key_up(Key.FINAL_CUT)
-            time.sleep(2)
-            self.cd100_buff_time = now
+        # if self.cd100_buff_time == 0 or now - self.cd100_buff_time > 100:
+        #     time.sleep(1)
+        #     key_down(Key.FINAL_CUT)
+        #     time.sleep(2)
+        #     key_up(Key.FINAL_CUT)
+        #     time.sleep(2)
+        #     self.cd100_buff_time = now
 
 
 class FlashJump(Command):
@@ -326,4 +326,22 @@ class SuddenRaid(Command):
 
     def main(self):
         press(Key.SUDDEN_RAID, 1, down_time=0.1, up_time=0.05)
+        time.sleep(1)
+
+
+class FinalCut(Command):
+    """Use FinalCut."""
+
+    def __init__(self, direction='right', duration=1.0):
+        super().__init__(locals())
+        self.direction = direction
+        self.duration = float(duration)
+
+    def main(self):
+
+        press(self.direction, 1, down_time=0.05, up_time=0.05)
+        time.sleep(0.5)
+        key_down(Key.FINAL_CUT)
+        time.sleep(2)
+        key_up(Key.FINAL_CUT)
         time.sleep(1)
