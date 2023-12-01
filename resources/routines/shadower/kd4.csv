@@ -15,7 +15,7 @@ $, target=buff_cooldown, value=1800
 *, x=0.263, y=0.726, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=right, repetitions=1
 *, x=0.424, y=0.697, frequency=1, skip=False, adjust=False
-    BloodyStorm, direction=left, repetitions=2
+    ChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
 *, x=0.283, y=0.697, frequency=1, skip=False, adjust=True
     JumpFlashToRopes, direction=left, duration=1.5
@@ -42,11 +42,12 @@ $, target=buff_cooldown, value=1800
     BloodyStorm, direction=left, repetitions=1
 
 @, label=mid left 2
-*, x=0.394, y=0.697, frequency=1, skip=False, adjust=True
-    BloodyStorm, direction=left, repetitions=2
+*, x=0.434, y=0.697, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
 
 @, label=mid right
 *, x=0.394, y=0.697, frequency=1, skip=False, adjust=True
+    FlashJump, direction=right
     ChainCombo, direction=right, repetitions=1
-    BloodyStorm, direction=left, repetitions=2
+    BloodyStorm, direction=left, repetitions=1
