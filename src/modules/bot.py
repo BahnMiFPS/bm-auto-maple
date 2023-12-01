@@ -154,9 +154,9 @@ class Bot(Configurable):
                         f"Players detected time: {now - players_detected_time}")
                     if now - players_detected_time > 5:
                         skip_step = True
-                    if now - players_detected_time > 20 and skip_step:
+                    if now - players_detected_time > 30 and skip_step:
                         self.change_channel()
-                    elif now - players_detected_time > 10 and skip_step:
+                    elif now - players_detected_time > 20 and skip_step:
                         self.go_fm()
                 else:
                     players_detected_time = None
@@ -395,7 +395,7 @@ class Bot(Configurable):
         print("Going to FM")
         target = (1222, 781)
         click(target, button='left')
-        time.sleep(5)
+        time.sleep(120)
         press('up', 2)
         time.sleep(0.1)
         config.routine.back_to_first_index()
@@ -417,6 +417,8 @@ class Bot(Configurable):
         time.sleep(4)
         press('ctrl', 3)
         self.command_book.buff.main()
+        time.sleep(1)
+        config.routine.back_to_first_index()
         time.sleep(1)
         self.players_detected_time = None
         # config.listener.toggle_enabled()
