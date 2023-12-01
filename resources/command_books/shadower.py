@@ -273,8 +273,8 @@ class BloodyStorm(Command):
                     press('left', 1, down_time=0.05, up_time=0.05)
                 else:
                     press('right', 1, down_time=0.05, up_time=0.05)
-            press(Key.BLOODY_STORM, 1)
-            time.sleep(0.23)
+            press(Key.BLOODY_STORM, 2)
+            time.sleep(0.8)
 
 
 class UsePortal(Command):

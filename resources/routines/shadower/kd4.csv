@@ -1,20 +1,52 @@
+$, target=buff_cooldown, value=1800
 
 @, label=bottom floor
-*, x=0.495, y=0.889, frequency=1, skip=False, adjust=False
+*, x=0.495, y=0.889, frequency=2, skip=False, adjust=False
     FinalCut, direction=right, duration=1.0
-    ChainCombo, direction=left, repetitions=2
+    ChainCombo, direction=left, repetitions=1
+*, x=0.495, y=0.889, frequency=1, skip=False, adjust=False
+    ChainCombo, direction=left, repetitions=1
     ChainCombo, direction=right, repetitions=2
-*, x=0.848, y=0.889, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=left, repetitions=1
+*, x=0.400, y=0.889, frequency=1, skip=False, adjust=True
     JumpFlashToRopes, direction=left, duration=2
-*, x=0.667, y=0.697, frequency=1, skip=False, adjust=False
+
+@, label=mid left
+*, x=0.263, y=0.726, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=right, repetitions=1
-    BloodyStorm, direction=left, repetitions=1
-*, x=0.616, y=0.697, frequency=1, skip=False, adjust=True
-    FlashJump, direction=left
 *, x=0.424, y=0.697, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=left, repetitions=2
+    BloodyStorm, direction=right, repetitions=1
+*, x=0.283, y=0.697, frequency=1, skip=False, adjust=True
+    JumpFlashToRopes, direction=left, duration=1.5
+
+@, label=top left
+*, x=0.121, y=0.515, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=right, repetitions=1
+*, x=0.495, y=0.515, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=left, repetitions=2
+    ChainCombo, direction=right, repetitions=1
+*, x=0.404, y=0.465, frequency=2, skip=False, adjust=True
     BloodyStorm, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
-*, x=0.273, y=0.697, frequency=1, skip=False, adjust=True
-    JumpFlashToRopes, direction=left, duration=2
-*, x=0.192, y=0.515, frequency=1, skip=False, adjust=False
+
+@, label=top right
+*, x=0.465, y=0.515, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=right, repetitions=1
     BloodyStorm, direction=left, repetitions=1
+
+@, label=top left 2
+*, x=0.717, y=0.545, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=left, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
+
+@, label=mid left 2
+*, x=0.394, y=0.697, frequency=1, skip=False, adjust=True
+    BloodyStorm, direction=left, repetitions=2
+    BloodyStorm, direction=right, repetitions=1
+
+@, label=mid right
+*, x=0.394, y=0.697, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=right, repetitions=1
+    BloodyStorm, direction=left, repetitions=2
