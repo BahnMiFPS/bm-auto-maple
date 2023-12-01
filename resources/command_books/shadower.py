@@ -43,9 +43,9 @@ def step(direction, target):
     d_y = target[1] - config.player_pos[1]
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
-            press(Key.JUMP, 2, down_time=0.15, up_time=0.05)
+            press(Key.JUMP, 1, down_time=0.1, up_time=0.05)
         elif direction == 'up':
-            press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
+            press(Key.JUMP, 1, down_time=0.1, up_time=0.05)
     # press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
     # press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
     time.sleep(0.1)
@@ -92,7 +92,7 @@ class Adjust(Command):
                     else:
                         key_down('down')
                         time.sleep(0.05)
-                        press(Key.JUMP, 3, down_time=0.1)
+                        press(Key.JUMP, 1, down_time=0.1)
                         key_up('down')
                         time.sleep(0.05)
                     counter -= 1
@@ -197,7 +197,7 @@ class ChainCombo(Command):
             key_up(current_direction)
             # directional handler
             # Wait 500 milliseconds after the combo is done
-            time.sleep(utils.rand_float(0.7, 1))
+            time.sleep(0.8)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -246,7 +246,7 @@ class ReverseChainCombo(Command):
             key_up(current_direction)
             # directional handler
             # Wait 500 milliseconds after the combo is done
-            time.sleep(utils.rand_float(0.7, 1))
+            time.sleep(0.9)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
@@ -306,9 +306,9 @@ class JumpFlashToRopes(Command):
             else:
                 current_direction = 'right'
         press(current_direction, 1, down_time=0.05, up_time=0.05)
-        press(Key.JUMP, 1, down_time=0.15, up_time=0.05)
-        press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
+        press(Key.JUMP, 1, down_time=0.1, up_time=0.05)
         key_down('up')
+        press(Key.FLASH_JUMP, 1, down_time=0.05, up_time=0.05)
         time.sleep(self.duration)
         key_up('up')
 
