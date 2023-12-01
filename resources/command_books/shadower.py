@@ -270,11 +270,11 @@ class BloodyStorm(Command):
                 press(self.direction, 1, down_time=0.05, up_time=0.05)
             else:
                 if config.player_pos[0] > 0.5:
-                    press('left', 1, down_time=0.3, up_time=0.05)
+                    press('left', 1, down_time=0.05, up_time=0.05)
                 else:
-                    press('right', 1, down_time=0.3, up_time=0.05)
+                    press('right', 1, down_time=0.05, up_time=0.05)
             press(Key.BLOODY_STORM, 1)
-            time.sleep(0.25)
+            time.sleep(0.23)
 
 
 class UsePortal(Command):

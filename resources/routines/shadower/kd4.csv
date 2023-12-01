@@ -4,3 +4,17 @@
     FinalCut, direction=right, duration=1.0
     ChainCombo, direction=left, repetitions=2
     ChainCombo, direction=right, repetitions=2
+*, x=0.848, y=0.889, frequency=1, skip=False, adjust=True
+    JumpFlashToRopes, direction=left, duration=2
+*, x=0.667, y=0.697, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=right, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
+*, x=0.616, y=0.697, frequency=1, skip=False, adjust=True
+    FlashJump, direction=left
+*, x=0.424, y=0.697, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=left, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
+*, x=0.273, y=0.697, frequency=1, skip=False, adjust=True
+    JumpFlashToRopes, direction=left, duration=2
+*, x=0.192, y=0.515, frequency=1, skip=False, adjust=False
+    BloodyStorm, direction=left, repetitions=1

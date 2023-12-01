@@ -1,3 +1,4 @@
+$, target=move_tolerance, value=3.0
 *, x=0.424, y=0.616, frequency=1, skip=False, adjust=False
-    ReverseChainCombo, direction=left, repetitions=1
-    ReverseChainCombo, direction=right, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
