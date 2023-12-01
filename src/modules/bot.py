@@ -25,6 +25,9 @@ def schedule_coroutine(loop, coroutine):
     loop.call_soon_threadsafe(lambda: asyncio.create_task(coroutine))
 
 
+DEBUG = True
+
+
 class Bot(Configurable):
     """A class that interprets and executes user-defined routines."""
 
@@ -101,8 +104,10 @@ class Bot(Configurable):
                 key down right until finding muyoung
                 """
                 now = time.time()
+                # Turn book off for debug
 
-                self.command_book.buff.main()
+                if not DEBUG:
+                    self.command_book.buff.main()
                 pet_settings = config.gui.settings.pets
                 auto_feed = pet_settings.auto_feed.get()
                 num_pets = pet_settings.num_pets.get()
@@ -147,9 +152,11 @@ class Bot(Configurable):
                         players_detected_time = now
                     print(
                         f"Players detected time: {now - players_detected_time}")
-                    if now - players_detected_time > 10:
+                    if now - players_detected_time > 5:
                         skip_step = True
                     if now - players_detected_time > 20 and skip_step:
+                        self.change_channel()
+                    elif now - players_detected_time > 10 and skip_step:
                         self.go_fm()
                 else:
                     players_detected_time = None
@@ -388,9 +395,11 @@ class Bot(Configurable):
         print("Going to FM")
         target = (1222, 781)
         click(target, button='left')
-        time.sleep(300)
+        time.sleep(5)
         press('up', 2)
         time.sleep(0.1)
+        config.routine.back_to_first_index()
+        time.sleep(5)
 
     @utils.run_if_enabled
     def change_channel(self):

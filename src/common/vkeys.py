@@ -216,7 +216,6 @@ def press(key, n, down_time=0.05, up_time=0.1):
     :param up_time:     Duration of release (in seconds).
     :return:            None
     """
-
     for _ in range(n):
         key_down(key)
         time.sleep(down_time * (0.8 + 0.4 * random()))

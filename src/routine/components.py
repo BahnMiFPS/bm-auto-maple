@@ -15,13 +15,16 @@ class Component:
 
     def __init__(self, *args, **kwargs):
         if len(args) > 1:
-            raise TypeError('Component superclass __init__ only accepts 1 (optional) argument: LOCALS')
+            raise TypeError(
+                'Component superclass __init__ only accepts 1 (optional) argument: LOCALS')
         if len(kwargs) != 0:
-            raise TypeError('Component superclass __init__ does not accept any keyword arguments')
+            raise TypeError(
+                'Component superclass __init__ does not accept any keyword arguments')
         if len(args) == 0:
             self.kwargs = {}
         elif type(args[0]) != dict:
-            raise TypeError("Component superclass __init__ only accepts arguments of type 'dict'.")
+            raise TypeError(
+                "Component superclass __init__ only accepts arguments of type 'dict'.")
         else:
             self.kwargs = args[0].copy()
             self.kwargs.pop('__class__')
@@ -37,7 +40,8 @@ class Component:
     def update(self, *args, **kwargs):
         """Updates this Component's constructor arguments with new arguments."""
 
-        self.__class__(*args, **kwargs)     # Validate arguments before actually updating values
+        # Validate arguments before actually updating values
+        self.__class__(*args, **kwargs)
         self.__init__(*args, **kwargs)
 
     def info(self):
@@ -81,7 +85,8 @@ class Point(Component):
             move = config.bot.command_book['move']
             move(*self.location).execute()
             if self.adjust:
-                adjust = config.bot.command_book['adjust']      # TODO: adjust using step('up')?
+                # TODO: adjust using step('up')?
+                adjust = config.bot.command_book['adjust']
                 adjust(*self.location).execute()
             for command in self.commands:
                 command.execute()
@@ -236,6 +241,8 @@ class Move(Command):
         self.prev_direction = ''
 
     def _new_direction(self, new):
+        if new == 'up':
+            return
         key_down(new)
         if self.prev_direction and self.prev_direction != new:
             key_up(self.prev_direction)
@@ -245,10 +252,12 @@ class Move(Command):
         counter = self.max_steps
         path = config.layout.shortest_path(config.player_pos, self.target)
         for i, point in enumerate(path):
+            print()
             toggle = True
             self.prev_direction = ''
             local_error = utils.distance(config.player_pos, point)
             global_error = utils.distance(config.player_pos, self.target)
+            start_time = time.time()
             while config.enabled and counter > 0 and \
                     local_error > settings.move_tolerance and \
                     global_error > settings.move_tolerance:
@@ -283,6 +292,13 @@ class Move(Command):
                 local_error = utils.distance(config.player_pos, point)
                 global_error = utils.distance(config.player_pos, self.target)
                 toggle = not toggle
+                if global_error > 0.1:
+                    # we give the bot 3 seconds to adjust themselves.
+                    # if they can't, we reload the routine.
+                    if time.time() - start_time > 3:
+                        print("going back to index 0")
+                        config.routine.back_to_first_index()
+
             if self.prev_direction:
                 key_up(self.prev_direction)
 
@@ -364,5 +380,6 @@ class Buff(Command):
     """Undefined 'buff' command for the default command book."""
 
     def main(self):
-        print("\n[!] 'Buff' command not implemented in current command book, aborting process.")
+        print(
+            "\n[!] 'Buff' command not implemented in current command book, aborting process.")
         config.enabled = False

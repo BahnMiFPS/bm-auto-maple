@@ -110,7 +110,7 @@ class Notifier:
                 # Check for other players entering the map
                 filtered = utils.filter_color(minimap, OTHER_RANGES)
                 others = len(utils.multi_match(
-                    filtered, OTHER_TEMPLATE, threshold=0.5))
+                    filtered, OTHER_TEMPLATE, threshold=0.3))
                 config.stage_fright = others > 0
                 if others != config.bot.other_players:
                     if others > config.bot.other_players:

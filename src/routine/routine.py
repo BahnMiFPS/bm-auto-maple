@@ -163,6 +163,12 @@ class Routine:
 
         self.index = (self.index + 1) % len(self.sequence)
 
+    @utils.run_if_enabled
+    def back_to_first_index(self):
+        """Reset the index to 0"""
+
+        self.index = 0
+
     def save(self, file_path):
         """Encodes and saves the current Routine at location PATH."""
 
