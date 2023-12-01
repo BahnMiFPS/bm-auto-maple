@@ -25,7 +25,7 @@ def schedule_coroutine(loop, coroutine):
     loop.call_soon_threadsafe(lambda: asyncio.create_task(coroutine))
 
 
-DEBUG = True
+DEBUG = False
 
 
 class Bot(Configurable):
