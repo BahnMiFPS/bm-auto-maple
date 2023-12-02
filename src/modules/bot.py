@@ -91,7 +91,7 @@ class Bot(Configurable):
         last_fed = time.time()
         last_changed_server = time.time()
         players_detected_time = None
-        next_channel_change = random.randint(2500, 3600)
+        next_channel_change = random.randint(9999, 99999)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
         # last_loot_rotation = time.time()
@@ -167,7 +167,7 @@ class Bot(Configurable):
                         f"change channel after {next_channel_change} seconds")
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(2400, 3600)
+                    next_channel_change = random.randint(9999, 99999)
 
                 if self.captcha_active:
                     self.captcha_timeout = False

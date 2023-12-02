@@ -70,7 +70,8 @@ SETTING_VALIDATORS = {
     'move_tolerance': float,
     'adjust_tolerance': float,
     'record_layout': validate_boolean,
-    'buff_cooldown': validate_nonnegative_int
+    'buff_cooldown': validate_nonnegative_int,
+    'finalcut_cooldown': validate_nonnegative_int
 }
 
 
@@ -82,6 +83,7 @@ def reset():
     adjust_tolerance = 0.01
     record_layout = False
     buff_cooldown = 300
+    finalcut_cooldown = 100
 
 
 # The allowed error from the destination when moving towards a Point
@@ -96,4 +98,5 @@ record_layout = False
 # The amount of time (in seconds) to wait between each call to the 'buff' command
 buff_cooldown = 300
 
+finalcut_cooldown = 100
 reset()

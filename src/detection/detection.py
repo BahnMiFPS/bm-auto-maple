@@ -30,6 +30,9 @@ captcha_config = {
 }
 solver = TwoCaptcha(**captcha_config)
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+image_path = os.path.join(current_dir, '../../assets/hintImage.jpg')
+
 
 def load_model():
     """
@@ -213,8 +216,10 @@ def encode_image(image):
     # Encode the image to base64 and return it
     return base64.b64encode(buff.getvalue()).decode('utf-8')
 
+
 # Now wrap your API call logic with the decorator
 # The exponential backoff decorator
+base64hintImage = encode_image(cv2.imread(image_path))
 
 
 def retry_with_exponential_backoff(
@@ -293,7 +298,7 @@ def get_2captcha_solution(base64_image):
         # Increase the timeout
         start_time = time.time()
         result = solver.normal(
-            base64_image, calc=1,  hintText="For tasks involving mathematics: Solve the math problem and provide the final answer. For tasks that display text: Carefully transcribe the text exactly as it is shown.", hintImage="../../assets/hintImage.jpg")
+            base64_image, calc=1,  hintText="For tasks involving mathematics: Solve the math problem and provide the final answer. For tasks that display text: Carefully transcribe the text exactly as it is shown.", hintImage=base64hintImage)
         end_time = time.time()
         time_taken = end_time - start_time
         print(f"Time taken for Captcha: {time_taken} seconds")
