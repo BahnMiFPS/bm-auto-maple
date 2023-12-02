@@ -1,56 +1,55 @@
-$, target=buff_cooldown, value=1800
+$, target=buff_cooldown, value=9999999999999999
+$, target=finalcut_cooldown, value=9999999999999999
 
 @, label=bottom floor
-*, x=0.495, y=0.926, frequency=2, skip=False, adjust=False
+*, x=0.495, y=0.889, frequency=2, skip=False, adjust=False
     FinalCut, direction=right, duration=1.0
     ChainCombo, direction=left, repetitions=1
-*, x=0.495, y=0.926, frequency=1, skip=False, adjust=False
+*, x=0.495, y=0.889, frequency=1, skip=False, adjust=False
     ChainCombo, direction=left, repetitions=1
-    ChainCombo, direction=right, repetitions=2
-    ChainCombo, direction=left, repetitions=1
-*, x=0.400, y=0.926, frequency=1, skip=False, adjust=True
+    ChainCombo, direction=right, repetitions=1
+    ReverseChainCombo, direction=right, repetitions=1
+    ReverseChainCombo, direction=left, repetitions=1
+*, x=0.382, y=0.889, frequency=1, skip=False, adjust=True
     Wait, duration=0.5
     JumpFlashToRopes, direction=left, duration=2
 
 @, label=mid left
-*, x=0.263, y=0.726, frequency=1, skip=False, adjust=False
+*, x=0.263, y=0.697, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=right, repetitions=1
-*, x=0.424, y=0.726, frequency=1, skip=False, adjust=False
+*, x=0.424, y=0.697, frequency=1, skip=False, adjust=False
     ChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
-*, x=0.283, y=0.726, frequency=1, skip=False, adjust=True
-    Wait, duration=0.5
-    JumpFlashToRopes, direction=left, duration=2
+*, x=0.051, y=0.697, frequency=1, skip=False, adjust=false
+    JumpFlashToRopes, direction=right, duration=1.5
 
 @, label=top left
-*, x=0.121, y=0.537, frequency=1, skip=False, adjust=False
-    BloodyStorm, direction=right, repetitions=1
-*, x=0.495, y=0.537, frequency=1, skip=False, adjust=False
-    BloodyStorm, direction=left, repetitions=2
-    ChainCombo, direction=right, repetitions=1
-*, x=0.404, y=0.484, frequency=2, skip=False, adjust=True
+*, x=0.303, y=0.515, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=left, repetitions=1
+    ReverseChainCombo, direction=right, repetitions=1
+    FlashJump, direction=left
+    BloodyStorm, direction=right, repetitions=1
+    ReverseChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
 
 @, label=top right
-*, x=0.465, y=0.568, frequency=1, skip=False, adjust=True
+*, x=0.510, y=0.515, frequency=1, skip=False, adjust=true
     ChainCombo, direction=right, repetitions=1
-    BloodyStorm, direction=left, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
+    ReverseChainCombo, direction=left, repetitions=1
 
 @, label=top left 2
-*, x=0.684, y=0.568, frequency=1, skip=False, adjust=True
-    ChainCombo, direction=left, repetitions=1
-    BloodyStorm, direction=right, repetitions=1
+*, x=0.666, y=0.545, frequency=1, skip=False, adjust=false
+    ReverseChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=left, repetitions=1
 
 @, label=mid left 2
-*, x=0.434, y=0.726, frequency=1, skip=False, adjust=True
-    ChainCombo, direction=left, repetitions=1
-    BloodyStorm, direction=right, repetitions=1
+*, x=0.100, y=0.697, frequency=1, skip=False, adjust=false
+    ReverseChainCombo, direction=right, repetitions=1
 
 @, label=mid right
-*, x=0.453, y=0.726, frequency=1, skip=False, adjust=True
-    Wait, duration=0.5
+*, x=0.400, y=0.697, frequency=1, skip=False, adjust=false
     FlashJump, direction=right
     ChainCombo, direction=right, repetitions=1
+    ReverseChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=left, repetitions=1
