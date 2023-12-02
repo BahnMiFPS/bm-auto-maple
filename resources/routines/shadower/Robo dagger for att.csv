@@ -1,0 +1,18 @@
+*, x=0.880, y=1.326, frequency=1, skip=False, adjust=True
+    ReverseChainCombo, direction=left, repetitions=2
+    ChainCombo, direction=right, repetitions=1
+*, x=0.530, y=1.326, frequency=1, skip=False, adjust=true
+    Wait, duration=1
+    JumpFlashToRopes, direction=left, duration=1.5
+*, x=0.600, y=1.163, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=right, repetitions=1
+    ReverseChainCombo, direction=left, repetitions=1
+*, x=0.590, y=1.163, frequency=1, skip=False, adjust=true
+    Wait, duration=1
+    JumpFlashToRopes, direction=left, duration=1.5
+*, x=0.446, y=1.033, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=right, repetitions=1
+    ChainCombo, direction=left, repetitions=1
+*, x=0.620, y=1.163, frequency=1, skip=False, adjust=true
+    ReverseChainCombo, direction=right, repetitions=1
