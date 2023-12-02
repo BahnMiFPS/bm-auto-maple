@@ -266,3 +266,33 @@ class JumpInDirection(Command):
         key_down(self.direction)
         press(Key.JUMP, 1, down_time=2, up_time=0.05)
         key_up(self.direction)
+
+
+class JumpToRopes(Command):
+    """
+    Jump Flash in a given direction. 
+    Hold up for x amount of seconds to be attached to the ropes
+    """
+
+    def __init__(self, direction='none', duration=1.0):
+        super().__init__(locals())
+        self.direction = direction
+        self.duration = float(duration)
+
+    def main(self):
+
+        # directional handler
+        if self.direction != 'none':
+            current_direction = self.direction
+        else:
+            if config.player_pos[0] > 0.5:
+                current_direction = 'left'
+            else:
+                current_direction = 'right'
+        key_down(current_direction)
+        time.sleep(0.1)
+        press(Key.JUMP, 1, down_time=0.1, up_time=0.05)
+        key_down('up')
+        time.sleep(self.duration)
+        key_up(current_direction)
+        key_up('up')

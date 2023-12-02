@@ -1,0 +1,13 @@
+*, x=0.047, y=0.558, frequency=1, skip=False, adjust=True
+    DoubleTPBigBang, direction=right, repetitions=5
+    TPBigBang, direction=left, repetitions=1
+*, x=0.868, y=0.558, frequency=1, skip=False, adjust=True
+    JumpToRopes, direction=left, duration=1.5
+*, x=0.822, y=0.411, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
+*, x=0.907, y=0.411, frequency=1, skip=False, adjust=True
+    JumpToRopes, direction=right, duration=1.5
+*, x=0.961, y=0.264, frequency=1, skip=False, adjust=False
+    BigBang, repetitions=1
+    TPBigBang, direction=left, repetitions=2
+    TPBigBang, direction=right, repetitions=1

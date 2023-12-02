@@ -22,13 +22,12 @@ load_dotenv()
 #########################
 api_key = "dontmindthis"
 CAPTCHA_API = os.getenv('CAPTCHA_API_KEY')
-print(f"CAPTCHA_API: {CAPTCHA_API}")
 captcha_config = {
     'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
     'defaultTimeout': 50,  # Set the timeout to 60 seconds
     'pollingInterval': 5,  # Set the polling interval to 5 seconds
-
 }
+
 solver = TwoCaptcha(**captcha_config)
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -299,7 +298,7 @@ def get_2captcha_solution(base64_image):
         # Increase the timeout
         start_time = time.time()
         result = solver.normal(
-            base64_image, calc=1,  hintText="Math captcha = SOLUTION ONLY PLEASE!", hintImg="assets/hintImage.jpg")
+            base64_image, calc=1,  hintText="Math captcha = SOLUTION ONLY PLEASE!", hintImg=base64hintImage)
         end_time = time.time()
         time_taken = end_time - start_time
         print(f"Time taken for Captcha: {time_taken} seconds")

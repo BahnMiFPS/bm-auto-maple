@@ -1,4 +1,5 @@
 $, target=buff_cooldown, value=1800
+$, target=finalcut_cooldown, value=1800
 
 @, label=bottom floor
 *, x=0.495, y=0.889, frequency=2, skip=False, adjust=False
@@ -25,7 +26,7 @@ $, target=buff_cooldown, value=1800
     BloodyStorm, direction=right, repetitions=1
 *, x=0.495, y=0.515, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=left, repetitions=2
-    ChainCombo, direction=right, repetitions=1
+    BloodyStorm, direction=right, repetitions=1
 *, x=0.404, y=0.465, frequency=2, skip=False, adjust=True
     BloodyStorm, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
