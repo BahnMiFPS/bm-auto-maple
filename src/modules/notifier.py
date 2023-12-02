@@ -67,7 +67,7 @@ class Notifier:
 
         self.room_change_threshold = 0.9
         self.rune_alert_delay = 270         # 4.5 minutes
-        self.captcha_alert_delay = 55       # 50 seconds
+        self.captcha_alert_delay = 50       # 50 seconds
 
     def start(self):
         """Starts this Notifier's thread."""
@@ -127,7 +127,10 @@ class Notifier:
                         config.bot.captcha_active = True
                         print(
                             f"Captcha found, setting captcha_active to {config.bot.captcha_active}")
-                        # self._ping('rune_appeared', volume=0.75)
+                        element = config.routine[config.routine.index]
+                        element.execute()
+                        config.routine.step()
+                    # self._ping('rune_appeared', volume=0.75)
                 elif now - captcha_start_time > self.captcha_alert_delay:
                     print(
                         f"Quitting game due to captcha start_time > {self.captcha_alert_delay}")

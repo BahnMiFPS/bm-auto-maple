@@ -96,36 +96,36 @@ class Bot(Configurable):
         skip_step = False
         # last_loot_rotation = time.time()
         while True:
-            if config.enabled:
-                self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
-            if config.enabled and self.auto_balrog:
-                print(f"Finding Muyoung: {self.finding_muyoung}")
-                """
-                key down right until finding muyoung
-                """
-                now = time.time()
-                # Turn book off for debug
+            # if config.enabled:
+            #     self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
+            # if config.enabled and self.auto_balrog:
+            #     print(f"Finding Muyoung: {self.finding_muyoung}")
+            #     """
+            #     key down right until finding muyoung
+            #     """
+            #     now = time.time()
+            #     # Turn book off for debug
 
-                if not DEBUG:
-                    self.command_book.buff.main()
-                pet_settings = config.gui.settings.pets
-                auto_feed = pet_settings.auto_feed.get()
-                num_pets = pet_settings.num_pets.get()
+            #     if not DEBUG:
+            #         self.command_book.buff.main()
+            #     pet_settings = config.gui.settings.pets
+            #     auto_feed = pet_settings.auto_feed.get()
+            #     num_pets = pet_settings.num_pets.get()
 
-                if auto_feed and now - last_fed > 1200 / num_pets:
-                    press(self.config['Feed pet'], 1)
-                    last_fed = now
-                    print(
-                        f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
+            #     if auto_feed and now - last_fed > 1200 / num_pets:
+            #         press(self.config['Feed pet'], 1)
+            #         last_fed = now
+            #         print(
+            #             f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
 
-                self.interact_muyoung(isEnter=True)
-                time.sleep(1.5)
-                self.fight_balrog()
-                time.sleep(1)
-                # self.loot_map()
-                time.sleep(1)
-                self.interact_muyoung(isEnter=False)
-                time.sleep(2)
+            #     self.interact_muyoung(isEnter=True)
+            #     time.sleep(1.5)
+            #     self.fight_balrog()
+            #     time.sleep(1)
+            #     # self.loot_map()
+            #     time.sleep(1)
+            #     self.interact_muyoung(isEnter=False)
+            #     time.sleep(2)
 
             if config.enabled and len(config.routine) > 0:
 
@@ -385,7 +385,7 @@ class Bot(Configurable):
             print(f"Solution found: {solution}")
             self.last_captcha_id = solution['captchaId']
             self.type_solution(solution)
-        if self.captcha_timeout and not solution:
+        if self.captcha_timeout:
             print(
                 f"Timed out, typing out solution regardless.")
             self.type_solution(['N', 'a'])
@@ -425,10 +425,12 @@ class Bot(Configurable):
 
     @utils.run_if_enabled
     def type_solution(self, solution):
+        print("Typing solution:")
         target = (572, 229)  # Coordinates to click the solution box
         click(target, button='left')
         for digit in solution['code']:
             if digit.isupper():
+                print(digit, end=", ")
                 key_down('shift')
                 press(digit, 1, down_time=0.1)
                 key_up('shift')
