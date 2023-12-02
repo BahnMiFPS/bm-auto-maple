@@ -299,7 +299,7 @@ def get_2captcha_solution(base64_image):
         # Increase the timeout
         start_time = time.time()
         result = solver.normal(
-            base64_image, calc=1,  hintText="Math captcha = SOLUTION ONLY PLEASE!", hintImg="./hintImage.jpg")
+            base64_image, calc=1,  hintText="Math captcha = SOLUTION ONLY PLEASE!", hintImg="assets/hintImage.jpg")
         end_time = time.time()
         time_taken = end_time - start_time
         print(f"Time taken for Captcha: {time_taken} seconds")
