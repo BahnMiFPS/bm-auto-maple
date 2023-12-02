@@ -71,19 +71,21 @@ SETTING_VALIDATORS = {
     'adjust_tolerance': float,
     'record_layout': validate_boolean,
     'buff_cooldown': validate_nonnegative_int,
-    'finalcut_cooldown': validate_nonnegative_int
+    'finalcut_cooldown': validate_nonnegative_int,
+    'finalcut_direction': validate_arrows,
 }
 
 
 def reset():
     """Resets all settings to their default values."""
 
-    global move_tolerance, adjust_tolerance, record_layout, buff_cooldown
+    global move_tolerance, adjust_tolerance, record_layout, buff_cooldown, finalcut_cooldown, finalcut_direction
     move_tolerance = 0.1
     adjust_tolerance = 0.01
     record_layout = False
     buff_cooldown = 300
     finalcut_cooldown = 100
+    finalcut_direction = 'right'
 
 
 # The allowed error from the destination when moving towards a Point
@@ -99,4 +101,6 @@ record_layout = False
 buff_cooldown = 300
 
 finalcut_cooldown = 100
+finalcut_direction = 'right'
+
 reset()

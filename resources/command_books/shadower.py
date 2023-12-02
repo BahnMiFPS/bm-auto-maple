@@ -126,6 +126,7 @@ class Buff(Command):
             time.sleep(3.0)
             self.decent_buff_time = now
         if self.cd100_buff_time == 0 or now - self.cd100_buff_time > settings.finalcut_cooldown:
+            press(settings.finalcut_direction, 1, down_time=0.15, up_time=0.05)
             time.sleep(1)
             key_down(Key.FINAL_CUT)
             time.sleep(2)
