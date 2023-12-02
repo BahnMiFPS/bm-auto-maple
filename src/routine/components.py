@@ -292,7 +292,7 @@ class Move(Command):
                 local_error = utils.distance(config.player_pos, point)
                 global_error = utils.distance(config.player_pos, self.target)
                 toggle = not toggle
-                if global_error > 0.1:
+                if global_error > 0.05:
                     # we give the bot 3 seconds to adjust themselves.
                     # if they can't, we reload the routine.
                     if time.time() - start_time > 3:
