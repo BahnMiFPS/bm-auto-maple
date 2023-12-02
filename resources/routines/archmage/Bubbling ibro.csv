@@ -1,0 +1,44 @@
+$, target=move_tolerance, value=0.055
+*, x=0.148, y=0.244, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.148, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.148, y=0.184, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.184, y=0.152, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.308, y=0.152, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.308, y=0.200, frequency=1, skip=False, adjust=True
+    Wait, duration=0.1
+    BigBang, repetitions=1
+*, x=0.404, y=0.200, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=3
+*, x=0.416, y=0.168, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.488, y=0.168, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.504, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.572, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.644, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+    Blizzard
+*, x=0.648, y=0.244, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.740, y=0.244, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.736, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.868, y=0.212, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+*, x=0.864, y=0.244, frequency=1, skip=False, adjust=True
+    BigBang, repetitions=1
+    DoubleTPBigBang, direction=left, repetitions=7
+
+@, label=bottom floor
+*, x=0.14, y=0.244, frequency=4, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=6
+*, x=0.884, y=0.276, frequency=4, skip=False, adjust=True
+    DoubleTPBigBang, direction=left, repetitions=7
