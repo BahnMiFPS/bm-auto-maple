@@ -22,6 +22,7 @@ load_dotenv()
 #########################
 api_key = "dontmindthis"
 CAPTCHA_API = os.getenv('CAPTCHA_API_KEY')
+print(f"CAPTCHA_API: {CAPTCHA_API}")
 captcha_config = {
     'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
     'defaultTimeout': 50,  # Set the timeout to 60 seconds
