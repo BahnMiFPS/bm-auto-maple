@@ -9,7 +9,8 @@ $, target=finalcut_cooldown, value=1800
     ChainCombo, direction=left, repetitions=1
     ChainCombo, direction=right, repetitions=2
     ChainCombo, direction=left, repetitions=1
-*, x=0.400, y=0.889, frequency=1, skip=False, adjust=True
+*, x=0.370, y=0.889, frequency=1, skip=False, adjust=True
+    Wait, duration=0.7
     JumpFlashToRopes, direction=left, duration=2
 
 @, label=mid left
@@ -18,8 +19,9 @@ $, target=finalcut_cooldown, value=1800
 *, x=0.424, y=0.697, frequency=1, skip=False, adjust=False
     ChainCombo, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
-*, x=0.283, y=0.697, frequency=1, skip=False, adjust=True
-    JumpFlashToRopes, direction=left, duration=1.5
+*, x=0.223, y=0.697, frequency=1, skip=False, adjust=True
+    Wait, duration=0.7
+    JumpFlashToRopes, direction=left, duration=2
 
 @, label=top left
 *, x=0.121, y=0.515, frequency=1, skip=False, adjust=False
@@ -27,7 +29,7 @@ $, target=finalcut_cooldown, value=1800
 *, x=0.495, y=0.515, frequency=1, skip=False, adjust=False
     BloodyStorm, direction=left, repetitions=2
     BloodyStorm, direction=right, repetitions=1
-*, x=0.404, y=0.465, frequency=2, skip=False, adjust=True
+*, x=0.350, y=0.465, frequency=2, skip=False, adjust=True
     BloodyStorm, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
 
@@ -49,6 +51,7 @@ $, target=finalcut_cooldown, value=1800
 
 @, label=mid right
 *, x=0.394, y=0.697, frequency=1, skip=False, adjust=True
+    Wait, duration=0.3
     FlashJump, direction=right
     ChainCombo, direction=right, repetitions=1
     BloodyStorm, direction=left, repetitions=1
