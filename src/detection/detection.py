@@ -23,7 +23,7 @@ load_dotenv()
 api_key = "dontmindthis"
 CAPTCHA_API = os.getenv('CAPTCHA_API_KEY')
 captcha_config = {
-    'apiKey': 'b85a7dc3e0bbbe9f4ff6e01bf67480b9',
+    'apiKey': CAPTCHA_API,
     'defaultTimeout': 50,  # Set the timeout to 60 seconds
     'pollingInterval': 5,  # Set the polling interval to 5 seconds
 }
