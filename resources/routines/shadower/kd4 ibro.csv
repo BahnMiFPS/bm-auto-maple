@@ -29,7 +29,7 @@ $, target=finalcut_cooldown, value=9999999999999999
     ReverseChainCombo, direction=right, repetitions=1
     FlashJump, direction=left
     BloodyStorm, direction=right, repetitions=1
-    ReverseChainCombo, direction=left, repetitions=1
+    BloodyStorm, direction=left, repetitions=1
     BloodyStorm, direction=right, repetitions=1
 
 @, label=top right
