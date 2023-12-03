@@ -428,7 +428,16 @@ class Bot(Configurable):
         print("Typing solution:")
         target = (572, 229)  # Coordinates to click the solution box
         click(target, button='left')
-        for digit in solution['code']:
+        # Check the type of solution
+        if isinstance(solution, list):
+            characters = solution
+        elif isinstance(solution, dict) and 'code' in solution:
+            characters = list(solution['code'])
+        else:
+            print(f"Invalid solution: {solution}")
+            return
+
+        for digit in characters:
             if digit.isupper():
                 print(digit, end=", ")
                 key_down('shift')
