@@ -1,0 +1,8 @@
+$, target=move_tolerance, value=3.0
+$, target=buff_cooldown, value=5000
+$, target=finalcut_direction, value=left
+$, target=finalcut_cooldown, value=110
+*, x=0.000, y=0.000, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=left, repetitions=2
+*, x=0.000, y=0.000, frequency=1, skip=False, adjust=False
+    ReverseChainCombo, direction=right, repetitions=2
