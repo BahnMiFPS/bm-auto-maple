@@ -126,6 +126,7 @@ class Bot(Configurable):
                     last_fed = now
                     print(
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
+                press('f10', 1)
                 self.interact_muyoung(isEnter=True)
                 time.sleep(1.5)
                 self.fight_balrog()
