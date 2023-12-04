@@ -268,7 +268,7 @@ class Bot(Configurable):
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 60:  # Run for 60 seconds
+        while time.time() - start_time < 45:  # Run for 60 seconds
             press('f', 1)
 
         time.sleep(0.5)
