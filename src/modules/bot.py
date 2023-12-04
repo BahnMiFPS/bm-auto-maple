@@ -126,7 +126,6 @@ class Bot(Configurable):
                     last_fed = now
                     print(
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
-
                 self.interact_muyoung(isEnter=True)
                 time.sleep(1.5)
                 self.fight_balrog()
@@ -282,7 +281,7 @@ class Bot(Configurable):
         start_time = time.time()
         direction = 'left'  # Start by moving to the right
 
-        while time.time() - start_time < 30:  # Run for 30 seconds
+        while time.time() - start_time < 25:  # Run for 30 seconds
             key_down(direction)
             move_start_time = time.time()
 
