@@ -262,7 +262,7 @@ class Bot(Configurable):
         # move to the right
         key_down('right')
         press('z', 1, down_time=0.2)
-        time.sleep(1.3)
+        time.sleep(1.5)
         key_up('right')
         time.sleep(0.5)
 
