@@ -91,7 +91,7 @@ class Bot(Configurable):
         last_fed = time.time()
         last_changed_server = time.time()
         players_detected_time = None
-        next_channel_change = random.randint(300, 305)
+        next_channel_change = random.randint(1800, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
         # last_loot_rotation = time.time()
@@ -119,7 +119,7 @@ class Bot(Configurable):
 
                     self.change_channel()
                     last_changed_server = now
-                    next_channel_change = random.randint(300, 305)
+                    next_channel_change = random.randint(1800, 3600)
 
                 if auto_feed and now - last_fed > 1200 / num_pets:
                     press(self.config['Feed pet'], 1)
@@ -210,7 +210,7 @@ class Bot(Configurable):
         Listener.recalibrate_minimap()
         self.finding_muyoung = True
 
-        time.sleep(1)
+        time.sleep(0.1)
 
         while self.finding_muyoung:
             key_down('right')
@@ -220,38 +220,38 @@ class Bot(Configurable):
         key_up('z')
         time.sleep(3)
         self.finding_muyoung = True
-        time.sleep(2)
+        time.sleep(1)
         if not self.finding_muyoung:
             click(self.muyoung_pos, button='left')
-            time.sleep(1)
+            time.sleep(0.5)
             click(self.muyoung_pos, button='left')
 
             print('\nInteracting with muyoung:')
 
             if isEnter:
                 press('enter', 1)
-                time.sleep(1)
+                time.sleep(0.5)
                 press('enter', 1)
-                time.sleep(1)
+                time.sleep(0.5)
                 click(self.muyoung_pos, button='left')
-                time.sleep(1)
+                time.sleep(0.5)
                 click(self.muyoung_pos, button='left')
-                time.sleep(1)
+                time.sleep(0.5)
                 press('down', 1)
-                time.sleep(1)
+                time.sleep(0.5)
 
                 press('enter', 1)
-                time.sleep(1)
+                time.sleep(0.5)
                 press('enter', 1)
             else:
                 press('left', 1)
-                time.sleep(1)
+                time.sleep(0.5)
 
                 press('left', 1)
-                time.sleep(1)
+                time.sleep(0.5)
 
                 press('enter', 1)
-                time.sleep(1)
+                time.sleep(0.5)
 
     @utils.run_if_enabled
     def fight_balrog(self):
@@ -271,7 +271,7 @@ class Bot(Configurable):
         while time.time() - start_time < 60:  # Run for 60 seconds
             press('f', 1)
 
-        time.sleep(1)
+        time.sleep(0.5)
 
     @utils.run_if_enabled
     def loot_map(self):
@@ -282,7 +282,7 @@ class Bot(Configurable):
         start_time = time.time()
         direction = 'left'  # Start by moving to the right
 
-        while time.time() - start_time < 15:  # Run for 30 seconds
+        while time.time() - start_time < 30:  # Run for 30 seconds
             key_down(direction)
             move_start_time = time.time()
 
@@ -323,7 +323,7 @@ class Bot(Configurable):
     #                 print('Solution found, entering result')
     #                 for arrow in solution:
     #                     press(arrow, 1, down_time=0.1)
-    #                 time.sleep(1)
+    #                 time.sleep(0.5)
     #                 for _ in range(3):
     #                     time.sleep(0.3)
     #                     frame = config.capture.frame
