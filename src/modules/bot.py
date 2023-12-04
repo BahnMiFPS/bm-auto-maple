@@ -113,12 +113,8 @@ class Bot(Configurable):
                 num_pets = pet_settings.num_pets.get()
 
                 if self.other_players > 0:
-                    if players_detected_time is None:
-                        players_detected_time = now
-                    if now - players_detected_time > 5:
-                        self.change_channel()
-                else:
-                    players_detected_time = None
+                    self.change_channel()
+
                 if auto_feed and now - last_fed > 1200 / num_pets:
                     press(self.config['Feed pet'], 1)
                     last_fed = now
