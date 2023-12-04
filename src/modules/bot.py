@@ -91,7 +91,7 @@ class Bot(Configurable):
         last_fed = time.time()
         last_changed_server = time.time()
         players_detected_time = None
-        next_channel_change = random.randint(9999, 99999)
+        next_channel_change = random.randint(300, 305)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
         # last_loot_rotation = time.time()
@@ -106,14 +106,20 @@ class Bot(Configurable):
                 now = time.time()
                 # Turn book off for debug
 
-                if not DEBUG:
-                    self.command_book.buff.main()
+                # if not DEBUG:
+                #     self.command_book.buff.main()
                 pet_settings = config.gui.settings.pets
                 auto_feed = pet_settings.auto_feed.get()
                 num_pets = pet_settings.num_pets.get()
 
                 if self.other_players > 0:
                     self.change_channel()
+
+                if now - last_changed_server > next_channel_change:
+
+                    self.change_channel()
+                    last_changed_server = now
+                    next_channel_change = random.randint(300, 305)
 
                 if auto_feed and now - last_fed > 1200 / num_pets:
                     press(self.config['Feed pet'], 1)
@@ -200,6 +206,7 @@ class Bot(Configurable):
         Moves to the right until muyoung is found on the screen and click him
         :return:        None
         """
+        Listener.recalibrate_minimap()
         self.finding_muyoung = True
 
         time.sleep(1)
@@ -245,6 +252,7 @@ class Bot(Configurable):
                 press('enter', 1)
                 time.sleep(1)
 
+    @utils.run_if_enabled
     def fight_balrog(self):
         """
         Moves to the right and teleport twice then hold down attack for 1 minutes straight
@@ -254,16 +262,17 @@ class Bot(Configurable):
         # move to the right
         key_down('right')
         press('z', 1, down_time=0.2)
-        time.sleep(1)
+        time.sleep(1.0)
         key_up('right')
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 60:  # Run for 60 seconds
-            press('f', 1, down_time=0.35)
+        while time.time() - start_time < 30:  # Run for 60 seconds
+            press('f', 1, down_time=0.1)
 
         time.sleep(1)
 
+    @utils.run_if_enabled
     def loot_map(self):
         """
         Move to the sides for 5 seconds, constantly press alt to loot while moving
@@ -272,7 +281,7 @@ class Bot(Configurable):
         start_time = time.time()
         direction = 'right'  # Start by moving to the right
 
-        while time.time() - start_time < 30:  # Run for 30 seconds
+        while time.time() - start_time < 15:  # Run for 30 seconds
             key_down(direction)
             move_start_time = time.time()
 
