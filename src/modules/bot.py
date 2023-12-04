@@ -201,6 +201,7 @@ class Bot(Configurable):
             else:
                 time.sleep(0.01)
 
+    @utils.run_if_enabled
     def interact_muyoung(self, isEnter=True):
         """
         Moves to the right until muyoung is found on the screen and click him
@@ -279,7 +280,7 @@ class Bot(Configurable):
         """
         print("Looting map")
         start_time = time.time()
-        direction = 'right'  # Start by moving to the right
+        direction = 'left'  # Start by moving to the right
 
         while time.time() - start_time < 15:  # Run for 30 seconds
             key_down(direction)
