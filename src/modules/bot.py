@@ -163,7 +163,7 @@ class Bot(Configurable):
                         f"Players detected time: {now - players_detected_time}")
                     if now - players_detected_time > 5:
                         skip_step = True
-                    if now - players_detected_time > 30 and skip_step:
+                    if now - players_detected_time > 35 and skip_step:
                         self.change_channel()
                     elif now - players_detected_time > 20 and skip_step:
                         self.go_fm()
