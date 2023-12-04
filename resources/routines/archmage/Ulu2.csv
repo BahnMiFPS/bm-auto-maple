@@ -1,55 +1,43 @@
 $, target=move_tolerance, value=0.075
+$, target=buff_cooldown, value=9999
 
 @, label=Bottom Floor
-*, x=0.480, y=0.726, frequency=1, skip=False, adjust=False
+*, x=0.480, y=0.732, frequency=1, skip=False, adjust=False
     TPBigBang, direction=left, repetitions=1
-*, x=0.278, y=0.726, frequency=1, skip=False, adjust=False
+*, x=0.278, y=0.732, frequency=1, skip=False, adjust=False
     TPBigBang, direction=left, repetitions=3
-*, x=0.264, y=0.678, frequency=4, skip=False, adjust=True
+*, x=0.264, y=0.684, frequency=4, skip=True, adjust=True
     BigBang, repetitions=3
-*, x=0.208, y=0.726, frequency=1, skip=False, adjust=False
+*, x=0.208, y=0.732, frequency=1, skip=False, adjust=False
     TPBigBang, direction=right, repetitions=1
-*, x=0.462, y=0.726, frequency=1, skip=False, adjust=True
+*, x=0.48, y=0.732, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
-    Wait, duration=0.5
+    Wait, duration=1
     UsePortal
-    BigBang, repetitions=4
-    UsePortal
-    TPBigBang, direction=right, repetitions=2
-*, x=0.784, y=0.726, frequency=1, skip=False, adjust=False
-    TPBigBang, direction=right, repetitions=3
-*, x=0.784, y=0.726, frequency=1, skip=False, adjust=False
-    TPBigBang, direction=left, repetitions=1
-
-@, label=Loot
-*, x=0.734, y=0.702, frequency=4, skip=False, adjust=True
-    BigBang, repetitions=2
-*, x=0.508, y=0.726, frequency=4, skip=False, adjust=True
     BigBang, repetitions=1
-
-@, label=Top Floor
-*, x=0.5, y=0.726, frequency=1, skip=False, adjust=True
-    BigBang, repetitions=2
-    Wait, duration=0.5
-    UsePortal
-    BigBang, repetitions=4
-*, x=0.5, y=0.484, frequency=2, skip=False, adjust=False
-    BigBang, repetitions=4
 
 @, label=Top Floor Fight
-*, x=0.411, y=0.573, frequency=2, skip=True, adjust=False
+*, x=0.411, y=0.579, frequency=2, skip=True, adjust=False
     TPBigBang, direction=left, repetitions=2
-*, x=0.323, y=0.548, frequency=2, skip=True, adjust=True
-    TPBigBang, direction=left, repetitions=1
-    TPBigBang, direction=right, repetitions=3
-*, x=0.500, y=0.573, frequency=2, skip=True, adjust=False
+    TPBigBang, direction=right, repetitions=2
+*, x=0.500, y=0.579, frequency=2, skip=True, adjust=False
     TPBigBang, direction=right, repetitions=1
-*, x=0.669, y=0.548, frequency=2, skip=True, adjust=True
+*, x=0.669, y=0.554, frequency=2, skip=True, adjust=True
     TPBigBang, direction=right, repetitions=1
     TPBigBang, direction=left, repetitions=5
     TPBigBang, direction=right, repetitions=3
+*, x=0.784, y=0.732, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=right, repetitions=3
+*, x=0.784, y=0.732, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=left, repetitions=1
 
-@, label=Use Portal
-*, x=0.500, y=0.484, frequency=1, skip=False, adjust=False
+@, label=Loot
+*, x=0.734, y=0.706, frequency=4, skip=True, adjust=True
+    BigBang, repetitions=2
+*, x=0.508, y=0.732, frequency=4, skip=True, adjust=True
     BigBang, repetitions=1
-    UsePortal
+
+@, label=Top Floor
+*, x=0.516, y=0.732, frequency=2, skip=False, adjust=True
+    BigBang, repetitions=1
+    Blizzard

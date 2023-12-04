@@ -96,36 +96,44 @@ class Bot(Configurable):
         skip_step = False
         # last_loot_rotation = time.time()
         while True:
-            # if config.enabled:
-            #     self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
-            # if config.enabled and self.auto_balrog:
-            #     print(f"Finding Muyoung: {self.finding_muyoung}")
-            #     """
-            #     key down right until finding muyoung
-            #     """
-            #     now = time.time()
-            #     # Turn book off for debug
+            if config.enabled:
+                self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
+            if config.enabled and self.auto_balrog:
+                print(f"Finding Muyoung: {self.finding_muyoung}")
+                """
+                key down right until finding muyoung
+                """
+                now = time.time()
+                # Turn book off for debug
 
-            #     if not DEBUG:
-            #         self.command_book.buff.main()
-            #     pet_settings = config.gui.settings.pets
-            #     auto_feed = pet_settings.auto_feed.get()
-            #     num_pets = pet_settings.num_pets.get()
+                if not DEBUG:
+                    self.command_book.buff.main()
+                pet_settings = config.gui.settings.pets
+                auto_feed = pet_settings.auto_feed.get()
+                num_pets = pet_settings.num_pets.get()
 
-            #     if auto_feed and now - last_fed > 1200 / num_pets:
-            #         press(self.config['Feed pet'], 1)
-            #         last_fed = now
-            #         print(
-            #             f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
+                if auto_feed and now - last_fed > 1200 / num_pets:
+                    press(self.config['Feed pet'], 1)
+                    last_fed = now
+                    print(
+                        f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
 
-            #     self.interact_muyoung(isEnter=True)
-            #     time.sleep(1.5)
-            #     self.fight_balrog()
-            #     time.sleep(1)
-            #     # self.loot_map()
-            #     time.sleep(1)
-            #     self.interact_muyoung(isEnter=False)
-            #     time.sleep(2)
+                self.interact_muyoung(isEnter=True)
+                time.sleep(1.5)
+                self.fight_balrog()
+                time.sleep(1)
+                self.loot_map()
+                time.sleep(1)
+                self.interact_muyoung(isEnter=False)
+                time.sleep(2)
+
+                if self.other_players > 0:
+                    if players_detected_time is None:
+                        players_detected_time = now
+                    if now - players_detected_time > 5:
+                        self.change_channel()
+                else:
+                    players_detected_time = None
 
             if config.enabled and len(config.routine) > 0:
 
@@ -258,29 +266,32 @@ class Bot(Configurable):
         key_up('right')
         time.sleep(0.5)
 
-        for _ in range(30):
+        start_time = time.time()
+        while time.time() - start_time < 60:  # Run for 60 seconds
             press('f', 1, down_time=0.35)
 
         time.sleep(1)
 
     def loot_map(self):
         """
-        Move to the right for 5 seconds, constantly press alt to loot while moving
+        Move to the sides for 5 seconds, constantly press alt to loot while moving
         """
         print("Looting map")
         start_time = time.time()
-        key_down('right')
-        while time.time() - start_time < 3:
-            print(time.time() - start_time)
-            press('alt', 1, down_time=0.1)
-        key_up('right')
-        time.sleep(1)
-        end_time = time.time()
-        key_down('left')
-        while time.time() - end_time < 3:
-            print(time.time() - start_time)
-            press('alt', 1, down_time=0.1)
-        key_up('left')
+        direction = 'right'  # Start by moving to the right
+
+        while time.time() - start_time < 30:  # Run for 30 seconds
+            key_down(direction)
+            move_start_time = time.time()
+
+            while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
+                press('alt', 1, down_time=0.1)
+
+            key_up(direction)
+            time.sleep(0.1)
+
+            # Switch direction
+            direction = 'left' if direction == 'right' else 'right'
 
         # teleport twice
 

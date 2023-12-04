@@ -87,18 +87,18 @@ class Notifier:
                 now = time.time()
                 # Check for unexpected black screen
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                if np.count_nonzero(gray < 15) / height / width > self.room_change_threshold:
-                    if last_black_screen_alert is None or now - last_black_screen_alert > 5:
-                        # self._alert('siren')
-                        if config.bot.auto_balrog:
-                            return
-                        print("Black screen detected")
+                # if np.count_nonzero(gray < 15) / height / width > self.room_change_threshold:
+                #     if last_black_screen_alert is None or now - last_black_screen_alert > 5:
+                #         # self._alert('siren')
+                #         if config.bot.auto_balrog:
+                #             return
+                #         print("Black screen detected")
 
-                        time.sleep(5)
-                        this_frame = config.capture.frame
-                        schedule_coroutine(client.loop, send_image_to_discord(
-                            this_frame, 'Black screen detected'))
-                        last_black_screen_alert = now
+                #         time.sleep(5)
+                #         this_frame = config.capture.frame
+                #         schedule_coroutine(client.loop, send_image_to_discord(
+                #             this_frame, 'Black screen detected'))
+                #         last_black_screen_alert = now
                 # Check for elite warning
                 # elite_frame = frame[height // 4:3 *
                 #                     height // 4, width // 4:3 * width // 4]

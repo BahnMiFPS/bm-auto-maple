@@ -1,4 +1,5 @@
 $, target=move_tolerance, value=0.055
+$, target=buff_cooldown, value=9999
 *, x=0.148, y=0.244, frequency=1, skip=False, adjust=True
     BigBang, repetitions=1
 *, x=0.148, y=0.212, frequency=1, skip=False, adjust=True

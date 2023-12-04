@@ -1,13 +1,42 @@
-*, x=0.047, y=0.558, frequency=1, skip=False, adjust=True
-    DoubleTPBigBang, direction=right, repetitions=5
-    TPBigBang, direction=left, repetitions=1
-*, x=0.868, y=0.558, frequency=1, skip=False, adjust=True
-    JumpToRopes, direction=left, duration=1.5
-*, x=0.822, y=0.411, frequency=1, skip=False, adjust=False
-    BigBang, repetitions=1
-*, x=0.907, y=0.411, frequency=1, skip=False, adjust=True
+$, target=buff_cooldown, value=99999
+*, x=0.496, y=0.558, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=left, repetitions=2
+    DoubleTPBigBang, direction=right, repetitions=2
+*, x=0.496, y=0.558, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=2
+    DoubleTPBigBang, direction=left, repetitions=1
+
+@, label=mid right
+*, x=0.729, y=0.558, frequency=1, skip=False, adjust=True
+    JumpToRopes, direction=right, duration=1.5
+*, x=0.767, y=0.411, frequency=1, skip=False, adjust=True
+    Blizzard
+    TPBigBang, direction=right, repetitions=1
+
+@, label=top right
+*, x=0.891, y=0.411, frequency=1, skip=False, adjust=True
     JumpToRopes, direction=right, duration=1.5
 *, x=0.961, y=0.264, frequency=1, skip=False, adjust=False
     BigBang, repetitions=1
     TPBigBang, direction=left, repetitions=2
     TPBigBang, direction=right, repetitions=1
+
+@, label=reset 1
+*, x=0.496, y=0.558, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=right, repetitions=2
+*, x=0.837, y=0.558, frequency=1, skip=False, adjust=False
+    DoubleTPBigBang, direction=left, repetitions=4
+*, x=0.124, y=0.558, frequency=1, skip=False, adjust=False
+    TPBigBang, direction=right, repetitions=3
+
+@, label=mid left
+*, x=0.326, y=0.558, frequency=1, skip=False, adjust=True
+    JumpToRopes, direction=left, duration=1.5
+*, x=0.233, y=0.411, frequency=1, skip=False, adjust=False
+    Blizzard
+
+@, label=top left
+*, x=0.124, y=0.411, frequency=1, skip=False, adjust=True
+    JumpToRopes, direction=left, duration=1.5
+*, x=0.031, y=0.264, frequency=1, skip=False, adjust=True
+    TPBigBang, direction=right, repetitions=5

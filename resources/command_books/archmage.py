@@ -105,12 +105,12 @@ class Buff(Command):
         self.cd900_buff_time = 0
         self.decent_buff_time = 0
 
-    def main(self, reset=False):
+    def main(self):
         now = time.time()
         # if self.cd20_buff_time == 0 or now - self.cd20_buff_time > 20:
         #     press(Key.BLIZZARD,  1, down_time=0.3)
         #     self.cd20_buff_time = now
-        if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown or reset:
+        if self.decent_buff_time == 0 or now - self.decent_buff_time > settings.buff_cooldown:
             press(Key.THORNS,  1, down_time=0.3)
             time.sleep(3.0)
             press(Key.HASTE,  1, down_time=0.3)
