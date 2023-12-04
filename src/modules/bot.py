@@ -211,12 +211,12 @@ class Bot(Configurable):
         self.finding_muyoung = True
 
         time.sleep(0.1)
-
+        direction = 'right' if isEnter else 'left'
         while self.finding_muyoung:
-            key_down('right')
+            key_down(direction)
             key_down('z')
 
-        key_up('right')
+        key_up(direction)
         key_up('z')
         time.sleep(3)
         self.finding_muyoung = True
