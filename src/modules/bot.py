@@ -99,7 +99,7 @@ class Bot(Configurable):
             if config.enabled:
                 self.auto_balrog = config.gui.settings.balrog.auto_balrog.get()
             if config.enabled and self.auto_balrog:
-                print(f"Finding Muyoung: {self.finding_muyoung}")
+
                 """
                 key down right until finding muyoung
                 """
@@ -171,8 +171,7 @@ class Bot(Configurable):
                     skip_step = False
                 # change channel after every 45 minutes - 1 hour
                 if now - last_changed_server > next_channel_change:
-                    print(
-                        f"change channel after {next_channel_change} seconds")
+
                     self.change_channel()
                     last_changed_server = now
                     next_channel_change = random.randint(9999, 99999)
@@ -206,7 +205,6 @@ class Bot(Configurable):
         Moves to the right until muyoung is found on the screen and click him
         :return:        None
         """
-        print("interact_muyoung called")
         self.finding_muyoung = True
 
         time.sleep(1)
@@ -220,7 +218,6 @@ class Bot(Configurable):
         time.sleep(3)
         self.finding_muyoung = True
         time.sleep(2)
-        print(f"finding muyoung is: {self.finding_muyoung}")
         if not self.finding_muyoung:
             click(self.muyoung_pos, button='left')
             time.sleep(1)

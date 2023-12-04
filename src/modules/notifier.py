@@ -137,7 +137,6 @@ class Notifier:
                     config.bot.captcha_timeout = True
 
                 if config.bot.finding_muyoung:
-                    print("Finding muyoung from notifier")
                     # Convert the frame to grayscale
                     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
