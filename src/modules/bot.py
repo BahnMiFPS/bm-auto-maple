@@ -262,13 +262,13 @@ class Bot(Configurable):
         # move to the right
         key_down('right')
         press('z', 1, down_time=0.2)
-        time.sleep(1.0)
+        time.sleep(1.3)
         key_up('right')
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 30:  # Run for 60 seconds
-            press('f', 1, down_time=0.1)
+        while time.time() - start_time < 60:  # Run for 60 seconds
+            press('f', 1)
 
         time.sleep(1)
 
