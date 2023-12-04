@@ -128,7 +128,7 @@ class Bot(Configurable):
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
                 press('f10', 1)
                 self.interact_muyoung(isEnter=True)
-                time.sleep(1.5)
+                time.sleep(1)
                 self.fight_balrog()
                 time.sleep(1)
                 self.loot_map()
@@ -263,12 +263,12 @@ class Bot(Configurable):
         # move to the right
         key_down('right')
         press('z', 1, down_time=0.2)
-        time.sleep(1.5)
+        time.sleep(1)
         key_up('right')
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 45:  # Run for 60 seconds
+        while time.time() - start_time < 30:  # Run for 60 seconds
             press('f', 1)
 
         time.sleep(0.5)
