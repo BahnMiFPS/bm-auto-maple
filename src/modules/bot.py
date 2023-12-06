@@ -324,6 +324,7 @@ class Bot(Configurable):
             time.sleep(0.1)  # Short pause before switching direction
 
         self.crimson_is_dead = False
+        self.there_is_loot = False
 
         # teleport twice
 

@@ -128,12 +128,12 @@ class Notifier:
                         config.bot.balrog_found = False
                 if config.bot.balrog_found:
                     dead_crimson = utils.multi_match(
-                        frame, CRIMSON_BALROG_TEMPLATE, 0.7)
+                        frame, CRIMSON_BALROG_TEMPLATE, 0.9)
                     if len(dead_crimson) > 0:
                         config.bot.crimson_is_dead = True
                 if config.bot.crimson_is_dead:
                     scrolls_on_ground = utils.multi_match(
-                        frame, SCROLLS_TEMPLATE, 0.7)
+                        frame, SCROLLS_TEMPLATE, 0.9)
                     if len(scrolls_on_ground) > 0:
                         config.bot.there_is_loot = True
                     else:
