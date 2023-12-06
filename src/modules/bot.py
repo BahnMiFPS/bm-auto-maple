@@ -73,6 +73,7 @@ class Bot(Configurable):
 
         self.start_fighting_balrog = False
         self.balrog_found = False
+        self.crimson_is_dead = False
 
     def start(self):
         """
@@ -283,7 +284,10 @@ class Bot(Configurable):
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 31 and self.balrog_found:  # Run for 60 seconds
+        while time.time() - start_time < 20 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
+            press('f', 1)
+        press('right', 1, down_time=0.2)
+        while time.time() - start_time < 10 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
             press('f', 1)
 
         time.sleep(0.5)
@@ -295,6 +299,8 @@ class Bot(Configurable):
         Switch direction every 5 seconds until 25 seconds have passed.
         """
         print("Looting map")
+        if not self.crimson_is_dead:
+            return
         start_time = time.time()
         direction = 'left'  # Initially set direction to 'right'
 
@@ -311,6 +317,8 @@ class Bot(Configurable):
             direction = 'left' if direction == 'right' else 'right'
 
             time.sleep(0.1)  # Short pause before switching direction
+
+        self.crimson_is_dead = False
 
         # teleport twice
 

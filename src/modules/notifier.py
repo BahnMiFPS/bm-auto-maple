@@ -39,6 +39,7 @@ DEBUG = False
 
 MUYOUNG_TEMPLATE = cv2.imread('assets/muyoung.png', 0)
 BALROG_BOSS_TEMPLATE = cv2.imread('assets/balrog_boss.png', 0)
+CRIMSON_BALROG_TEMPLATE = cv2.imread('assets/crimson_balrog_dead.png', 0)
 
 
 def schedule_coroutine(loop, coroutine):
@@ -124,7 +125,11 @@ class Notifier:
                         config.bot.balrog_found = True
                     else:
                         config.bot.balrog_found = False
-                        print("Balrog not found")
+                if config.bot.balrog_found:
+                    dead_crimson = utils.multi_match(
+                        frame, CRIMSON_BALROG_TEMPLATE, 0.9)
+                    if len(dead_crimson) > 0:
+                        config.bot.crimson_is_dead = True
                 # Check for captcha warning
                 if not config.bot.captcha_active:
                     captcha = utils.multi_match(
