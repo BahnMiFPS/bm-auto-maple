@@ -38,6 +38,7 @@ CAPTCHA_TEMPLATE = cv2.imread('assets/captcha_warning.png', 0)
 DEBUG = False
 
 MUYOUNG_TEMPLATE = cv2.imread('assets/muyoung.png', 0)
+BALROG_BOSS_TEMPLATE = cv2.imread('assets/balrog_boss.png', 0)
 
 
 def schedule_coroutine(loop, coroutine):
@@ -116,7 +117,14 @@ class Notifier:
                     if others > config.bot.other_players:
                         self._ping('ding', volume=0)
                     config.bot.other_players = others
-
+                if config.bot.start_fighting_balrog:
+                    balrog_boss = utils.multi_match(
+                        frame, BALROG_BOSS_TEMPLATE, threshold=0.7)
+                    if len(balrog_boss) > 0:
+                        config.bot.balrog_found = True
+                    else:
+                        config.bot.balrog_found = False
+                        print("Balrog not found")
                 # Check for captcha warning
                 if not config.bot.captcha_active:
                     captcha = utils.multi_match(

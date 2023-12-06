@@ -71,6 +71,9 @@ class Bot(Configurable):
         self.finding_muyoung = False
         self.muyoung_pos = (0, 0)
 
+        self.start_fighting_balrog = False
+        self.balrog_found = False
+
     def start(self):
         """
         Starts this Bot object's thread.
@@ -94,6 +97,7 @@ class Bot(Configurable):
         next_channel_change = random.randint(1800, 3600)
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
+        last_go_back_to_map = time.time()
         # last_loot_rotation = time.time()
         while True:
             if config.enabled:
@@ -115,6 +119,9 @@ class Bot(Configurable):
                 if self.other_players > 0:
                     self.change_channel()
 
+                if now - last_go_back_to_map > 1800:
+                    self.go_back_to_map()
+                    last_go_back_to_map = now
                 if now - last_changed_server > next_channel_change:
 
                     self.change_channel()
@@ -128,13 +135,16 @@ class Bot(Configurable):
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
                 press('f10', 1)
                 self.interact_muyoung(isEnter=True)
-                time.sleep(1)
-                self.fight_balrog()
-                time.sleep(1)
-                self.loot_map()
-                time.sleep(1)
-                self.interact_muyoung(isEnter=False)
                 time.sleep(2)
+                if self.balrog_found:
+                    self.fight_balrog()
+                    time.sleep(1)
+                    self.loot_map()
+                    time.sleep(1)
+                    self.interact_muyoung(isEnter=False)
+                    time.sleep(2)
+                else:
+                    print('No balrog Found, going back')
 
             if config.enabled and len(config.routine) > 0:
 
@@ -207,6 +217,7 @@ class Bot(Configurable):
         Moves to the right until muyoung is found on the screen and click him
         :return:        None
         """
+
         Listener.recalibrate_minimap()
         self.finding_muyoung = True
 
@@ -226,9 +237,10 @@ class Bot(Configurable):
             time.sleep(0.5)
             click(self.muyoung_pos, button='left')
 
-            print('\nInteracting with muyoung:')
+            print(f'\nInteracting with muyoung: Is Enter?: {isEnter}')
 
             if isEnter:
+                self.start_fighting_balrog = True
                 press('enter', 1)
                 time.sleep(0.5)
                 press('enter', 1)
@@ -244,6 +256,9 @@ class Bot(Configurable):
                 time.sleep(0.5)
                 press('enter', 1)
             else:
+                if not self.balrog_found:
+                    return
+                self.start_fighting_balrog = False
                 press('left', 1)
                 time.sleep(0.5)
 
@@ -268,7 +283,7 @@ class Bot(Configurable):
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 45:  # Run for 60 seconds
+        while time.time() - start_time < 31 and self.balrog_found:  # Run for 60 seconds
             press('f', 1)
 
         time.sleep(0.5)
@@ -283,15 +298,15 @@ class Bot(Configurable):
         start_time = time.time()
         direction = 'left'  # Initially set direction to 'right'
 
-        while time.time() - start_time < 25:  # Continue for 25 seconds
+        while time.time() - start_time < 24 and self.balrog_found:  # Continue for 25 seconds
             move_start_time = time.time()
             key_down(direction)
+            time.sleep(0.1)
 
-            while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
-                press('alt', 1)  # Press 'alt' every second
-
+            while time.time() - move_start_time < 8:  # Move in the current direction for 5 seconds
+                press('alt', 1, down_time=0.025, up_time=0.05)
             key_up(direction)
-
+            time.sleep(0.1)
             # Switch direction
             direction = 'left' if direction == 'right' else 'right'
 
@@ -417,11 +432,39 @@ class Bot(Configurable):
         time.sleep(5)
 
     @utils.run_if_enabled
+    def go_back_to_map(self):
+        print("Going back to Balrog map")
+        press('1', 1)
+        time.sleep(0.2)
+
+        key_down('shift')
+        time.sleep(0.1)
+        press('2', 1)
+        time.sleep(0.1)
+
+        key_up('shift')
+        time.sleep(0.1)
+
+        alt_go = "go"
+        for char in alt_go:
+            press(char, 1)
+            time.sleep(0.1)
+        press('space', 1)
+        time.sleep(0.1)
+        balrog_map = "balrogpq"
+        for char in balrog_map:
+            press(char, 1)
+            time.sleep(0.1)
+        press('enter', 1)
+        time.sleep(1)
+
+    @utils.run_if_enabled
     def change_channel(self):
         if self.captcha_active:
             return
         print("Changing channel")
-        random_channel_to_skip = random.randint(1, 4)
+        # random_channel_to_skip = random.randint(1, 4)
+        random_channel_to_skip = 2
         press('esc', 1)
         time.sleep(2)
         press('enter', 1)
