@@ -40,6 +40,7 @@ DEBUG = False
 MUYOUNG_TEMPLATE = cv2.imread('assets/muyoung.png', 0)
 BALROG_BOSS_TEMPLATE = cv2.imread('assets/balrog_boss.png', 0)
 CRIMSON_BALROG_TEMPLATE = cv2.imread('assets/crimson_balrog_dead.png', 0)
+SCROLLS_TEMPLATE = cv2.imread('assets/scrolls.png', 0)
 
 
 def schedule_coroutine(loop, coroutine):
@@ -127,9 +128,17 @@ class Notifier:
                         config.bot.balrog_found = False
                 if config.bot.balrog_found:
                     dead_crimson = utils.multi_match(
-                        frame, CRIMSON_BALROG_TEMPLATE, 0.9)
+                        frame, CRIMSON_BALROG_TEMPLATE, 0.7)
                     if len(dead_crimson) > 0:
                         config.bot.crimson_is_dead = True
+                if config.bot.crimson_is_dead:
+                    scrolls_on_ground = utils.multi_match(
+                        frame, SCROLLS_TEMPLATE, 0.7)
+                    if len(scrolls_on_ground) > 0:
+                        config.bot.there_is_loot = True
+                    else:
+                        config.bot.there_is_loot = False
+                        print(f"Scrolls are gone, setting there_is_loot to False")
                 # Check for captcha warning
                 if not config.bot.captcha_active:
                     captcha = utils.multi_match(

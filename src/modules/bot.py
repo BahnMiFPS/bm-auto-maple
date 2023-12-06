@@ -74,6 +74,7 @@ class Bot(Configurable):
         self.start_fighting_balrog = False
         self.balrog_found = False
         self.crimson_is_dead = False
+        self.there_is_loot = True
 
     def start(self):
         """
@@ -146,6 +147,9 @@ class Bot(Configurable):
                     time.sleep(2)
                 else:
                     print('No balrog Found, going back')
+                time.sleep(0.1)
+                self.crimson_is_dead = False
+                time.sleep(0.1)
 
             if config.enabled and len(config.routine) > 0:
 
@@ -185,7 +189,7 @@ class Bot(Configurable):
                 if now - last_changed_server > next_channel_change:
 
                     self.change_channel()
-                    last_chaqnged_server = now
+                    last_changed_server = now
                     next_channel_change = random.randint(9999, 99999)
 
                 if self.captcha_active:
@@ -221,7 +225,6 @@ class Bot(Configurable):
 
         Listener.recalibrate_minimap()
         self.finding_muyoung = True
-
         time.sleep(0.1)
         direction = 'right'
         while self.finding_muyoung:
@@ -284,9 +287,13 @@ class Bot(Configurable):
         time.sleep(0.5)
 
         start_time = time.time()
-        while time.time() - start_time < 20 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
+        while time.time() - start_time < 31 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
             press('f', 1)
-        press('right', 1, down_time=0.2)
+        time.sleep(1)
+        press('right', 1, down_time=0.3)
+        time.sleep(0.1)
+        start_time = time.time()
+        time.sleep(0.1)
         while time.time() - start_time < 10 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
             press('f', 1)
 
@@ -299,17 +306,15 @@ class Bot(Configurable):
         Switch direction every 5 seconds until 25 seconds have passed.
         """
         print("Looting map")
-        if not self.crimson_is_dead:
-            return
         start_time = time.time()
         direction = 'left'  # Initially set direction to 'right'
 
-        while time.time() - start_time < 24 and self.balrog_found:  # Continue for 25 seconds
+        while time.time() - start_time < 25 and self.balrog_found and self.there_is_loot:  # Continue for 25 seconds
             move_start_time = time.time()
             key_down(direction)
             time.sleep(0.1)
 
-            while time.time() - move_start_time < 8:  # Move in the current direction for 5 seconds
+            while time.time() - move_start_time < 10:  # Move in the current direction for 5 seconds
                 press('alt', 1, down_time=0.025, up_time=0.05)
             key_up(direction)
             time.sleep(0.1)
