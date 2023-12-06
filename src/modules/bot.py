@@ -107,7 +107,7 @@ class Bot(Configurable):
                 # Turn book off for debug
 
                 # if not DEBUG:
-                #     self.command_book.buff.main()
+                self.command_book.buff.main()
                 pet_settings = config.gui.settings.pets
                 auto_feed = pet_settings.auto_feed.get()
                 num_pets = pet_settings.num_pets.get()
@@ -174,7 +174,7 @@ class Bot(Configurable):
                 if now - last_changed_server > next_channel_change:
 
                     self.change_channel()
-                    last_changed_server = now
+                    last_chaqnged_server = now
                     next_channel_change = random.randint(9999, 99999)
 
                 if self.captcha_active:
@@ -211,7 +211,7 @@ class Bot(Configurable):
         self.finding_muyoung = True
 
         time.sleep(0.1)
-        direction = 'right' if isEnter else 'left'
+        direction = 'right'
         while self.finding_muyoung:
             key_down(direction)
             key_down('z')
@@ -287,7 +287,7 @@ class Bot(Configurable):
             move_start_time = time.time()
 
             while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
-                press('alt', 1, down_time=0.1)
+                press('alt', 1)
 
             key_up(direction)
             time.sleep(0.1)

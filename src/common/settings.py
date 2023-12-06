@@ -83,7 +83,7 @@ def reset():
     move_tolerance = 0.1
     adjust_tolerance = 0.01
     record_layout = False
-    buff_cooldown = 300
+    buff_cooldown = 1800
     finalcut_cooldown = 100
     finalcut_direction = 'right'
 
@@ -98,7 +98,7 @@ adjust_tolerance = 0.01
 record_layout = False
 
 # The amount of time (in seconds) to wait between each call to the 'buff' command
-buff_cooldown = 300
+buff_cooldown = 1800
 
 finalcut_cooldown = 100
 finalcut_direction = 'right'
