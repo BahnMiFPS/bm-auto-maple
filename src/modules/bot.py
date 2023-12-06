@@ -288,6 +288,7 @@ class Bot(Configurable):
             while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
                 key_down(direction)
                 press('alt', 1)
+
             key_up(direction)
 
             # Switch direction
