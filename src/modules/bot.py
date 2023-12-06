@@ -276,23 +276,26 @@ class Bot(Configurable):
     @utils.run_if_enabled
     def loot_map(self):
         """
-        Move to the sides for 5 seconds, constantly press alt to loot while moving
+        Move to the sides for 5 seconds, constantly press alt to loot while moving.
+        Switch direction every 5 seconds until 25 seconds have passed.
         """
         print("Looting map")
         start_time = time.time()
+        direction = 'left'  # Initially set direction to 'right'
 
-        while time.time() - start_time < 25:  # Run for 30 seconds
-            direction = 'left'  # Start by moving to the right
+        while time.time() - start_time < 25:  # Continue for 25 seconds
             move_start_time = time.time()
+            key_down(direction)
 
             while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
-                key_down(direction)
-                press('alt', 1)
+                press('alt', 1)  # Press 'alt' every second
 
             key_up(direction)
 
             # Switch direction
             direction = 'left' if direction == 'right' else 'right'
+
+            time.sleep(0.1)  # Short pause before switching direction
 
         # teleport twice
 
