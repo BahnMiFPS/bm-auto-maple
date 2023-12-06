@@ -280,17 +280,15 @@ class Bot(Configurable):
         """
         print("Looting map")
         start_time = time.time()
-        direction = 'left'  # Start by moving to the right
 
         while time.time() - start_time < 25:  # Run for 30 seconds
-            key_down(direction)
+            direction = 'left'  # Start by moving to the right
             move_start_time = time.time()
 
             while time.time() - move_start_time < 5:  # Move in the current direction for 5 seconds
+                key_down(direction)
                 press('alt', 1)
-
             key_up(direction)
-            time.sleep(0.1)
 
             # Switch direction
             direction = 'left' if direction == 'right' else 'right'
