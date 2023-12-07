@@ -40,6 +40,8 @@ DEBUG = False
 MUYOUNG_TEMPLATE = cv2.imread('assets/muyoung.png', 0)
 BALROG_BOSS_TEMPLATE = cv2.imread('assets/balrog_boss.png', 0)
 CRIMSON_BALROG_TEMPLATE = cv2.imread('assets/crimson_balrog_dead.png', 0)
+CRIMSON_BALROG_BANDS_TEMPLATE = cv2.imread(
+    'assets/crimson_balrog_dead_bands.png', 0)
 SCROLLS_TEMPLATE = cv2.imread('assets/scrolls.png', 0)
 
 
@@ -127,9 +129,11 @@ class Notifier:
                     else:
                         config.bot.balrog_found = False
                 if config.bot.balrog_found:
+                    cash_dead_crimson = utils.multi_match(
+                        frame, CRIMSON_BALROG_BANDS_TEMPLATE, 0.9)
                     dead_crimson = utils.multi_match(
                         frame, CRIMSON_BALROG_TEMPLATE, 0.9)
-                    if len(dead_crimson) > 0:
+                    if len(dead_crimson) > 0 or len(cash_dead_crimson) > 0:
                         config.bot.crimson_is_dead = True
                 if config.bot.crimson_is_dead:
                     scrolls_on_ground = utils.multi_match(
