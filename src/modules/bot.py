@@ -231,7 +231,12 @@ class Bot(Configurable):
         self.finding_muyoung = True
         time.sleep(0.1)
         direction = 'right'
+        start_time = time.time()  # Add this line
         while self.finding_muyoung:
+            if time.time() - start_time > 60:
+                print("Muyoung not found, going back")
+                self.go_back_to_map()
+                return
             key_down(direction)
             key_down('z')
 
