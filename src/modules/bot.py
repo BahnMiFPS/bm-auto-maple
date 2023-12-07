@@ -149,6 +149,10 @@ class Bot(Configurable):
                     print('No balrog Found, going back')
                 time.sleep(0.1)
                 self.crimson_is_dead = False
+                self.start_fighting_balrog = False
+                self.balrog_found = False
+                self.crimson_is_dead = False
+                self.there_is_loot = True
                 time.sleep(0.1)
 
             if config.enabled and len(config.routine) > 0:
@@ -233,7 +237,10 @@ class Bot(Configurable):
 
         key_up(direction)
         key_up('z')
-        time.sleep(3)
+        if isEnter:
+            time.sleep(3)
+        else:
+            time.sleep(1)
         self.finding_muyoung = True
         time.sleep(1)
         if not self.finding_muyoung:
@@ -289,42 +296,63 @@ class Bot(Configurable):
         start_time = time.time()
         while time.time() - start_time < 31 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
             press('f', 1)
-        time.sleep(1)
-        press('right', 1, down_time=0.3)
-        time.sleep(0.1)
-        start_time = time.time()
-        time.sleep(0.1)
-        while time.time() - start_time < 10 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
-            press('f', 1)
+        if not self.crimson_is_dead:
+            time.sleep(1)
+            press('right', 1, down_time=0.3)
+            time.sleep(0.1)
+            start_time = time.time()
+            time.sleep(0.1)
+            while time.time() - start_time < 10 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
+                press('f', 1)
 
-        time.sleep(0.5)
+        time.sleep(0.1)
 
     @utils.run_if_enabled
     def loot_map(self):
         """
+        Try to move to left and right and loot for seconds first before going in to the next action
         Move to the sides for 5 seconds, constantly press alt to loot while moving.
         Switch direction every 5 seconds until 25 seconds have passed.
         """
         print("Looting map")
         start_time = time.time()
-        direction = 'left'  # Initially set direction to 'right'
+        direction = 'right'  # Initially set direction to 'right'
+        total_quick_loot_duration = 5
+        seconds_to_quick_loot = 1.5
+        if self.crimson_is_dead:
+            while time.time() - start_time < total_quick_loot_duration and self.balrog_found and self.there_is_loot:
+                quick_loot_start_time = time.time()
+                key_down(direction)
+                time.sleep(0.1)
+                while time.time() - quick_loot_start_time < seconds_to_quick_loot:
+                    press('alt', 1, down_time=0.025, up_time=0.05)
+                key_up(direction)
+                time.sleep(0.1)
+                # Switch direction
+                seconds_to_quick_loot = 3
+                direction = 'left' if direction == 'right' else 'right'
 
-        while time.time() - start_time < 25 and self.balrog_found and self.there_is_loot:  # Continue for 25 seconds
-            move_start_time = time.time()
-            key_down(direction)
+                time.sleep(0.1)
+
             time.sleep(0.1)
 
-            while time.time() - move_start_time < 10:  # Move in the current direction for 5 seconds
-                press('alt', 1, down_time=0.025, up_time=0.05)
-            key_up(direction)
-            time.sleep(0.1)
-            # Switch direction
-            direction = 'left' if direction == 'right' else 'right'
+            while time.time() - start_time < 25 and self.balrog_found and self.there_is_loot:  # Continue for 25 seconds
+                move_start_time = time.time()
+                key_down(direction)
+                time.sleep(0.1)
 
-            time.sleep(0.1)  # Short pause before switching direction
+                while time.time() - move_start_time < 10:  # Move in the current direction for 5 seconds
+                    press('alt', 1, down_time=0.025, up_time=0.05)
+                key_up(direction)
+                time.sleep(0.1)
+                # Switch direction
+                direction = 'left' if direction == 'right' else 'right'
+
+                time.sleep(0.1)  # Short pause before switching direction
 
         self.crimson_is_dead = False
-        self.there_is_loot = False
+        time.sleep(0.1)
+        self.there_is_loot = True
 
         # teleport twice
 

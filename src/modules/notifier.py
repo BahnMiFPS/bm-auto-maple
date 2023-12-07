@@ -135,8 +135,10 @@ class Notifier:
                     scrolls_on_ground = utils.multi_match(
                         frame, SCROLLS_TEMPLATE, 0.9)
                     if len(scrolls_on_ground) > 0:
+                        time.sleep(0.1)
                         config.bot.there_is_loot = True
                     else:
+                        time.sleep(0.1)
                         config.bot.there_is_loot = False
                         print(f"Scrolls are gone, setting there_is_loot to False")
                 # Check for captcha warning
