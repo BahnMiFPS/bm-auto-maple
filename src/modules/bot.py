@@ -137,7 +137,7 @@ class Bot(Configurable):
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
                 press('f10', 1)
                 self.interact_muyoung(isEnter=True)
-                time.sleep(2)
+                time.sleep(1.2)
                 if self.balrog_found:
                     self.fight_balrog()
                     time.sleep(1)
@@ -239,7 +239,7 @@ class Bot(Configurable):
                 return
             key_down(direction)
             key_down('z')
-
+        time.sleep(1)
         key_up(direction)
         key_up('z')
         if isEnter:
@@ -252,7 +252,7 @@ class Bot(Configurable):
             click(self.muyoung_pos, button='left')
             time.sleep(0.5)
             click(self.muyoung_pos, button='left')
-
+            time.sleep(0.5)
             print(f'\nInteracting with muyoung: Is Enter?: {isEnter}')
 
             if isEnter:
@@ -294,9 +294,9 @@ class Bot(Configurable):
         # move to the right
         key_down('right')
         press('z', 1, down_time=0.2)
-        time.sleep(1)
-        key_up('right')
         time.sleep(0.5)
+        key_up('right')
+        time.sleep(0.1)
 
         start_time = time.time()
         while time.time() - start_time < 31 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds

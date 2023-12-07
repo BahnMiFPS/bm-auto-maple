@@ -137,7 +137,7 @@ class Notifier:
                         config.bot.crimson_is_dead = True
                 if config.bot.crimson_is_dead:
                     scrolls_on_ground = utils.multi_match(
-                        frame, SCROLLS_TEMPLATE, 0.9)
+                        frame, SCROLLS_TEMPLATE, 0.7)
                     if len(scrolls_on_ground) > 0:
                         time.sleep(0.1)
                         config.bot.there_is_loot = True
