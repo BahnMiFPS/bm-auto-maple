@@ -136,6 +136,9 @@ class Bot(Configurable):
                     print(
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
                 press('f10', 1)
+                if config.bot.balrog_found:
+                    print("Balrog still found, attempting to leave dungeon")
+                    self.interact_muyoung(isEnter=False)
                 self.interact_muyoung(isEnter=True)
                 time.sleep(1.2)
                 if self.balrog_found:
