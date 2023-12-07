@@ -299,16 +299,24 @@ class Bot(Configurable):
         time.sleep(0.1)
 
         start_time = time.time()
-        while time.time() - start_time < 31 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
+        while time.time() - start_time < 20 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
             press('f', 1)
+
         if not self.crimson_is_dead:
-            time.sleep(1)
-            press('right', 1, down_time=0.3)
-            time.sleep(0.1)
             start_time = time.time()
-            time.sleep(0.1)
-            while time.time() - start_time < 10 and self.balrog_found and not self.crimson_is_dead:  # Run for 60 seconds
-                press('f', 1)
+            direction = 'right'
+            while time.time() - start_time < 20 and not self.crimson_is_dead:
+                # Move in one direction
+                press(direction, 1, down_time=0.2)
+
+                # Press 'f' three times
+                for _ in range(3):
+                    press('f', 1)
+                    time.sleep(0.1)
+
+                # Switch direction
+                direction = 'left' if direction == 'right' else 'right'
+                time.sleep(0.5)
 
         time.sleep(0.1)
 
