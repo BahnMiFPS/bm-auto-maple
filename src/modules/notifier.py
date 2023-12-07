@@ -121,13 +121,13 @@ class Notifier:
                     if others > config.bot.other_players:
                         self._ping('ding', volume=0)
                     config.bot.other_players = others
-                balrog_boss = utils.multi_match(
-                    frame, BALROG_BOSS_TEMPLATE, threshold=0.6)
-                if len(balrog_boss) > 0:
-                    print("Still finding some balrog on screen")
-                    config.bot.balrog_found = True
-                else:
-                    config.bot.balrog_found = False
+                if config.bot.start_fighting_balrog:
+                    balrog_boss = utils.multi_match(
+                        frame, BALROG_BOSS_TEMPLATE, threshold=0.7)
+                    if len(balrog_boss) > 0:
+                        config.bot.balrog_found = True
+                    else:
+                        config.bot.balrog_found = False
                 if config.bot.balrog_found:
                     cash_dead_crimson = utils.multi_match(
                         frame, CRIMSON_BALROG_BANDS_TEMPLATE, 0.9)
