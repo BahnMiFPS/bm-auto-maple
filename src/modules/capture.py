@@ -55,8 +55,8 @@ class Capture:
         self.window = {
             'left': 0,
             'top': 0,
-            'width': 800,
-            'height': 600
+            'width': 1280,
+            'height': 720
         }
 
         self.ready = False

@@ -239,7 +239,6 @@ class Bot(Configurable):
                 return
             key_down(direction)
             key_down('z')
-        time.sleep(1)
         key_up(direction)
         key_up('z')
         if isEnter:

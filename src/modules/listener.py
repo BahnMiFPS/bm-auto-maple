@@ -13,7 +13,7 @@ class Listener(Configurable):
     DEFAULT_CONFIG = {
         'Start/stop': 'insert',
         'Reload routine': 'f6',
-        'Record position': 'f7z'
+        'Record position': 'f7'
     }
     BLOCK_DELAY = 1         # Delay after blocking restricted button press
 

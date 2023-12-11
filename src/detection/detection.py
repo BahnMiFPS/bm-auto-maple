@@ -358,7 +358,7 @@ if __name__ == '__main__':
     from src.common import config, utils
     import mss
     config.enabled = True
-    monitor = {'top': 0, 'left': 0, 'width': 800, 'height': 600}
+    monitor = {'top': 0, 'left': 0, 'width': 1280, 'height': 720}
     model = load_model()
     while True:
         with mss.mss() as sct:
