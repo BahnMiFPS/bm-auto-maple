@@ -144,7 +144,6 @@ class Notifier:
                     else:
                         time.sleep(0.1)
                         config.bot.there_is_loot = False
-                        print(f"Scrolls are gone, setting there_is_loot to False")
                 # Check for captcha warning
                 if not config.bot.captcha_active:
                     captcha = utils.multi_match(

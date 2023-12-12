@@ -97,6 +97,8 @@ class Bot(Configurable):
         last_changed_server = time.time()
         players_detected_time = None
         next_channel_change = random.randint(1800, 3600)
+        next_go_back_map = random.randint(1800, 3600)
+
         captcha_attempts = []  # Store timestamps of captcha attempts
         skip_step = False
         last_go_back_to_map = time.time()
@@ -121,11 +123,13 @@ class Bot(Configurable):
                 if self.other_players > 0:
                     self.change_channel()
 
-                if now - last_go_back_to_map > 1800:
+
+                if now - last_go_back_to_map > next_go_back_map:
                     self.go_back_to_map()
                     last_go_back_to_map = now
-                if now - last_changed_server > next_channel_change:
+                    next_go_back_map = random.randint(1800, 3600)
 
+                if now - last_changed_server > next_channel_change:
                     self.change_channel()
                     last_changed_server = now
                     next_channel_change = random.randint(1800, 3600)
@@ -135,7 +139,6 @@ class Bot(Configurable):
                     last_fed = now
                     print(
                         f"Feeding pet at {time.strftime('%H:%M:%S', time.localtime())}")
-                press('f10', 1)
                 self.interact_muyoung(isEnter=True)
                 time.sleep(1.2)
                 if self.balrog_found:
@@ -488,29 +491,30 @@ class Bot(Configurable):
     @utils.run_if_enabled
     def go_back_to_map(self):
         print("Going back to Balrog map")
+        time.sleep(5)
         press('1', 1)
-        time.sleep(0.2)
+        time.sleep(2)
 
         key_down('shift')
-        time.sleep(0.1)
+        time.sleep(0.25)
         press('2', 1)
-        time.sleep(0.1)
+        time.sleep(0.25)
 
         key_up('shift')
-        time.sleep(0.1)
+        time.sleep(0.25)
 
         alt_go = "go"
         for char in alt_go:
             press(char, 1)
-            time.sleep(0.1)
+            time.sleep(0.25)
         press('space', 1)
-        time.sleep(0.1)
+        time.sleep(0.25)
         balrog_map = "balrogpq"
         for char in balrog_map:
             press(char, 1)
-            time.sleep(0.1)
+            time.sleep(0.25)
         press('enter', 1)
-        time.sleep(1)
+        time.sleep(3)
 
     @utils.run_if_enabled
     def change_channel(self):
